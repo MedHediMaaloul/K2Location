@@ -1,0 +1,920 @@
+<table>
+        <tr>
+            <td>Code de categorie</td>
+            <td>Designation</td>
+            <td>Agence</td>
+            <td>Famille de categorie</td>
+            <td>num_serie_materiels</td>
+            <td>quantite_materiels</td>
+            <td>designation_comp</td>
+            <td>numserie_composant</td>
+        </tr><tr>
+                <td>1213</td>
+                <td>Jeu de chiffres et lettres à frapper</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>11</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>1213</td>
+                <td>Jeu de chiffres et lettres à frapper</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>11</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>123</td>
+                <td>Porte Touret S1000</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>10</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>123</td>
+                <td>Porte Touret S1000</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>10</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>154</td>
+                <td>SUMITOMO T-72C+</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1235</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>164</td>
+                <td>Porte Touret S1000</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>12</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>164</td>
+                <td>Porte Touret S1000</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>12</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>CO0210022</td>
+                <td>Alcool isopropylique 1L</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>40</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>CO0210022</td>
+                <td>Alcool isopropylique 1L</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>40</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>CO3800381</td>
+                <td>Lingettes kimwipes</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>16</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>CO3800381</td>
+                <td>Lingettes kimwipes</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>16</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS0910092</td>
+                <td>Sac à bandoulière SMARTBAG XL</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>60</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS0910092</td>
+                <td>Sac à bandoulière SMARTBAG XL</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>60</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS1580159</td>
+                <td>Clé gaine technique</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS1580159</td>
+                <td>Clé gaine technique</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>6</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS4260427</td>
+                <td>Marteau rivoir 400G</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS4260427</td>
+                <td>Marteau rivoir 400G</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS5120513</td>
+                <td>Pince à bec</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS5120513</td>
+                <td>Pince à bec</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS5190520</td>
+                <td>Pince coupante</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS5190520</td>
+                <td>Pince coupante</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS5440545</td>
+                <td>Pointerolle corps octagonal</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS5440545</td>
+                <td>Pointerolle corps octagonal</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6370638</td>
+                <td>Tournevis fente 3.5mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6370638</td>
+                <td>Tournevis fente 3.5mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6380639</td>
+                <td>Tournevis fente 5,5mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6380639</td>
+                <td>Tournevis fente 5,5mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6390640</td>
+                <td>Tournevis PH0</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6390640</td>
+                <td>Tournevis PH0</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6400641</td>
+                <td>Tournevis PH2</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>KS6400641</td>
+                <td>Tournevis PH2</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701365</td>
+                <td>Machine de Portage HYDROCA</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>PORTAGE</td>
+                <td></td>
+                <td>200</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701365</td>
+                <td>Machine de Portage HYDROCA</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>PORTAGE</td>
+                <td></td>
+                <td>200</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701366</td>
+                <td>Machine de Portage</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>PORTAGE</td>
+                <td></td>
+                <td>100</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701366</td>
+                <td>Machine de Portage</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>PORTAGE</td>
+                <td></td>
+                <td>100</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701372</td>
+                <td>COMWAY A3</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1234</td>
+                <td>1</td>
+                <td>c1</td>
+                <td>111</td>
+            </tr><tr>
+                <td>LO6701373</td>
+                <td>COMWAY C10</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1234</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701374</td>
+                <td>COMWAY C6</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1234</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701375</td>
+                <td>SUMITOMO 72C</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1234</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701376</td>
+                <td>SUMITOMO 72C+</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1234</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701384</td>
+                <td>Boite de jonction pour tubes PEHD</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>50</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LO6701384</td>
+                <td>Boite de jonction pour tubes PEHD</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>50</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LOC12406721472</td>
+                <td>COMWAY C10</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1235</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LOCFS963CF</td>
+                <td>COMPRESSEUR KEASER M50</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>13</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>LOCFS963CF</td>
+                <td>COMPRESSEUR KEASER M50</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>13</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU1440145</td>
+                <td>Cisaille à feuillard</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>30</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU1440145</td>
+                <td>Cisaille à feuillard</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>30</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU1520153</td>
+                <td>Ciseau pour Kevlar</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>19</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU1520153</td>
+                <td>Ciseau pour Kevlar</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>19</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2170218</td>
+                <td>Echelle 3 plans TUBESCA</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2170218</td>
+                <td>Echelle 3 plans TUBESCA</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2330234</td>
+                <td>Escabeau 3 marches EN131</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2330234</td>
+                <td>Escabeau 3 marches EN131</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2370238</td>
+                <td>Etabli de serrage MASTER 600</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2370238</td>
+                <td>Etabli de serrage MASTER 600</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2440245</td>
+                <td>Etiqueteuse BRADY MBP21-PLUS</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>14</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU2440245</td>
+                <td>Etiqueteuse BRADY MBP21-PLUS</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>14</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU5370538</td>
+                <td>Pistolet à colle</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU5370538</td>
+                <td>Pistolet à colle</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU6010602</td>
+                <td>Comway A4</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1235</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU6030604</td>
+                <td>COMWAY C10S</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1235</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU6070620</td>
+                <td>Fujikura 90S+</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1235</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU6070621</td>
+                <td>Fujikura 41S+</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>SOUDEUSE</td>
+                <td>1235</td>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU6300631</td>
+                <td>Tente de chantier 180*180*200</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>36</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU6300631</td>
+                <td>Tente de chantier 180*180*200</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>36</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU7410742</td>
+                <td>Perforateur M18 BH-402C</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>Perforateur</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU7410742</td>
+                <td>Perforateur M18 BH-402C</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>Perforateur</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU7420743</td>
+                <td>Perceuse Visseuse M18 BPD-0</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>OU7420743</td>
+                <td>Perceuse Visseuse M18 BPD-0</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE0420043</td>
+                <td>Balises de signalisation 0.50m</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>108</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE0420043</td>
+                <td>Balises de signalisation 0.50m</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>108</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE3110312</td>
+                <td>Garde-Fou aluminium 1m x 1m x 0,90m</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE3110312</td>
+                <td>Garde-Fou aluminium 1m x 1m x 0,90m</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4880489</td>
+                <td>Panneau travaux</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>24</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4880489</td>
+                <td>Panneau travaux</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>24</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4920493</td>
+                <td>Panneau chaussée rétrécie</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>24</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4920493</td>
+                <td>Panneau chaussée rétrécie</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>24</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4940495</td>
+                <td>Panneau 30 km/h</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>12</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4940495</td>
+                <td>Panneau 30 km/h</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>12</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4950496</td>
+                <td>Panneau 50 km/h</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>8</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>SE4950496</td>
+                <td>Panneau 50 km/h</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>ACCESSOIRES</td>
+                <td></td>
+                <td>8</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TE5030504</td>
+                <td>Photomètre</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TE5030504</td>
+                <td>Photomètre</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TE6130614</td>
+                <td>Laser 30mW</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TE6130614</td>
+                <td>Laser 30mW</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>3</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0080009</td>
+                <td>Recharge Aiguille 30m D 3mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0080009</td>
+                <td>Recharge Aiguille 30m D 3mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>18</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0150016</td>
+                <td>Aiguille 300m D 11mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>12</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0150016</td>
+                <td>Aiguille 300m D 11mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>12</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0160017</td>
+                <td>Aiguille 100m D 6mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0160017</td>
+                <td>Aiguille 100m D 6mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0200021</td>
+                <td>Aiguille 60m D 4,5mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI0200021</td>
+                <td>Aiguille 60m D 4,5mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI2050206</td>
+                <td>Crochet lève plaque L 570mm</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI2050206</td>
+                <td>Crochet lève plaque L 570mm</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>21</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI2130214</td>
+                <td>Dérouleur à patin 1500 Kg</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>100</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI2130214</td>
+                <td>Dérouleur à patin 1500 Kg</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>100</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI4230424</td>
+                <td>Marteau à plaque</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>19</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI4230424</td>
+                <td>Marteau à plaque</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>19</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI4380439</td>
+                <td>Mire aluminium télescopique 5m</td>
+                <td>21 Rue de la Dhuys, 93470 Coubron</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>10</td>
+                <td></td>
+                <td></td>
+            </tr><tr>
+                <td>TI4380439</td>
+                <td>Mire aluminium télescopique 5m</td>
+                <td>7 Rue Jean Baptiste Say 21800 Chevigny ST Sauveur</td>
+                <td>OUTILS</td>
+                <td></td>
+                <td>10</td>
+                <td></td>
+                <td></td>
+            </tr></table>

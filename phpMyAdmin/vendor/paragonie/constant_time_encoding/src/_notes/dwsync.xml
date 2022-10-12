@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="Base32.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Base32Hex.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Base64.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Base64DotSlash.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Base64DotSlashOrdered.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Base64UrlSafe.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Binary.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="EncoderInterface.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Encoding.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="Hex.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+<file name="RFC4648.php" local="132188834270000000" remote="132218440200000000" testing="0" />
+</dwsync>

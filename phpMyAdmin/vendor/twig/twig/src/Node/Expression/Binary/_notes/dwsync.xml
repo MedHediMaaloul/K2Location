@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AbstractBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="AddBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="AndBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="BitwiseAndBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="BitwiseOrBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="BitwiseXorBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="ConcatBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="DivBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="EndsWithBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="EqualBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="FloorDivBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="GreaterBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="GreaterEqualBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="InBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="LessBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="LessEqualBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="MatchesBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="ModBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="MulBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="NotEqualBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="NotInBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="OrBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="PowerBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="RangeBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="StartsWithBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="SubBinary.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+</dwsync>

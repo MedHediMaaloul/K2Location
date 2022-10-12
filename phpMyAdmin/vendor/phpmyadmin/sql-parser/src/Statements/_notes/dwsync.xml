@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AlterStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="AnalyzeStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="BackupStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="CallStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="CheckStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ChecksumStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="CreateStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="DeleteStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="DropStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ExplainStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="InsertStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="LoadStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="LockStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="MaintenanceStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="NotImplementedStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="OptimizeStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="PurgeStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="RenameStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="RepairStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ReplaceStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="RestoreStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="SelectStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="SetStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ShowStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="TransactionStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="TruncateStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="UpdateStatement.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+</dwsync>

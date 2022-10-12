@@ -1,0 +1,8 @@
+"type";"pimm";"Marque";"Model";"Agence";"fournisseur";"km";"date_achat";"date_immatriculation";"boite_vitesse";"type_carburant";"date_DPC_VGP";"date_DPC_CT";"date_DPT_Pollution"
+"FOURGON UTILITAIRE";"123";"Citroen";"Berlingo";"324 route des vernes 74370 Pringy Annecy";"";"150000";"0000-00-00";"0000-00-00";"Manuelle";"Diesel";"0000-00-00";"0000-00-00";"0000-00-00";
+"VOITURE DE SOCIÉTÉ";"456";"Toyota";"Hilux";"324 route des vernes 74370 Pringy Annecy";"";"20000";"0000-00-00";"0000-00-00";"Automatique";"Diesel";"0000-00-00";"0000-00-00";"0000-00-00";
+"CAMION NACELLE";"789";"Peugeot";"Partner";"324 route des vernes 74370 Pringy Annecy";"";"70000";"0000-00-00";"0000-00-00";"Automatique";"Hybride";"0000-00-00";"0000-00-00";"0000-00-00";
+"FOURGON NACELLE";"101112";"Fiat";"Punto";"324 route des vernes 74370 Pringy Annecy";"";"250000";"0000-00-00";"0000-00-00";"Manuelle";"Essence";"0000-00-00";"0000-00-00";"0000-00-00";
+"CAMION NACELLE";"131415";"Citroen";"Berlingo";"324 route des vernes 74370 Pringy Annecy";"";"150000";"0000-00-00";"0000-00-00";"Manuelle";"Essence";"0000-00-00";"0000-00-00";"0000-00-00";
+"FOURGON UTILITAIRE";"125456554";"Citroen";"Berlingo";"21 Rue de la Dhuys, 93470 Coubron";"";"150000";"0000-00-00";"0000-00-00";"Automatique";"Diesel";"0000-00-00";"0000-00-00";"0000-00-00";
+"CAMION NACELLE";"535353";"Citroen";"Berlingo";"21 Rue de la Dhuys, 93470 Coubron";"";"150000";"0000-00-00";"0000-00-00";"Manuelle";"Diesel";"0000-00-00";"0000-00-00";"0000-00-00";

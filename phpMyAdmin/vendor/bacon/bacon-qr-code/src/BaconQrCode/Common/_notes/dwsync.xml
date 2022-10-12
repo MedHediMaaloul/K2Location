@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AbstractEnum.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="BitArray.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="BitMatrix.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="BitUtils.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="CharacterSetEci.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="EcBlock.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="EcBlocks.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="ErrorCorrectionLevel.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="FormatInformation.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="Mode.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="ReedSolomonCodec.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+<file name="Version.php" local="132188834280000000" remote="132218439000000000" testing="0" />
+</dwsync>

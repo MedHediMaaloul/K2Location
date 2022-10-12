@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="advisory_rules_generic.txt" local="132188834260000000" remote="132218430000000000" testing="0" />
+<file name="advisory_rules_mysql_before80003.txt" local="132188834260000000" remote="132218430000000000" testing="0" />
+<file name="check_user_privileges.inc.php" local="132188834260000000" remote="132218430600000000" testing="0" />
+<file name="common.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="config.default.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="config.values.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="db_common.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="db_table_exists.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="error.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="hash.lib.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="information_schema_relations.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="language_stats.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="mult_submits.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="mysql_relations.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="replication.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="server_common.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="special_schema_links.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="tbl_columns_definition_form.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="tbl_common.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="tbl_partition_definition.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="user_preferences.inc.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+<file name="vendor_config.php" local="132188834260000000" remote="132218433000000000" testing="0" />
+</dwsync>

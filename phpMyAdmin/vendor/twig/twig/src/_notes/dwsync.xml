@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="Compiler.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="Environment.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="ExpressionParser.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="FileExtensionEscapingStrategy.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="Lexer.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="Markup.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="NodeTraverser.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="Parser.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="Source.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="Template.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="TemplateWrapper.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="Token.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="TokenStream.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="TwigFilter.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="TwigFunction.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+<file name="TwigTest.php" local="132188834280000000" remote="132218447400000000" testing="0" />
+</dwsync>

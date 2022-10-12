@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AlterOperation.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="Array2d.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ArrayObj.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="CaseExpression.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="Condition.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="CreateDefinition.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="DataType.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="Expression.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ExpressionArray.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="FunctionCall.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="GroupKeyword.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="IndexHint.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="IntoKeyword.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="JoinKeyword.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="Key.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="Limit.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="LockExpression.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="OptionsArray.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="OrderKeyword.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="ParameterDefinition.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="PartitionDefinition.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="Reference.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="RenameOperation.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="SetOperation.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+<file name="UnionKeyword.php" local="132188834270000000" remote="132218443200000000" testing="0" />
+</dwsync>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="CHANGELOG.md" local="132188834270000000" remote="132218443800000000" testing="0" />
+<file name="Compiler.php" local="132188834270000000" remote="132218443800000000" testing="0" />
+<file name="composer.json" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="Expression.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="ExpressionFunction.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="ExpressionFunctionProviderInterface.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="ExpressionLanguage.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="Lexer.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="LICENSE" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="ParsedExpression.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="Parser.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="phpunit.xml.dist" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="README.md" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="SerializedParsedExpression.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="SyntaxError.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="Token.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+<file name="TokenStream.php" local="132188834270000000" remote="132218444400000000" testing="0" />
+</dwsync>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AbstractExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="CoreExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="DebugExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="EscaperExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="ExtensionInterface.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="GlobalsInterface.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="InitRuntimeInterface.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="OptimizerExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="ProfilerExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="RuntimeExtensionInterface.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="SandboxExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="StagingExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+<file name="StringLoaderExtension.php" local="132188834280000000" remote="132218446800000000" testing="0" />
+</dwsync>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="add_privileges_database.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="add_privileges_routine.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="add_privileges_table.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="add_user_fieldset.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="choose_user_group.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="column_privileges.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="delete_user_fieldset.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="edit_routine_privileges.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="global_priv_table.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="global_priv_tbl_item.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="initials_row.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="privileges_summary.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="privileges_summary_row.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="require_options.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="require_options_item.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="resource_limits.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+<file name="resource_limit_item.twig" local="132188834260000000" remote="132218436000000000" testing="0" />
+</dwsync>
