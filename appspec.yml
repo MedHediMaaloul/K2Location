@@ -1,22 +1,18 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /var/www/html
-    overwrite: true
+  - source: ./install.txt
+    destination: /tmp/K2Location
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies.sh
-      timeout: 300
-      runas: root
+    - location: ./scripts/before-install.sh
+      timeout: 900
   AfterInstall:
-    - location: scripts/codedeploy/install_composer_dependencies.sh
-      timeout: 300
-      runas: root
-    - location: scripts/codedeploy/start_server.sh
-      timeout: 30
-      runas: root
-  ApplicationStop:
-    - location: scripts/codedeploy/stop_server.sh
-      timeout: 30
-      runas: root
+    - location: ./scripts/after-install.sh
+      timeout: 900
+  ApplicationStart:
+    - location: ./scripts/application-start.sh
+      timeout: 900
+  ValidateService:
+    - location: ./scripts/validate-service.sh
+      timeout: 900
