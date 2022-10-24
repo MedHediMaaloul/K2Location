@@ -1,9 +1,8 @@
 version: 0.0
 os: linux
-
 files:
   - source: /
-    destination: /root/destination/directory
+    destination: /home/ubuntu/app
 hooks:
   BeforeInstall:
     - location: /scripts/before-install.sh
