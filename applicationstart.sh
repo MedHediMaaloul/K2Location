@@ -2,4 +2,4 @@
 
 cd /home/ubuntu
 sudo npm install -g pm2
-pm2 -f start server.js 
+pm2 start app.js
