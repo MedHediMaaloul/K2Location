@@ -1,8 +1,12 @@
 <?php
 //configration  
-$servername = '127.0.0.1';
+// $servername = '127.0.0.1';
+// $username = 'root';
+// $password = '';
+// $dbname = 'db_k2loc';
+$servername = 'http://35.180.98.249/phpmyadmin/';
 $username = 'root';
-$password = '';
+$password = 'K2Location';
 $dbname = 'db_k2loc';
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);

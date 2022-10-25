@@ -8,8 +8,13 @@
 // $username = 'root';
 // $password = '';
 // $dbname = 'devkestnwgadmin';
+
+// $servername = 'http://35.180.98.249/phpmyadmin/';
+// $username = 'root';
+// $password = 'K2Location';
+// $dbname = 'db_k2loc';
 try {
-        $bdd = new PDO('mysql:host=localhost;dbname=db_k2loc;charset=utf8', 'root', '');
+        $bdd = new PDO('mysql:host=http://35.180.98.249/phpmyadmin/;dbname=db_k2loc;charset=utf8', 'root', 'K2Location');
 } catch (Exception $e) {
         die('Erreur : ' . $e->getMessage());
 }
