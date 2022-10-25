@@ -4,7 +4,7 @@
 // $username = 'root';
 // $password = '';
 // $dbname = 'db_k2loc';
-$servername = 'http://35.180.98.249/phpmyadmin/';
+$servername = 'http://35.180.98.249';
 $username = 'root';
 $password = 'K2Location';
 $dbname = 'db_k2loc';
