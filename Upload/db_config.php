@@ -4,7 +4,7 @@
 // $username = 'root';
 // $password = '';
 // $dbname = 'db_k2loc';
-$servername = 'ec2-35-180-98-249.eu-west-3.compute.amazonaws.com';
+$servername = 'Localhost';
 $username = 'root';
 $password = 'K2Location';
 $dbname = 'db_k2loc';
