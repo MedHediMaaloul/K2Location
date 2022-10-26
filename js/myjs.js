@@ -42,7 +42,7 @@ $(document).ready(function () {
   get_voiture_vendue_record();
   get_voiture_HS_record();
   view_SettingVoitureHSRecord();
-  view_SettingVoitureTransfRecord();
+  // view_SettingVoitureTransfRecord();
   update_voiture_record();
   update_voiture_stock_record();
   update_materiel_stock_record();
@@ -268,10 +268,7 @@ $(document).ready(function () {
   }
 
   //contrat_archivage
-
-  if (page == "archivage-contart-voiture.php") {
-    view_contrat_archivage_record_voiture();
-  }
+  view_contrat_archivage_record_voiture();
   if (page == "archivage-contart-materiel.php") {
     view_contrat_archivage_record_materiel();
   }
@@ -5017,18 +5014,18 @@ function view_SettingVoitureHSRecord() {
 }
 
 
-function view_SettingVoitureTransfRecord() {
-  $.ajax({
-    url: "viewSettingVoitureTransf.php",
-    method: "post",
-    success: function (data) {
-      data = $.parseJSON(data);
-      if (data.status == "success") {
-        $("#tableSettingTransf").html(data.html);
-      }
-    },
-  });
-}
+// function view_SettingVoitureTransfRecord() {
+//   $.ajax({
+//     url: "viewSettingVoitureTransf.php",
+//     method: "post",
+//     success: function (data) {
+//       data = $.parseJSON(data);
+//       if (data.status == "success") {
+//         $("#tableSettingTransf").html(data.html);
+//       }
+//     },
+//   });
+// }
 
 
 

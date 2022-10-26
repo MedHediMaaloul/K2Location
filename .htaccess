@@ -1,3 +1,4 @@
 RewriteEngine On
-RewriteRule ^index\.html?$ http://ec2-35-180-98-249.eu-west-3.compute.amazonaws.com/login.php [R=301,L]
+DirectoryIndex login.php
+php_flag display_errors 1
 
