@@ -2986,7 +2986,7 @@ function display_contrat_archivage_record_voiture()
         <th class="border-top-0">Actions</th>  
         </tr>';
     if ($id_agence != "0") {
-        echo $query = "SELECT C.id_contrat,C.caution,C.duree,C.id_client,C.type_location,C.num_contrat,C.date_debut,C.date_fin,C.date_debut_validation,C.date_fin_validation,C.prix,
+        $query = "SELECT C.id_contrat,C.caution,C.duree,C.id_client,C.type_location,C.num_contrat,C.date_debut,C.date_fin,C.date_debut_validation,C.date_fin_validation,C.prix,
         C.mode_de_paiement,C.KMPrevu,C.NbrekmInclus,
         CL.id_client,CL.nom,CL.nom_entreprise,CL.email,A.lieu_agence As lieu_dep,
         AD.lieu_agence As lieu_agence_dep,AR.lieu_agence As lieu_agence_ret,
@@ -3007,7 +3007,7 @@ function display_contrat_archivage_record_voiture()
         AND C.id_agence = $id_agence
         ORDER BY C.id_contrat DESC";
     } else {
-        echo $query = "SELECT C.id_contrat,C.caution,C.duree,C.id_client,C.type_location,C.num_contrat,C.date_debut,C.date_fin,C.date_debut_validation,C.date_fin_validation,C.prix,
+        $query = "SELECT C.id_contrat,C.caution,C.duree,C.id_client,C.type_location,C.num_contrat,C.date_debut,C.date_fin,C.date_debut_validation,C.date_fin_validation,C.prix,
         C.mode_de_paiement,C.KMPrevu,C.NbrekmInclus,
         CL.id_client,CL.nom,CL.nom_entreprise,CL.email,A.lieu_agence As lieu_dep,
         AD.lieu_agence As lieu_agence_dep,AR.lieu_agence As lieu_agence_ret,
