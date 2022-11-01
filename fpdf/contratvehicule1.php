@@ -26,6 +26,44 @@ if (isset($_GET['id'])){
                   $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
                   $Contrat_date_fin = $row['date_fin'];
                   $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
+                  
+                  $Contrat_price = $row['prix'];
+                  $Contrat_moyen_caution = $row['moyen_caution'];
+                  $cautioncb = $row['caution'];
+                  $cautioncheque = $row['cautioncheque'];
+                  if ($Contrat_moyen_caution == "Carte bancaire"){
+                    $Contrat_caution = $cautioncb;
+                  }else if($Contrat_moyen_caution == "Cheque"){
+                    $Contrat_caution = $cautioncheque;
+                  }else{
+                    $Contrat_caution = $cautioncb + $cautioncheque;
+                  }
+                  $Contrat_num_caution_cheque = $row['num_cheque_caution'];
+                  $Contrat_num_caution_cb = $row['num_cb_caution'];
+                  $Contrat_mode_paiement = $row['mode_de_paiement'];
+                  $Contrat_duration = $row['duree'];
+                  $Contrat_km = $row['NbrekmInclus'];
+  
+                  $Conducteur_name = $row['nom'];
+                  $Entreprise_name = $row['nom_entreprise'];
+                  if ($Entreprise_name == ""){
+                    $Client_name = $Conducteur_name;
+                  }else if($Conducteur_name == ""){
+                    $Client_name = $Entreprise_name;
+                  }else{
+                    $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
+                  }
+                  
+                  $Client_mail = $row['email'];
+                  $Client_tel = $row['tel'];
+                  $Client_adress = $row['adresse'];
+  
+                  $Vehicule = $row['type'];
+                  $Vehicule_model = $row['Model'];
+                  $Vehicule_marque = $row['Marque'];
+                  $Vehicule_imm = $row['pimm'];
+
+                  $Lieu_agence = $row['lieu_agence'];
               }
           }
 
@@ -261,13 +299,185 @@ $pdf = new PDF('P','mm','A4');
 // Nouvelle page A4 (incluant ici logo, titre et pied de page)
 $pdf->AddPage();
 define('EURO',chr(128));
-$pdf->SetTitle(utf8_decode("Contrat Véhicule_N°':".$Contrat_number));
+$pdf->SetTitle(utf8_decode("Contrat Véhicule_N°':".$Contrat_number."_".$Client_name));
 $pdf->Image('logok2.jpg',10,15,20,15);
 $pdf->SetFont('Arial','B',8);
 $pdf->Cell(50,4,utf8_decode('CONTRAT DE LOCATION N°'). $Contrat_number,0,2,'',false);
 
+$position=$pdf->getY();
+
+if($pdf->getY()>$position){
+  $position=$pdf->getY();
+}
+$pdf->SetXY(10,$position+2);
+
+//Tableau
+$position=0;
+$prixTotal=0;
+$prixTotalHorsTaxes=0;
+$totalTtc=0;
+//Création des données qui seront contenues la table
+$datas = array();
+$datas[] = array("Nom: ".$Client_name."\n"."Mail: ".$Client_mail."\n"."Tel: ".$Client_tel."\n"."Adresse: ".utf8_decode($Client_adress),utf8_decode("Véhicule: ".$Vehicule."\n"."Marque: ".$Vehicule_marque." ".$Vehicule_model."\n"."Immatriculation: ".$Vehicule_imm));
+//Tableau contenant les titres des colonnes
+$header=array(utf8_decode('INFORMATIONS CLIENT'),utf8_decode('INFORMATIONS VÉHICULE'));
+//Tableau contenant la largeur des colonnes
+$w=array(90,100);
+//Tableau contenant le centrage des colonnes
+$al=array('L','L');
+//Génération de la table à proprement dite
+$pdf->table($header,$w,$al,$datas);
+
+$pdf->SetY($pdf->GetY()+10);
+$pdf->SetFont('Arial','B',10);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,'CONDITIONS PARTICULIERES',0,0,'C');
+$pdf->SetY($pdf->GetY()+8);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$texte1 = "Le locataire reconnait que le matériel loué a bien un rapport direct avec son activité et que ce faisant le code de la consommation ne s'applique pas. Le loueur et le locataire certifient, attestent et conviennent que le matériel est livré ce jour, qu'il est conforme à sa désignation, aux prescriptions des règlements d'hygiène et de sécurité du travail, qu'il est en bon état de fonctionnement sans vice apparent ou caché et répond aux besoins du locataire, qu'il n'est pas contrefaisant et qu'il est conforme à la réglementation relative à la pollution et à la protection de l'environnement.";
+$pdf->MultiCell(0,5,utf8_decode($texte1));
+$pdf->SetY($pdf->GetY()+5);
+$pdf->SetFont('Arial','B',9);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,'AUTRES INFORMATIONS',0,0);
+$pdf->SetY($pdf->GetY()+8);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->Cell(0,0,utf8_decode('État du véhicule:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$texte2 = "Lors de la remise du véhicule et lors de sa restitution, une fiche de contrôle de l'état du véhicule sera établie entre le locataire et le loueur. Le véhicule devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le véhicule seront à la charge du locataire, et/ou être déduites en partie ou totalité sur le montant de la caution.";
+$pdf->MultiCell(0,5,utf8_decode($texte2));
+$pdf->SetY($pdf->GetY()+5);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,utf8_decode('Durée:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$pdf->MultiCell(0,5,"Du"." ".$Contrat_date_debut." "."au"." ".$Contrat_date_fin);
+$pdf->SetY($pdf->GetY()+5);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,utf8_decode('Prix de location:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$Contrat_price_ttc = $Contrat_price + $Contrat_price* 0.2 ;
+if ($Contrat_duration == "Standard") {
+        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "Par Jour") {
+        $texte3 = $Contrat_price. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "Par Semaine") {
+        $texte3 = $Contrat_price. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "Par Mois") {
+        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "LLD") {
+        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+}
+// $texte3 = $Contrat_price." Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc." euros. ";
+$pdf->MultiCell(0,5,utf8_decode($texte3));
+$pdf->SetY($pdf->GetY()+5);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,utf8_decode('Mode de paiement:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
+if ($Contrat_mode_paiement == "Virements bancaires"){
+    $texte5 = "Des Virements bancaires seront effectués.";
+  } else if ($Contrat_mode_paiement == "Carte bancaire") {
+    $texte5 = "Des paiements par carte bancaire seront effectués.";
+  } else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
+    $texte5 = "Des prélèvements automatiques seront effectués.";
+  } else if ($Contrat_mode_paiement == "Espèces") {
+    $texte5 = "Des paiements en espèces seront effectués.";
+  } else {
+    $texte5 = "Chèque";
+  }
+$texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
+$pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
+$pdf->SetY($pdf->GetY()+5);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,utf8_decode('Dépôt de garantie:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$texte6 = " à titre de dépôt de garantie pour répondre des dégâts qui pourraient être causés aux matériels loués. Le remboursement du dépôt de garantie sera effectué au retour du matériel si celui-ci n'a pas été endommagé."; 
+if ($Contrat_moyen_caution == "Carte bancaire"){
+  $texte61 = utf8_decode("N° Carte Bancaire de caution : ").$Contrat_num_caution_cb;
+} else if ($Contrat_moyen_caution == "Cheque") {
+  $texte61 = utf8_decode("N° chèque de caution: ").$Contrat_num_caution_cheque;
+} else {
+  $texte61 = $cautioncb ." ".chr(128).utf8_decode(" de caution par carte bancaire N° : ").$Contrat_num_caution_cb."\n".$cautioncheque ." ".chr(128).utf8_decode(" de caution par chèque N° : ").$Contrat_num_caution_cheque;
+}
+// $texte7 = "Pour les contrats avec engagement, toutes ruptures de contrat (que ce soit 6 mois ou 1 ans), engendrons des frais de résiliation à hauteur de 30% de la totalité des factures restantes. ";
+$pdf->MultiCell(0,5,utf8_decode("Le locataire verse à K2, une somme de ").$Contrat_caution ." ".chr(128).utf8_decode($texte6)."\n".$texte61);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->SetY($pdf->GetY()+5);
+$pdf->VerifPage();
+$pdf->Cell(0,0,utf8_decode('Autres éléments et accessoires:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$texte8 = "Sont à charge du locataire les frais suivants :";
+$pdf->Cell(0,5,utf8_decode($texte8));
+$pdf->SetY($pdf->GetY()+10);
+$pdf->Cell(50, 0,utf8_decode("        - Frais d'entretien(lave glace, liquide de refroidissement, adBlue)."));
+$pdf->SetY($pdf->GetY()+5);
+$pdf->Cell(50, 0,utf8_decode("        - Les frais de carburant, stationnement et de contravention."));
+$pdf->SetY($pdf->GetY()+10);
+$pdf->Cell(80, 0,utf8_decode("La sous-location du véhicule par le locataire à un tiers est exclue ."));
+$pdf->SetY($pdf->GetY()+10);
+$pdf->SetFont('Arial','B',7);
+$pdf->SetTextColor(0);
+$pdf->VerifPage();
+$pdf->Cell(0,0,utf8_decode('Clause en cas de litige:'),0,0);
+$pdf->SetY($pdf->GetY()+2);
+$pdf->SetFont('Arial','',8);
+$pdf->SetTextColor(0);
+$texte8 = "Les parties conviennent expressément que tout litige pouvant naître de l'exécution du présent contrat relèvera de la compétence du tribunal de commerce de DIJON. Fait en deux exemplaires originaux remis à chacune des parties, A ".$Lieu_agence.", le ";
+$pdf->MultiCell(0,5,utf8_decode($texte8).$Contrat_date_debut.".");
+$pdf->VerifPage();
+$pdf->SetY($pdf->GetY()+10);
+$texte9 = "Le locataire soussigné déclare accepter toutes les conditions générales figurant sur les pages suivantes du contrat qui a été établi en autant d'exemplaires que de parties. Signature du contrat et l'autorisation de prélèvement ci-dessous et paraphe de chaque page.";
+$pdf->MultiCell(0,5,utf8_decode($texte9));
+$pdf->VerifPage();
+$pdf->SetY($pdf->GetY()+15);
+$Y3 = $pdf->GetY();
+$pdf->Line(10, $Y3, 200, $Y3);
+$pdf->Line(10, $Y3, 10, $Y3 + 50);
+$pdf->Line(100, $Y3, 100, $Y3 + 50);
+$pdf->Line(200, $Y3, 200, $Y3 + 50);
+$pdf->Line(10, $Y3 + 50, 200, $Y3 + 50);
+$pdf->SetY($pdf->GetY()+5);
+$y4 = $pdf->GetY();
+$x4 = $pdf->GetX();
+$texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
+$texte11 = "             précédée de la mention manuscrite Bon pour accord";
+$texte12 = "Signature du LOUEUR et Cachet Commercial";
+$pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
+$pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
+$pdf->Ln(5);
+$pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Image('logok2.jpg',10,13,20,15);
-$pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number.".pdf"));
+$pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
 else {
   echo "erreur";
