@@ -6851,11 +6851,10 @@ function isValidEmailAddress(emailAddress) {
 }
 
 
-
 function get_id_client() {
   $(document).on("click", "#btn-id-client", function () {
     var ID = $(this).attr("data-id3");
-    window.open("fpdf/ContratVehicule.php?id=" + ID, '_blank');
+    window.open("fpdf/contratvehicule.php?id=" + ID, '_blank');
   });
 }
 
