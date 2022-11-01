@@ -488,7 +488,7 @@ $pdf->Cell(0,0,"
 $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
 // $pdf->AjouterChapitre(1,utf8_decode($titre));
 $pdf->Cell(80, 0,utf8_decode($titre));
-$txt = "ARTICLE 1 - OBJET
+$txt1 = "ARTICLE 1 - OBJET
 Le loueur loue au client locataire ou à son obligé, le matériel décrit aux clauses et conditions énoncées dans la proposition de location et/ou le contrat de location qu'il accepte et s'engage à observer.
 ARTICLE 2 - GÉNÉRALITÉS
 2-1 : Pour avoir valeur contractuelle, les présentes conditions générales doivent être expressément mentionnées dans le contrat de location. Les parties contractantes règlent les questions spécifiques dans les conditions particulières du contrat de location.
@@ -732,7 +732,7 @@ Conformément à la Loi Informatique et Libertés et au RGPD, vous disposez des 
 -	droit de définir le sort de vos données après votre mort et de choisir que nous communiquions (ou non) vos données à un tiers que vous aurez préalablement désigné. En cas de décès et à défaut d'instructions de votre part, nous nous engageons à détruire vos données, sauf leur conservation s'avère nécessaire à des fins probatoires ou pour répondre à une obligation légale. 
 Vous pouvez exercer vos droits par mail à « mail », ou par courrier ; et ce, en justifiant de votre identité par tous moyens. 
 Pour toute question sur vos données à caractère personnel, vous pouvez également écrire à l'adresse suivante : « mail »  ";
-$pdf->MultiCell(47,2.4,utf8_decode($txt));
+$pdf->MultiCell(47,2.4,utf8_decode($txt1));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
