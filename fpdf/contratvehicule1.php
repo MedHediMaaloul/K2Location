@@ -476,6 +476,13 @@ $pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
 $pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
+$pdf->Ln(50);
+$pdf->SetFont('','B','I');
+$x5 = $pdf->GetX();
+$pdf->Cell(0,0,"                                                                                                               
+                                                                                            Paraphe",0);
+$titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
+$pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode("fpdf/conditiongeneral.txt"));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
