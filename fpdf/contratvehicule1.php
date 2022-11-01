@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 1);
 if (isset($_GET['id'])){
 
   include("../Gestion_location/inc/connect_db.php");
@@ -264,9 +263,10 @@ function NbLines($w,$txt){
   }
   return $nl;
 }
-function CorpsChapitre($fichier)
+function CorpsChapitre()
 {
     // Lecture du fichier texte
+    $fichier = 'http://15.236.8.125/fpdf/conditiongeneral.txt';
     $txt = file_get_contents($fichier);
     $this->Image('logok2.jpg',10,13,20,15);
     // Police
@@ -281,12 +281,12 @@ function CorpsChapitre($fichier)
     $this->SetCol(0);
 }
 
-function AjouterChapitre($num, $titre, $fichier)
+function AjouterChapitre($num, $titre)
 {
     // Ajout du chapitre
     $this->AddPage();
     // $this->TitreChapitre($num,$titre);
-    $this->CorpsChapitre($fichier);
+    $this->CorpsChapitre();
 }
 function VerifPage()
 {
@@ -483,7 +483,7 @@ $x5 = $pdf->GetX();
 $pdf->Cell(0,0,"                                                                                                               
                                                                                             Paraphe",0);
 $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
-$pdf->AjouterChapitre(1,utf8_decode($titre),"conditiongeneral.txt");
+$pdf->AjouterChapitre(1,utf8_decode($titre));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
