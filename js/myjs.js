@@ -6854,7 +6854,7 @@ function isValidEmailAddress(emailAddress) {
 function get_id_client() {
   $(document).on("click", "#btn-id-client", function () {
     var ID = $(this).attr("data-id3");
-    window.open("fpdf/devis.php?id=" + ID, '_blank');
+    window.open("fpdf/contratvehicule1.php?id=" + ID, '_blank');
   });
 }
 
