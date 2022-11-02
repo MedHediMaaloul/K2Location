@@ -364,28 +364,7 @@ $pdf->SetY($pdf->GetY()+10);
 $texte9 = "Le locataire soussigné déclare accepter toutes les conditions générales figurant sur les pages suivantes du contrat qui a été établi en autant d'exemplaires que de parties. Signature du contrat et l'autorisation de prélèvement ci-dessous et paraphe de chaque page.";
 $pdf->MultiCell(0,5,utf8_decode($texte9));
 $pdf->VerifPage();
-$pdf->SetY($pdf->GetY()+15);
-$Y3 = $pdf->GetY();
-$pdf->Line(10, $Y3, 200, $Y3);
-$pdf->Line(10, $Y3, 10, $Y3 + 50);
-$pdf->Line(100, $Y3, 100, $Y3 + 50);
-$pdf->Line(200, $Y3, 200, $Y3 + 50);
-$pdf->Line(10, $Y3 + 50, 200, $Y3 + 50);
-$pdf->SetY($pdf->GetY()+5);
-$y4 = $pdf->GetY();
-$x4 = $pdf->GetX();
-$texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
-$texte11 = "             précédée de la mention manuscrite Bon pour accord";
-$texte12 = "Signature du LOUEUR et Cachet Commercial";
-$pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
-$pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
-$pdf->Ln(5);
-$pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
-$pdf->Ln(50);
-$pdf->SetFont('','B','I');
-$x5 = $pdf->GetX();
-$pdf->Cell(0,0,"                                                                                                               
-                                                                                            Paraphe",0);
+
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
