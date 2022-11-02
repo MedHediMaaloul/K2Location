@@ -405,10 +405,8 @@ $pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Ln(50);
-$pdf->SetFont('Arial','',5);
 $x5 = $pdf->GetX();
-$pdf->Cell(0,0,"                                                                                                               
-                                                                                            Paraphe",0);
+$pdf->Cell(0,0,"Paraphe",0,'R');
 $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
 $pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
 $pdf->Image('logok2.jpg',10,13,20,15);
