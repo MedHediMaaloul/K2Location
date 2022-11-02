@@ -6892,7 +6892,7 @@ function get_id_client_contrat_materiel() {
 function get_id_client_contrat_pack() {
   $(document).on("click", "#btn-id-client-pack", function () {
     var id_contrat_pack = $(this).attr("data-id3");
-    window.open("fpdf/ContratPack.php?id=" + id_contrat_pack, '_blank');
+    window.open("fpdf/contratlocationpack.php?id=" + id_contrat_pack, '_blank');
 
   });
 }

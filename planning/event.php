@@ -69,7 +69,7 @@ while ($rowcontrat = mysqli_fetch_row($result)) {
 			$calendar[] = array(
 				'id' =>$rows['id'],
 				'title' => "CONTRAT DE LOCATION PACK N° ".$rows['id']." - ".$rows['title'],
-				'url' => "fpdf/ContratPack.php?id=".$rows['id'],
+				'url' => "fpdf/contratlocationpack.php?id=".$rows['id'],
 				"class" => 'event-important',
 				'start' => "$start",
 				'end' => "$end"
