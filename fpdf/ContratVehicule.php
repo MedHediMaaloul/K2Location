@@ -18,6 +18,7 @@ if (isset($_GET['id'])){
     AND C.id_client =CL.id_client
     AND C.id_contrat = $id_contrat";
     
+    
     $result = mysqli_query($conn, $query);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
