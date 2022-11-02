@@ -365,6 +365,24 @@ $pdf->Cell(0,0,utf8_decode('Prix de location:'),0,0);
 $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
+$Contrat_price_ttc = $Contrat_price + $Contrat_price* 0.2 ;
+if ($Contrat_duration == "Standard") {
+        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "Par Jour") {
+        $texte3 = $Contrat_price. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "Par Semaine") {
+        $texte3 = $Contrat_price. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "Par Mois") {
+        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+} else if ($Contrat_duration == "LLD") {
+        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+}
+$pdf->MultiCell(0,5,utf8_decode($texte3));
 $pdf->SetY($pdf->GetY()+5);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
@@ -374,7 +392,17 @@ $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
 $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
-$texte5 = "Des Virements bancaires seront effectués.";
+if ($Contrat_mode_paiement == "Virements bancaires"){
+    $texte5 = "Des Virements bancaires seront effectués.";
+} else if ($Contrat_mode_paiement == "Carte bancaire") {
+  $texte5 = "Des paiements par carte bancaire seront effectués.";
+} else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
+  $texte5 = "Des prélèvements automatiques seront effectués.";
+} else if ($Contrat_mode_paiement == "Espèces") {
+  $texte5 = "Des paiements en espèces seront effectués.";
+} else {
+  $texte5 = "Chèque";
+}
 $texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
 $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
 $pdf->SetY($pdf->GetY()+5);
@@ -386,8 +414,13 @@ $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
 $texte6 = " à titre de dépôt de garantie pour répondre des dégâts qui pourraient être causés aux matériels loués. Le remboursement du dépôt de garantie sera effectué au retour du matériel si celui-ci n'a pas été endommagé."; 
-$texte61 = utf8_decode("N° Carte Bancaire de caution : ").$Contrat_num_caution_cb;
-// $texte7 = "Pour les contrats avec engagement, toutes ruptures de contrat (que ce soit 6 mois ou 1 ans), engendrons des frais de résiliation à hauteur de 30% de la totalité des factures restantes. ";
+if ($Contrat_moyen_caution == "Carte bancaire"){
+  $texte61 = utf8_decode("N° Carte Bancaire de caution : ").$Contrat_num_caution_cb;
+} else if ($Contrat_moyen_caution == "Cheque") {
+  $texte61 = utf8_decode("N° chèque de caution: ").$Contrat_num_caution_cheque;
+} else {
+  $texte61 = $cautioncb ." ".chr(128).utf8_decode(" de caution par carte bancaire N° : ").$Contrat_num_caution_cb."\n".$cautioncheque ." ".chr(128).utf8_decode(" de caution par chèque N° : ").$Contrat_num_caution_cheque;
+}
 $pdf->MultiCell(0,5,utf8_decode("Le locataire verse à K2, une somme de ").$Contrat_caution ." ".chr(128).utf8_decode($texte6)."\n".$texte61);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
