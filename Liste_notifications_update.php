@@ -17,7 +17,7 @@ global $conn;
     		if($row[0] == "Vehicule"){
     		    header('Location: fpdf/contratlocationvehicule.php?id='.$_GET['clicked_id']); 
     		}elseif($row[0] == "Materiel"){
-    		    header('Location: fpdf/ContratMateriel.php?id='.$_GET['clicked_id']); 
+    		    header('Location: fpdf/contratlocationmateriel.php?id='.$_GET['clicked_id']); 
     		}elseif($row[0] == "Pack"){
 				header('Location: fpdf/ContratPack.php?id='.$_GET['clicked_id']); 
 			}

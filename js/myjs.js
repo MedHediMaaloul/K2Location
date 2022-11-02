@@ -6883,7 +6883,7 @@ function get_contrat_pack_avenant() {
 function get_id_client_contrat_materiel() {
   $(document).on("click", "#btn-id-client-materiel", function () {
     var id_contrat_materiel = $(this).attr("data-id5");
-    window.open("fpdf/ContratMateriel.php?id=" + id_contrat_materiel, '_blank');
+    window.open("fpdf/contratlocationmateriel.php?id=" + id_contrat_materiel, '_blank');
 
   });
 }
