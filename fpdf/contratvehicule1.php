@@ -201,30 +201,30 @@ function NbLines($w,$txt){
   }
   return $nl;
 }
-function CorpsChapitre($fichier)
-{
-    // Lecture du fichier texte
-    $txt = file_get_contents($fichier);
-    $this->Image('logok2.jpg',10,13,20,15);
-    // Police
-    $this->SetFont('Arial','',5.4);
-    // Sortie du texte sur 6 cm de largeur
-    $this->MultiCell(47,2.4,utf8_decode($txt));
-    $this->Ln();
-    // Mention
-    $this->SetFont('','B','I');
-    $this->Cell(0,"2","Paraphe");
-    // Retour en première colonne
-    $this->SetCol(0);
-}
+// function CorpsChapitre($fichier)
+// {
+//     // Lecture du fichier texte
+//     $txt = file_get_contents($fichier);
+//     $this->Image('logok2.jpg',10,13,20,15);
+//     // Police
+//     $this->SetFont('Arial','',5.4);
+//     // Sortie du texte sur 6 cm de largeur
+//     $this->MultiCell(47,2.4,utf8_decode($txt));
+//     $this->Ln();
+//     // Mention
+//     $this->SetFont('','B','I');
+//     $this->Cell(0,"2","Paraphe");
+//     // Retour en première colonne
+//     $this->SetCol(0);
+// }
 
-function AjouterChapitre($num, $titre, $fichier)
-{
-    // Ajout du chapitre
-    $this->AddPage();
-    // $this->TitreChapitre($num,$titre);
-    $this->CorpsChapitre($fichier);
-}
+// function AjouterChapitre($num, $titre, $fichier)
+// {
+//     // Ajout du chapitre
+//     $this->AddPage();
+//     // $this->TitreChapitre($num,$titre);
+//     $this->CorpsChapitre($fichier);
+// }
 function VerifPage()
 {
   if( (($this->GetY())==0) | (($this->GetY())>=240) ) {
@@ -241,12 +241,10 @@ $pdf->SetTitle(utf8_decode("Contrat Véhicule_N°':".$Contrat_number));
 $pdf->Image('logok2.jpg',10,15,20,15);
 $pdf->SetFont('Arial','B',8);
 $pdf->Cell(50,4,utf8_decode('CONTRAT DE LOCATION N°'). $Contrat_number,0,2,'',false);
-
-
 $pdf->Cell(0,0,"                                                                                                               
                                                                                             Paraphe",0);
-$titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
-$pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
+// $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
+// $pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number.".pdf"));
 }
