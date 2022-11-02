@@ -466,6 +466,7 @@ $texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
 $texte11 = "             précédée de la mention manuscrite Bon pour accord";
 $texte12 = "Signature du LOUEUR et Cachet Commercial";
 $pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
+$pdf->SetX($pdf->GetX()+50);
 $pdf->Cell($x4 + 200,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
