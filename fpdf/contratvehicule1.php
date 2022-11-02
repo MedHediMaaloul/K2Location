@@ -1,72 +1,35 @@
 <?php
 if (isset($_GET['id'])){
 
-  include("../Gestion_location/inc/connect_db.php");
-  $id_client = $_GET['id'];
-  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,C.num_contrat,
-  C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,C.NbrekmInclus,C.date_ajoute,
-  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,CL.cin,
-  V.type,V.pimm,V.id_voiture,
-  MM.Model,MM.Marque,
-  A.lieu_agence
-  FROM contrat_client AS C 
-  LEFT JOIN client AS CL ON C.id_client =CL.id_client 
-  LEFT JOIN voiture AS V on C.id_voiture = V.id_voiture
-  LEFT JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel 
-  LEFT JOIN agence as A on C.id_agence=A.id_agence
-  WHERE  C.type_location = 'Vehicule'
-  AND C.id_client =CL.id_client
-  AND C.id_contrat = $id_client";
-  
-  $result = mysqli_query($conn, $query);
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  $Contrat_number = $row['id_contrat'];
-                  $Contrat_date_debut = $row['date_debut'];
-                  $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
-                  $Contrat_date_fin = $row['date_fin'];
-                  $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
-                  
-                  $Contrat_price = $row['prix'];
-                  $Contrat_moyen_caution = $row['moyen_caution'];
-                  $cautioncb = $row['caution'];
-                  $cautioncheque = $row['cautioncheque'];
-                  if ($Contrat_moyen_caution == "Carte bancaire"){
-                    $Contrat_caution = $cautioncb;
-                  }else if($Contrat_moyen_caution == "Cheque"){
-                    $Contrat_caution = $cautioncheque;
-                  }else{
-                    $Contrat_caution = $cautioncb + $cautioncheque;
-                  }
-                  $Contrat_num_caution_cheque = $row['num_cheque_caution'];
-                  $Contrat_num_caution_cb = $row['num_cb_caution'];
-                  $Contrat_mode_paiement = $row['mode_de_paiement'];
-                  $Contrat_duration = $row['duree'];
-                  $Contrat_km = $row['NbrekmInclus'];
-  
-                  $Conducteur_name = $row['nom'];
-                  $Entreprise_name = $row['nom_entreprise'];
-                  if ($Entreprise_name == ""){
-                    $Client_name = $Conducteur_name;
-                  }else if($Conducteur_name == ""){
-                    $Client_name = $Entreprise_name;
-                  }else{
-                    $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
-                  }
-                  
-                  $Client_mail = $row['email'];
-                  $Client_tel = $row['tel'];
-                  $Client_adress = $row['adresse'];
-  
-                  $Vehicule = $row['type'];
-                  $Vehicule_model = $row['Model'];
-                  $Vehicule_marque = $row['Marque'];
-                  $Vehicule_imm = $row['pimm'];
 
-                  $Lieu_agence = $row['lieu_agence'];
-              }
-          }
+                  $Contrat_number = $_GET['id'];
 
+                  $Contrat_date_debut = "02-11-2022";
+                  $Contrat_date_fin = "02-11-2022";
+                  
+                  $Contrat_price = "1200";
+                  $Contrat_moyen_caution = "1200";
+                  $Contrat_caution = "44855";
+
+                  $Contrat_num_caution_cheque = "62965959659";
+                  $Contrat_num_caution_cb = "4959595";
+                  $Contrat_mode_paiement = "fff";
+                  $Contrat_duration = "484";
+                  $Contrat_km = "49859";
+  
+                  $Client_name = "849";
+
+                  
+                  $Client_mail = "grgf959bfb";
+                  $Client_tel = "5959595";
+                  $Client_adress = "fbhfbgb";
+  
+                  $Vehicule = "bngh";
+                  $Vehicule_model = "fgvrfgt";
+                  $Vehicule_marque = "rgrfg";
+                  $Vehicule_imm = "4854959";
+
+                  $Lieu_agence = "coubron";
 
 require('fpdf.php');
 
@@ -263,30 +226,7 @@ function NbLines($w,$txt){
   }
   return $nl;
 }
-// function CorpsChapitre($fichier)
-// {
-//     // Lecture du fichier texte
-//     $txt = file_get_contents($fichier);
-//     $this->Image('logok2.jpg',10,13,20,15);
-//     // Police
-//     $this->SetFont('Arial','',5.4);
-//     // Sortie du texte sur 6 cm de largeur
-//     $this->MultiCell(47,2.4,utf8_decode($txt));
-//     $this->Ln();
-//     // Mention
-//     $this->SetFont('','B','I');
-//     $this->Cell(0,"2","Paraphe");
-//     // Retour en première colonne
-//     $this->SetCol(0);
-// }
 
-// function AjouterChapitre($num, $titre, $fichier)
-// {
-//     // Ajout du chapitre
-//     $this->AddPage();
-//     // $this->TitreChapitre($num,$titre);
-//     $this->CorpsChapitre($fichier);
-// }
 function VerifPage()
 {
   if( (($this->GetY())==0) | (($this->GetY())>=240) ) {
@@ -370,22 +310,9 @@ $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
 $Contrat_price_ttc = $Contrat_price + $Contrat_price* 0.2 ;
-if ($Contrat_duration == "Standard") {
-        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
-        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-} else if ($Contrat_duration == "Par Jour") {
-        $texte3 = $Contrat_price. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
-        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
-} else if ($Contrat_duration == "Par Semaine") {
-        $texte3 = $Contrat_price. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
-        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
-} else if ($Contrat_duration == "Par Mois") {
-        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
-        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-} else if ($Contrat_duration == "LLD") {
-        $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
-        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-}
+$texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
+" euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+
 // $texte3 = $Contrat_price." Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc." euros. ";
 $pdf->MultiCell(0,5,utf8_decode($texte3));
 $pdf->SetY($pdf->GetY()+5);
@@ -397,17 +324,7 @@ $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
 $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
-if ($Contrat_mode_paiement == "Virements bancaires"){
-    $texte5 = "Des Virements bancaires seront effectués.";
-  } else if ($Contrat_mode_paiement == "Carte bancaire") {
-    $texte5 = "Des paiements par carte bancaire seront effectués.";
-  } else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
-    $texte5 = "Des prélèvements automatiques seront effectués.";
-  } else if ($Contrat_mode_paiement == "Espèces") {
-    $texte5 = "Des paiements en espèces seront effectués.";
-  } else {
-    $texte5 = "Chèque";
-  }
+$texte5 = "Des Virements bancaires seront effectués.";
 $texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
 $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
 $pdf->SetY($pdf->GetY()+5);
@@ -419,13 +336,7 @@ $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
 $texte6 = " à titre de dépôt de garantie pour répondre des dégâts qui pourraient être causés aux matériels loués. Le remboursement du dépôt de garantie sera effectué au retour du matériel si celui-ci n'a pas été endommagé."; 
-if ($Contrat_moyen_caution == "Carte bancaire"){
-  $texte61 = utf8_decode("N° Carte Bancaire de caution : ").$Contrat_num_caution_cb;
-} else if ($Contrat_moyen_caution == "Cheque") {
-  $texte61 = utf8_decode("N° chèque de caution: ").$Contrat_num_caution_cheque;
-} else {
-  $texte61 = $cautioncb ." ".chr(128).utf8_decode(" de caution par carte bancaire N° : ").$Contrat_num_caution_cb."\n".$cautioncheque ." ".chr(128).utf8_decode(" de caution par chèque N° : ").$Contrat_num_caution_cheque;
-}
+$texte61 = utf8_decode("N° Carte Bancaire de caution : ").$Contrat_num_caution_cb;
 // $texte7 = "Pour les contrats avec engagement, toutes ruptures de contrat (que ce soit 6 mois ou 1 ans), engendrons des frais de résiliation à hauteur de 30% de la totalité des factures restantes. ";
 $pdf->MultiCell(0,5,utf8_decode("Le locataire verse à K2, une somme de ").$Contrat_caution ." ".chr(128).utf8_decode($texte6)."\n".$texte61);
 $pdf->SetFont('Arial','B',7);
@@ -481,8 +392,6 @@ $pdf->SetFont('','B','I');
 $x5 = $pdf->GetX();
 $pdf->Cell(0,0,"                                                                                                               
                                                                                             Paraphe",0);
-// $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
-// $pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
