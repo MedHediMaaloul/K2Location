@@ -309,12 +309,6 @@ $pdf->Cell(0,0,utf8_decode('Prix de location:'),0,0);
 $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$Contrat_price_ttc = $Contrat_price + $Contrat_price* 0.2 ;
-$texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
-" euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-
-// $texte3 = $Contrat_price." Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc." euros. ";
-$pdf->MultiCell(0,5,utf8_decode($texte3));
 $pdf->SetY($pdf->GetY()+5);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
