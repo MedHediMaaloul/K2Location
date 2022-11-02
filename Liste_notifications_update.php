@@ -15,7 +15,7 @@ global $conn;
             $result_get_type_contrat = mysqli_query($conn, $query_get_type_contrat);
             $row = mysqli_fetch_row($result_get_type_contrat);
     		if($row[0] == "Vehicule"){
-    		    header('Location: fpdf/contratvehicule.php?id='.$_GET['clicked_id']); 
+    		    header('Location: fpdf/contratvehicule1.php?id='.$_GET['clicked_id']); 
     		}elseif($row[0] == "Materiel"){
     		    header('Location: fpdf/ContratMateriel.php?id='.$_GET['clicked_id']); 
     		}elseif($row[0] == "Pack"){
