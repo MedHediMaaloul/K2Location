@@ -1,35 +1,68 @@
 <?php
 if (isset($_GET['id'])){
 
-
-                  $Contrat_number = $_GET['id'];
-
-                  $Contrat_date_debut = "02-11-2022";
-                  $Contrat_date_fin = "02-11-2022";
-                  
-                  $Contrat_price = "1200";
-                  $Contrat_moyen_caution = "1200";
-                  $Contrat_caution = "44855";
-
-                  $Contrat_num_caution_cheque = "62965959659";
-                  $Contrat_num_caution_cb = "4959595";
-                  $Contrat_mode_paiement = "fff";
-                  $Contrat_duration = "484";
-                  $Contrat_km = "49859";
-  
-                  $Client_name = "849";
-
-                  
-                  $Client_mail = "grgf959bfb";
-                  $Client_tel = "5959595";
-                  $Client_adress = "fbhfbgb";
-  
-                  $Vehicule = "bngh";
-                  $Vehicule_model = "fgvrfgt";
-                  $Vehicule_marque = "rgrfg";
-                  $Vehicule_imm = "4854959";
-
-                  $Lieu_agence = "coubron";
+    include("../Gestion_location/inc/connect_db.php");
+    $id_client = $_GET['id'];
+    $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
+    C.date_debut,C.date_fin,C.prix,C.NbrekmInclus,
+    CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,
+    V.type,V.pimm,V.id_voiture,
+    MM.Model,MM.Marque,
+    A.lieu_agence
+    FROM contrat_client AS C 
+    LEFT JOIN client AS CL ON C.id_client =CL.id_client 
+    LEFT JOIN voiture AS V on C.id_voiture = V.id_voiture
+    LEFT JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel 
+    LEFT JOIN agence as A on C.id_agence=A.id_agence
+    WHERE  C.type_location = 'Vehicule'
+    AND C.id_client =CL.id_client
+    AND C.id_contrat = $id_client";
+    
+    $result = mysqli_query($conn, $query);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $Contrat_number = $row['id_contrat'];
+            $Contrat_date_debut = $row['date_debut'];
+            $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
+            $Contrat_date_fin = $row['date_fin'];
+            $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
+            
+            $Contrat_price = $row['prix'];
+            $Contrat_moyen_caution = $row['moyen_caution'];
+            $cautioncb = $row['caution'];
+            $cautioncheque = $row['cautioncheque'];
+            if ($Contrat_moyen_caution == "Carte bancaire"){
+              $Contrat_caution = $cautioncb;
+            }else if($Contrat_moyen_caution == "Cheque"){
+              $Contrat_caution = $cautioncheque;
+            }else{
+              $Contrat_caution = $cautioncb + $cautioncheque;
+            }
+            $Contrat_num_caution_cheque = $row['num_cheque_caution'];
+            $Contrat_num_caution_cb = $row['num_cb_caution'];
+            $Contrat_mode_paiement = $row['mode_de_paiement'];
+            $Contrat_duration = $row['duree'];
+            $Contrat_km = $row['NbrekmInclus'];
+            $Conducteur_name = $row['nom'];
+            $Entreprise_name = $row['nom_entreprise'];
+            if ($Entreprise_name == ""){
+              $Client_name = $Conducteur_name;
+            }else if($Conducteur_name == ""){
+              $Client_name = $Entreprise_name;
+            }else{
+              $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
+            }
+            
+            $Client_mail = $row['email'];
+            $Client_tel = $row['tel'];
+            $Client_adress = $row['adresse'];
+            $Vehicule = $row['type'];
+            $Vehicule_model = $row['Model'];
+            $Vehicule_marque = $row['Marque'];
+            $Vehicule_imm = $row['pimm'];
+            $Lieu_agence = $row['lieu_agence'];
+        }
+    }
 
 require('fpdf.php');
 

@@ -3,9 +3,9 @@ if (isset($_GET['id'])){
 
   include("../Gestion_location/inc/connect_db.php");
   $id_client = $_GET['id'];
-  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,C.num_contrat,
-  C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,C.NbrekmInclus,C.date_ajoute,
-  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,CL.cin,
+  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
+  C.date_debut,C.date_fin,C.prix,C.NbrekmInclus,
+  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,
   V.type,V.pimm,V.id_voiture,
   MM.Model,MM.Marque,
   A.lieu_agence
