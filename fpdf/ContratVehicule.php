@@ -19,54 +19,50 @@ if (isset($_GET['id'])){
     AND C.id_contrat = $id_contrat";
   
   $result = mysqli_query($conn, $query);
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  $Contrat_number = $row['id_contrat'];
-                  $Contrat_date_debut = $row['date_debut'];
-                  $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
-                  $Contrat_date_fin = $row['date_fin'];
-                  $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
-                  
-                  $Contrat_price = $row['prix'];
-                  $Contrat_moyen_caution = $row['moyen_caution'];
-                  $cautioncb = $row['caution'];
-                  $cautioncheque = $row['cautioncheque'];
-                  if ($Contrat_moyen_caution == "Carte bancaire"){
-                    $Contrat_caution = $cautioncb;
-                  }else if($Contrat_moyen_caution == "Cheque"){
-                    $Contrat_caution = $cautioncheque;
-                  }else{
-                    $Contrat_caution = $cautioncb + $cautioncheque;
-                  }
-                  $Contrat_num_caution_cheque = $row['num_cheque_caution'];
-                  $Contrat_num_caution_cb = $row['num_cb_caution'];
-                  $Contrat_mode_paiement = $row['mode_de_paiement'];
-                  $Contrat_duration = $row['duree'];
-                  $Contrat_km = $row['NbrekmInclus'];
-  
-                  $Conducteur_name = $row['nom'];
-                  $Entreprise_name = $row['nom_entreprise'];
-                  if ($Entreprise_name == ""){
-                    $Client_name = $Conducteur_name;
-                  }else if($Conducteur_name == ""){
-                    $Client_name = $Entreprise_name;
-                  }else{
-                    $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
-                  }
-                  
-                  $Client_mail = $row['email'];
-                  $Client_tel = $row['tel'];
-                  $Client_adress = $row['adresse'];
-  
-                  $Vehicule = $row['type'];
-                  $Vehicule_model = $row['Model'];
-                  $Vehicule_marque = $row['Marque'];
-                  $Vehicule_imm = $row['pimm'];
-
-                  $Lieu_agence = $row['lieu_agence'];
-              }
+  if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+          $Contrat_number = $row['id_contrat'];
+          $Contrat_date_debut = $row['date_debut'];
+          $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
+          $Contrat_date_fin = $row['date_fin'];
+          $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
+          
+          $Contrat_price = $row['prix'];
+          $Contrat_moyen_caution = $row['moyen_caution'];
+          $cautioncb = $row['caution'];
+          $cautioncheque = $row['cautioncheque'];
+          if ($Contrat_moyen_caution == "Carte bancaire"){
+            $Contrat_caution = $cautioncb;
+          }else if($Contrat_moyen_caution == "Cheque"){
+            $Contrat_caution = $cautioncheque;
+          }else{
+            $Contrat_caution = $cautioncb + $cautioncheque;
           }
-
+          $Contrat_num_caution_cheque = $row['num_cheque_caution'];
+          $Contrat_num_caution_cb = $row['num_cb_caution'];
+          $Contrat_mode_paiement = $row['mode_de_paiement'];
+          $Contrat_duration = $row['duree'];
+          $Contrat_km = $row['NbrekmInclus'];
+          $Conducteur_name = $row['nom'];
+          $Entreprise_name = $row['nom_entreprise'];
+          if ($Entreprise_name == ""){
+            $Client_name = $Conducteur_name;
+          }else if($Conducteur_name == ""){
+            $Client_name = $Entreprise_name;
+          }else{
+            $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
+          }
+          
+          $Client_mail = $row['email'];
+          $Client_tel = $row['tel'];
+          $Client_adress = $row['adresse'];
+          $Vehicule = $row['type'];
+          $Vehicule_model = $row['Model'];
+          $Vehicule_marque = $row['Marque'];
+          $Vehicule_imm = $row['pimm'];
+          $Lieu_agence = $row['lieu_agence'];
+      }
+  }
 
 require('fpdf.php');
 
@@ -385,7 +381,6 @@ if ($Contrat_duration == "Standard") {
         $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
         " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
 }
-// $texte3 = $Contrat_price." Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc." euros. ";
 $pdf->MultiCell(0,5,utf8_decode($texte3));
 $pdf->SetY($pdf->GetY()+5);
 $pdf->SetFont('Arial','B',7);
@@ -425,7 +420,6 @@ if ($Contrat_moyen_caution == "Carte bancaire"){
 } else {
   $texte61 = $cautioncb ." ".chr(128).utf8_decode(" de caution par carte bancaire N° : ").$Contrat_num_caution_cb."\n".$cautioncheque ." ".chr(128).utf8_decode(" de caution par chèque N° : ").$Contrat_num_caution_cheque;
 }
-// $texte7 = "Pour les contrats avec engagement, toutes ruptures de contrat (que ce soit 6 mois ou 1 ans), engendrons des frais de résiliation à hauteur de 30% de la totalité des factures restantes. ";
 $pdf->MultiCell(0,5,utf8_decode("Le locataire verse à K2, une somme de ").$Contrat_caution ." ".chr(128).utf8_decode($texte6)."\n".$texte61);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
@@ -451,8 +445,8 @@ $pdf->Cell(0,0,utf8_decode('Clause en cas de litige:'),0,0);
 $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte8 = "Les parties conviennent expressément que tout litige pouvant naître de l'exécution du présent contrat relèvera de la compétence du tribunal de commerce de DIJON. Fait en deux exemplaires originaux remis à chacune des parties, A ".$Lieu_agence.", le ";
-$pdf->MultiCell(0,5,utf8_decode($texte8).$Contrat_date_debut.".");
+$texte81 = "Les parties conviennent expressément que tout litige pouvant naître de l'exécution du présent contrat relèvera de la compétence du tribunal de commerce de DIJON. Fait en deux exemplaires originaux remis à chacune des parties, A ".$Lieu_agence.", le ";
+$pdf->MultiCell(0,5,utf8_decode($texte81).$Contrat_date_debut.".");
 $pdf->VerifPage();
 $pdf->SetY($pdf->GetY()+10);
 $texte9 = "Le locataire soussigné déclare accepter toutes les conditions générales figurant sur les pages suivantes du contrat qui a été établi en autant d'exemplaires que de parties. Signature du contrat et l'autorisation de prélèvement ci-dessous et paraphe de chaque page.";
@@ -477,7 +471,6 @@ $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Ln(50);
 $pdf->SetFont('Arial','B',8);
-$x5 = $pdf->GetX();
 $pdf->Cell(0,0,"                                                                                                               
                                                                                             Paraphe",0);
 $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;

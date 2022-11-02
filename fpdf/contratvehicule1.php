@@ -288,7 +288,6 @@ function VerifPage()
     $this->AddPage();
   }
 }
-
 }
 
 $pdf = new PDF('P','mm','A4');
@@ -446,8 +445,8 @@ $pdf->Cell(0,0,utf8_decode('Clause en cas de litige:'),0,0);
 $pdf->SetY($pdf->GetY()+2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte8 = "Les parties conviennent expressément que tout litige pouvant naître de l'exécution du présent contrat relèvera de la compétence du tribunal de commerce de DIJON. Fait en deux exemplaires originaux remis à chacune des parties, A ".$Lieu_agence.", le ";
-$pdf->MultiCell(0,5,utf8_decode($texte8).$Contrat_date_debut.".");
+$texte81 = "Les parties conviennent expressément que tout litige pouvant naître de l'exécution du présent contrat relèvera de la compétence du tribunal de commerce de DIJON. Fait en deux exemplaires originaux remis à chacune des parties, A ".$Lieu_agence.", le ";
+$pdf->MultiCell(0,5,utf8_decode($texte81).$Contrat_date_debut.".");
 $pdf->VerifPage();
 $pdf->SetY($pdf->GetY()+10);
 $texte9 = "Le locataire soussigné déclare accepter toutes les conditions générales figurant sur les pages suivantes du contrat qui a été établi en autant d'exemplaires que de parties. Signature du contrat et l'autorisation de prélèvement ci-dessous et paraphe de chaque page.";
@@ -472,7 +471,8 @@ $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Ln(50);
 $pdf->SetFont('Arial','B',8);
-$pdf->Cell($x4 + 200,0,"Paraphe",0,'C');
+$pdf->Cell(0,0,"                                                                                                               
+                                                                                            Paraphe",0);
 $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
 $pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
 $pdf->Image('logok2.jpg',10,13,20,15);
