@@ -263,34 +263,6 @@ function NbLines($w,$txt){
   }
   return $nl;
 }
-// function CorpsChapitre()
-// {
-//     // Lecture du fichier texte
-//     $context = stream_context_create(array(
-//         'http' => array('ignore_errors' => true),
-//     ));    
-//     $fichier = 'http://15.236.8.125/fpdf/conditiongeneral.txt';
-//     $txt = file_get_contents($fichier, false, $context);
-//     $this->Image('logok2.jpg',10,13,20,15);
-//     // Police
-//     $this->SetFont('Arial','',5.4);
-//     // Sortie du texte sur 6 cm de largeur
-//     $this->MultiCell(47,2.4,utf8_decode($txt));
-//     $this->Ln();
-//     // Mention
-//     $this->SetFont('','B','I');
-//     $this->Cell(0,"2","Paraphe");
-//     // Retour en première colonne
-//     $this->SetCol(0);
-// }
-
-// function AjouterChapitre($num, $titre)
-// {
-//     // Ajout du chapitre
-//     $this->AddPage();
-//     // $this->TitreChapitre($num,$titre);
-//     $this->CorpsChapitre();
-// }
 function VerifPage()
 {
   if( (($this->GetY())==0) | (($this->GetY())>=240) ) {
@@ -485,20 +457,6 @@ $pdf->SetFont('','B','I');
 $x5 = $pdf->GetX();
 $pdf->Cell(0,0,"                                                                                                               
                                                                                             Paraphe",0);
-$titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
-// $pdf->AjouterChapitre(1,utf8_decode($titre));
-// $pdf->Cell(80, 0,utf8_decode($titre));
-// $txt1 = "ARTICLE 1 - OBJET
-// Le loueur loue au client locataire ou à son obligé, le matériel décrit aux clauses et conditions énoncées dans la proposition de location et/ou le contrat de location qu'il accepte et s'engage à observer.
-// ARTICLE 2 - GÉNÉRALITÉS
-// 2-1 : Pour avoir valeur contractuelle, les présentes conditions générales doivent être expressément mentionnées dans le contrat de location. Les parties contractantes règlent les questions spécifiques dans les conditions particulières du contrat de location.
-// 2-2 : Le loueur met à la disposition du locataire un matériel conforme à la règlementation en vigueur.
-// 2-3 : En garantie de la présente convention, le locataire justifie de son identité en présentant au loueur une pièce d'identité, un KBIS de moins de trois mois, ou une attestation de domicile (quittance EDF ou facture de téléphone de moins de trois mois).
-// 2-4 : La facturation est toujours établie au nom de l'entreprise contractante en deux exemplaires. À la demande du client, le bon de commande peut être joint à la facture, s'il est fourni au loueur en 2 exemplaires.
-// Pour les demandes d'ouverture de compte et facturation fin de mois, le locataire doit fournir un extrait K BIS de moins de 3 mois et un RIB.
-// 2-5 : Un bon de commande engage le locataire quel que soit le porteur ou le signataire.";
-
-// $pdf->MultiCell(47,2.4,utf8_decode($txt1));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
