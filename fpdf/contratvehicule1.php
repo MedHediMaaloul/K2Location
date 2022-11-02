@@ -1,28 +1,6 @@
 <?php
-  include("../Gestion_location/inc/connect_db.php");
-  $id_client = $_GET['id'];
-  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,C.num_contrat,
-  C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,C.NbrekmInclus,C.date_ajoute,
-  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,CL.cin,
-  V.type,V.pimm,V.id_voiture,
-  MM.Model,MM.Marque,
-  A.lieu_agence
-  FROM contrat_client AS C 
-  LEFT JOIN client AS CL ON C.id_client =CL.id_client 
-  LEFT JOIN voiture AS V on C.id_voiture = V.id_voiture
-  LEFT JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel 
-  LEFT JOIN agence as A on C.id_agence=A.id_agence
-  WHERE  C.type_location = 'Vehicule'
-  AND C.id_client =CL.id_client
-  AND C.id_contrat = $id_client";
-  
-  $result = mysqli_query($conn, $query);
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  $Contrat_number = $row['id_contrat'];
-              }
-          }
-
+$id_client = $_GET['id'];
+$Contrat_number = $id_client;
 
 require('fpdf.php');
 
@@ -219,30 +197,6 @@ function NbLines($w,$txt){
   }
   return $nl;
 }
-function CorpsChapitre($fichier)
-{
-    // Lecture du fichier texte
-    $txt = file_get_contents($fichier);
-    $this->Image('logok2.jpg',10,13,20,15);
-    // Police
-    $this->SetFont('Arial','',5.4);
-    // Sortie du texte sur 6 cm de largeur
-    $this->MultiCell(47,2.4,utf8_decode($txt));
-    $this->Ln();
-    // Mention
-    $this->SetFont('','B','I');
-    $this->Cell(0,"2","Paraphe");
-    // Retour en première colonne
-    $this->SetCol(0);
-}
-
-function AjouterChapitre($num, $titre, $fichier)
-{
-    // Ajout du chapitre
-    $this->AddPage();
-    // $this->TitreChapitre($num,$titre);
-    $this->CorpsChapitre($fichier);
-}
 function VerifPage()
 {
   if( (($this->GetY())==0) | (($this->GetY())>=240) ) {
@@ -252,14 +206,12 @@ function VerifPage()
 }
 
 $pdf = new PDF('P','mm','A4');
-// Nouvelle page A4 (incluant ici logo, titre et pied de page)
 $pdf->AddPage();
-define('EURO',chr(128));
 $pdf->SetTitle(utf8_decode("Contrat Véhicule_N°':".$Contrat_number));
 $pdf->Image('logok2.jpg',10,15,20,15);
 $pdf->SetFont('Arial','B',8);
 $pdf->Cell(50,4,utf8_decode('CONTRAT DE LOCATION N°'). $Contrat_number,0,2,'',false);
 
-
+$pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number.".pdf"));
 
 ?>
