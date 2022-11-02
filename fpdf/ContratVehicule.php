@@ -3,20 +3,20 @@ if (isset($_GET['id'])){
 
   include("../Gestion_location/inc/connect_db.php");
   $id_client = $_GET['id'];
-  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,C.num_contrat,
-  C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,C.NbrekmInclus,C.date_ajoute,
-  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,CL.cin,
-  V.type,V.pimm,V.id_voiture,
-  MM.Model,MM.Marque,
-  A.lieu_agence
-  FROM contrat_client AS C 
-  LEFT JOIN client AS CL ON C.id_client =CL.id_client 
-  LEFT JOIN voiture AS V on C.id_voiture = V.id_voiture
-  LEFT JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel 
-  LEFT JOIN agence as A on C.id_agence=A.id_agence
-  WHERE  C.type_location = 'Vehicule'
-  AND C.id_client =CL.id_client
-  AND C.id_contrat = $id_client";
+  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
+    C.date_debut,C.date_fin,C.prix,C.NbrekmInclus,
+    CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,
+    V.type,V.pimm,V.id_voiture,
+    MM.Model,MM.Marque,
+    A.lieu_agence
+    FROM contrat_client AS C 
+    LEFT JOIN client AS CL ON C.id_client =CL.id_client 
+    LEFT JOIN voiture AS V on C.id_voiture = V.id_voiture
+    LEFT JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel 
+    LEFT JOIN agence as A on C.id_agence=A.id_agence
+    WHERE  C.type_location = 'Vehicule'
+    AND C.id_client =CL.id_client
+    AND C.id_contrat = $id_contrat";
   
   $result = mysqli_query($conn, $query);
           if ($result->num_rows > 0) {

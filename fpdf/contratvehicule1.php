@@ -2,7 +2,7 @@
 if (isset($_GET['id'])){
 
     include("../Gestion_location/inc/connect_db.php");
-    $id_client = $_GET['id'];
+    $id_contrat = $_GET['id'];
     $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
     C.date_debut,C.date_fin,C.prix,C.NbrekmInclus,
     CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,
@@ -16,7 +16,7 @@ if (isset($_GET['id'])){
     LEFT JOIN agence as A on C.id_agence=A.id_agence
     WHERE  C.type_location = 'Vehicule'
     AND C.id_client =CL.id_client
-    AND C.id_contrat = $id_client";
+    AND C.id_contrat = $id_contrat";
     
     $result = mysqli_query($conn, $query);
     if ($result->num_rows > 0) {
