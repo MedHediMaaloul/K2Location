@@ -20,48 +20,6 @@
           if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
                   $Contrat_number = $row['id_contrat'];
-                  $Contrat_date_debut = $row['date_debut'];
-                  $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
-                  $Contrat_date_fin = $row['date_fin'];
-                  $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
-                  
-                  $Contrat_price = $row['prix'];
-                  $Contrat_moyen_caution = $row['moyen_caution'];
-                  $cautioncb = $row['caution'];
-                  $cautioncheque = $row['cautioncheque'];
-                  if ($Contrat_moyen_caution == "Carte bancaire"){
-                    $Contrat_caution = $cautioncb;
-                  }else if($Contrat_moyen_caution == "Cheque"){
-                    $Contrat_caution = $cautioncheque;
-                  }else{
-                    $Contrat_caution = $cautioncb + $cautioncheque;
-                  }
-                  $Contrat_num_caution_cheque = $row['num_cheque_caution'];
-                  $Contrat_num_caution_cb = $row['num_cb_caution'];
-                  $Contrat_mode_paiement = $row['mode_de_paiement'];
-                  $Contrat_duration = $row['duree'];
-                  $Contrat_km = $row['NbrekmInclus'];
-  
-                  $Conducteur_name = $row['nom'];
-                  $Entreprise_name = $row['nom_entreprise'];
-                  if ($Entreprise_name == ""){
-                    $Client_name = $Conducteur_name;
-                  }else if($Conducteur_name == ""){
-                    $Client_name = $Entreprise_name;
-                  }else{
-                    $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
-                  }
-                  
-                  $Client_mail = $row['email'];
-                  $Client_tel = $row['tel'];
-                  $Client_adress = $row['adresse'];
-  
-                  $Vehicule = $row['type'];
-                  $Vehicule_model = $row['Model'];
-                  $Vehicule_marque = $row['Marque'];
-                  $Vehicule_imm = $row['pimm'];
-
-                  $Lieu_agence = $row['lieu_agence'];
               }
           }
 
@@ -297,7 +255,7 @@ $pdf = new PDF('P','mm','A4');
 // Nouvelle page A4 (incluant ici logo, titre et pied de page)
 $pdf->AddPage();
 define('EURO',chr(128));
-$pdf->SetTitle(utf8_decode("Contrat Véhicule_N°':".$Contrat_number."_".$Client_name));
+$pdf->SetTitle(utf8_decode("Contrat Véhicule_N°':".$Contrat_number));
 $pdf->Image('logok2.jpg',10,15,20,15);
 $pdf->SetFont('Arial','B',8);
 $pdf->Cell(50,4,utf8_decode('CONTRAT DE LOCATION N°'). $Contrat_number,0,2,'',false);
