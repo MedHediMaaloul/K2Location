@@ -3,9 +3,9 @@ if (isset($_GET['id'])){
 
   include("../Gestion_location/inc/connect_db.php");
   $id_client = $_GET['id'];
-  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
-  C.date_debut,C.date_fin,C.prix,C.NbrekmInclus,
-  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,
+  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,C.num_contrat,
+  C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,C.NbrekmInclus,C.date_ajoute,
+  CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,CL.cin,
   V.type,V.pimm,V.id_voiture,
   MM.Model,MM.Marque,
   A.lieu_agence
@@ -385,6 +385,7 @@ if ($Contrat_duration == "Standard") {
         $texte3 = $Contrat_price. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc.
         " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
 }
+// $texte3 = $Contrat_price." Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$Contrat_price_ttc." euros. ";
 $pdf->MultiCell(0,5,utf8_decode($texte3));
 $pdf->SetY($pdf->GetY()+5);
 $pdf->SetFont('Arial','B',7);
@@ -397,15 +398,15 @@ $pdf->SetTextColor(0);
 $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
 if ($Contrat_mode_paiement == "Virements bancaires"){
     $texte5 = "Des Virements bancaires seront effectués.";
-} else if ($Contrat_mode_paiement == "Carte bancaire") {
-  $texte5 = "Des paiements par carte bancaire seront effectués.";
-} else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
-  $texte5 = "Des prélèvements automatiques seront effectués.";
-} else if ($Contrat_mode_paiement == "Espèces") {
-  $texte5 = "Des paiements en espèces seront effectués.";
-} else {
-  $texte5 = "Chèque";
-}
+  } else if ($Contrat_mode_paiement == "Carte bancaire") {
+    $texte5 = "Des paiements par carte bancaire seront effectués.";
+  } else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
+    $texte5 = "Des prélèvements automatiques seront effectués.";
+  } else if ($Contrat_mode_paiement == "Espèces") {
+    $texte5 = "Des paiements en espèces seront effectués.";
+  } else {
+    $texte5 = "Chèque";
+  }
 $texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
 $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
 $pdf->SetY($pdf->GetY()+5);
@@ -424,6 +425,7 @@ if ($Contrat_moyen_caution == "Carte bancaire"){
 } else {
   $texte61 = $cautioncb ." ".chr(128).utf8_decode(" de caution par carte bancaire N° : ").$Contrat_num_caution_cb."\n".$cautioncheque ." ".chr(128).utf8_decode(" de caution par chèque N° : ").$Contrat_num_caution_cheque;
 }
+// $texte7 = "Pour les contrats avec engagement, toutes ruptures de contrat (que ce soit 6 mois ou 1 ans), engendrons des frais de résiliation à hauteur de 30% de la totalité des factures restantes. ";
 $pdf->MultiCell(0,5,utf8_decode("Le locataire verse à K2, une somme de ").$Contrat_caution ." ".chr(128).utf8_decode($texte6)."\n".$texte61);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
@@ -470,12 +472,14 @@ $texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
 $texte11 = "             précédée de la mention manuscrite Bon pour accord";
 $texte12 = "Signature du LOUEUR et Cachet Commercial";
 $pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
-$pdf->Cell($x4 + 200,0,utf8_decode($texte12),0,'C');
+$pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Ln(50);
+$pdf->SetFont('Arial','B',8);
 $x5 = $pdf->GetX();
-$pdf->Cell($x4 + 200,0,"Paraphe",0,'C');
+$pdf->Cell(0,0,"                                                                                                               
+                                                                                            Paraphe",0);
 $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
 $pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
 $pdf->Image('logok2.jpg',10,13,20,15);
