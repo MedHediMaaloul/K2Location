@@ -233,6 +233,30 @@ function VerifPage()
     $this->AddPage();
   }
 }
+function CorpsChapitre($fichier)
+{
+    // Lecture du fichier texte
+    $txt = file_get_contents($fichier);
+    $this->Image('logok2.jpg',10,13,20,15);
+    // Police
+    $this->SetFont('Arial','',5.4);
+    // Sortie du texte sur 6 cm de largeur
+    $this->MultiCell(47,2.4,utf8_decode($txt));
+    $this->Ln();
+    // Mention
+    $this->SetFont('','B','I');
+    $this->Cell(0,"2","Paraphe");
+    // Retour en première colonne
+    $this->SetCol(0);
+}
+
+function AjouterChapitre($num, $titre, $fichier)
+{
+    // Ajout du chapitre
+    $this->AddPage();
+    // $this->TitreChapitre($num,$titre);
+    $this->CorpsChapitre($fichier);
+}
 }
 
 $pdf = new PDF('P','mm','A4');
@@ -364,7 +388,8 @@ $pdf->SetY($pdf->GetY()+10);
 $texte9 = "Le locataire soussigné déclare accepter toutes les conditions générales figurant sur les pages suivantes du contrat qui a été établi en autant d'exemplaires que de parties. Signature du contrat et l'autorisation de prélèvement ci-dessous et paraphe de chaque page.";
 $pdf->MultiCell(0,5,utf8_decode($texte9));
 $pdf->VerifPage();
-
+$titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
+$pdf->AjouterChapitre(1,utf8_decode($titre),utf8_decode('conditiongeneral.txt'));
 $pdf->Image('logok2.jpg',10,13,20,15);
 $pdf->Output('I',utf8_decode("Contrat Véhicule_N°:".$Contrat_number."_".$Client_name.".pdf"));
 }
