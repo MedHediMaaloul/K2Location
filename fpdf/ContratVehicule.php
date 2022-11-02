@@ -274,6 +274,7 @@ function CorpsChapitre($fichier)
     $this->MultiCell(47,2.4,utf8_decode($txt));
     $this->Ln();
     // Mention
+    // $this->SetFont('','B','I');
     $this->Cell(0,"2","Paraphe");
     // Retour en première colonne
     $this->SetCol(0);
@@ -476,6 +477,7 @@ $pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Ln(50);
+// $pdf->SetFont('','B','I');
 $x5 = $pdf->GetX();
 $pdf->Cell(0,0,"                                                                                                               
                                                                                             Paraphe",0);
