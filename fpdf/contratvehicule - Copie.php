@@ -1,9 +1,9 @@
 <?php
 if (isset($_GET['id'])){
 
-    include("../Gestion_location/inc/connect_db.php");
-    $id_contrat = $_GET['id'];
-    $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
+  include("../Gestion_location/inc/connect_db.php");
+  $id_client = $_GET['id'];
+  $query = "SELECT C.id_contrat,C.moyen_caution,C.caution,C.cautioncheque,C.num_cheque_caution,C.num_cb_caution,C.duree,C.id_client,C.type_location,
     C.date_debut,C.date_fin,C.prix,C.NbrekmInclus,
     CL.id_client,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse,
     V.type,V.pimm,V.id_voiture,
@@ -17,52 +17,52 @@ if (isset($_GET['id'])){
     WHERE  C.type_location = 'Vehicule'
     AND C.id_client =CL.id_client
     AND C.id_contrat = $id_contrat";
-    
-    $result = mysqli_query($conn, $query);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $Contrat_number = $row['id_contrat'];
-            $Contrat_date_debut = $row['date_debut'];
-            $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
-            $Contrat_date_fin = $row['date_fin'];
-            $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
-            
-            $Contrat_price = $row['prix'];
-            $Contrat_moyen_caution = $row['moyen_caution'];
-            $cautioncb = $row['caution'];
-            $cautioncheque = $row['cautioncheque'];
-            if ($Contrat_moyen_caution == "Carte bancaire"){
-              $Contrat_caution = $cautioncb;
-            }else if($Contrat_moyen_caution == "Cheque"){
-              $Contrat_caution = $cautioncheque;
-            }else{
-              $Contrat_caution = $cautioncb + $cautioncheque;
-            }
-            $Contrat_num_caution_cheque = $row['num_cheque_caution'];
-            $Contrat_num_caution_cb = $row['num_cb_caution'];
-            $Contrat_mode_paiement = $row['mode_de_paiement'];
-            $Contrat_duration = $row['duree'];
-            $Contrat_km = $row['NbrekmInclus'];
-            $Conducteur_name = $row['nom'];
-            $Entreprise_name = $row['nom_entreprise'];
-            if ($Entreprise_name == ""){
-              $Client_name = $Conducteur_name;
-            }else if($Conducteur_name == ""){
-              $Client_name = $Entreprise_name;
-            }else{
-              $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
-            }
-            
-            $Client_mail = $row['email'];
-            $Client_tel = $row['tel'];
-            $Client_adress = $row['adresse'];
-            $Vehicule = $row['type'];
-            $Vehicule_model = $row['Model'];
-            $Vehicule_marque = $row['Marque'];
-            $Vehicule_imm = $row['pimm'];
-            $Lieu_agence = $row['lieu_agence'];
-        }
-    }
+  
+  $result = mysqli_query($conn, $query);
+  if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+          $Contrat_number = $row['id_contrat'];
+          $Contrat_date_debut = $row['date_debut'];
+          $Contrat_date_debut = date("d-m-Y", strtotime($Contrat_date_debut));
+          $Contrat_date_fin = $row['date_fin'];
+          $Contrat_date_fin = date("d-m-Y", strtotime($Contrat_date_fin));
+          
+          $Contrat_price = $row['prix'];
+          $Contrat_moyen_caution = $row['moyen_caution'];
+          $cautioncb = $row['caution'];
+          $cautioncheque = $row['cautioncheque'];
+          if ($Contrat_moyen_caution == "Carte bancaire"){
+            $Contrat_caution = $cautioncb;
+          }else if($Contrat_moyen_caution == "Cheque"){
+            $Contrat_caution = $cautioncheque;
+          }else{
+            $Contrat_caution = $cautioncb + $cautioncheque;
+          }
+          $Contrat_num_caution_cheque = $row['num_cheque_caution'];
+          $Contrat_num_caution_cb = $row['num_cb_caution'];
+          $Contrat_mode_paiement = $row['mode_de_paiement'];
+          $Contrat_duration = $row['duree'];
+          $Contrat_km = $row['NbrekmInclus'];
+          $Conducteur_name = $row['nom'];
+          $Entreprise_name = $row['nom_entreprise'];
+          if ($Entreprise_name == ""){
+            $Client_name = $Conducteur_name;
+          }else if($Conducteur_name == ""){
+            $Client_name = $Entreprise_name;
+          }else{
+            $Client_name = $Conducteur_name . " ( " . $Entreprise_name . " ) ";
+          }
+          
+          $Client_mail = $row['email'];
+          $Client_tel = $row['tel'];
+          $Client_adress = $row['adresse'];
+          $Vehicule = $row['type'];
+          $Vehicule_model = $row['Model'];
+          $Vehicule_marque = $row['Marque'];
+          $Vehicule_imm = $row['pimm'];
+          $Lieu_agence = $row['lieu_agence'];
+      }
+  }
 
 require('fpdf.php');
 
@@ -265,7 +265,7 @@ function CorpsChapitre($fichier)
     $txt = file_get_contents($fichier);
     $this->Image('logok2.jpg',10,13,20,15);
     // Police
-    $this->SetFont('Arial','',5);
+    $this->SetFont('Arial','',5.4);
     // Sortie du texte sur 6 cm de largeur
     $this->MultiCell(47,2.4,utf8_decode($txt));
     $this->Ln();
@@ -393,15 +393,15 @@ $pdf->SetTextColor(0);
 $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
 if ($Contrat_mode_paiement == "Virements bancaires"){
     $texte5 = "Des Virements bancaires seront effectués.";
-} else if ($Contrat_mode_paiement == "Carte bancaire") {
-  $texte5 = "Des paiements par carte bancaire seront effectués.";
-} else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
-  $texte5 = "Des prélèvements automatiques seront effectués.";
-} else if ($Contrat_mode_paiement == "Espèces") {
-  $texte5 = "Des paiements en espèces seront effectués.";
-} else {
-  $texte5 = "Chèque";
-}
+  } else if ($Contrat_mode_paiement == "Carte bancaire") {
+    $texte5 = "Des paiements par carte bancaire seront effectués.";
+  } else if ($Contrat_mode_paiement == "Prélèvements automatiques") {
+    $texte5 = "Des prélèvements automatiques seront effectués.";
+  } else if ($Contrat_mode_paiement == "Espèces") {
+    $texte5 = "Des paiements en espèces seront effectués.";
+  } else {
+    $texte5 = "Chèque";
+  }
 $texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
 $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
 $pdf->SetY($pdf->GetY()+5);
@@ -466,7 +466,7 @@ $texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
 $texte11 = "             précédée de la mention manuscrite Bon pour accord";
 $texte12 = "Signature du LOUEUR et Cachet Commercial";
 $pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
-$pdf->Cell($x4 + 200,0,utf8_decode($texte12),0,'C');
+$pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
 $pdf->Ln(50);
