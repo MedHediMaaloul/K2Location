@@ -263,34 +263,34 @@ function NbLines($w,$txt){
   }
   return $nl;
 }
-function CorpsChapitre()
-{
-    // Lecture du fichier texte
-    $context = stream_context_create(array(
-        'http' => array('ignore_errors' => true),
-    ));    
-    $fichier = 'http://15.236.8.125/fpdf/conditiongeneral.txt';
-    $txt = file_get_contents($fichier, false, $context);
-    $this->Image('logok2.jpg',10,13,20,15);
-    // Police
-    $this->SetFont('Arial','',5.4);
-    // Sortie du texte sur 6 cm de largeur
-    $this->MultiCell(47,2.4,utf8_decode($txt));
-    $this->Ln();
-    // Mention
-    $this->SetFont('','B','I');
-    $this->Cell(0,"2","Paraphe");
-    // Retour en première colonne
-    $this->SetCol(0);
-}
+// function CorpsChapitre()
+// {
+//     // Lecture du fichier texte
+//     $context = stream_context_create(array(
+//         'http' => array('ignore_errors' => true),
+//     ));    
+//     $fichier = 'http://15.236.8.125/fpdf/conditiongeneral.txt';
+//     $txt = file_get_contents($fichier, false, $context);
+//     $this->Image('logok2.jpg',10,13,20,15);
+//     // Police
+//     $this->SetFont('Arial','',5.4);
+//     // Sortie du texte sur 6 cm de largeur
+//     $this->MultiCell(47,2.4,utf8_decode($txt));
+//     $this->Ln();
+//     // Mention
+//     $this->SetFont('','B','I');
+//     $this->Cell(0,"2","Paraphe");
+//     // Retour en première colonne
+//     $this->SetCol(0);
+// }
 
-function AjouterChapitre($num, $titre)
-{
-    // Ajout du chapitre
-    $this->AddPage();
-    // $this->TitreChapitre($num,$titre);
-    $this->CorpsChapitre();
-}
+// function AjouterChapitre($num, $titre)
+// {
+//     // Ajout du chapitre
+//     $this->AddPage();
+//     // $this->TitreChapitre($num,$titre);
+//     $this->CorpsChapitre();
+// }
 function VerifPage()
 {
   if( (($this->GetY())==0) | (($this->GetY())>=240) ) {
