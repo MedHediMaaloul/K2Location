@@ -5,24 +5,22 @@ if (isset($_GET['id'])){
 include("../Gestion_location/inc/connect_db.php");
 $id_contrat = $_GET['id'];
 
-    $query = "SELECT CA.id_contrat_avenant,CA.debut_contrat_avenant,CA.fin_contrat_avenant,CA.id_materiel_avenant,CA.id_contrat_client,
-              CL.nom_entreprise,CL.nom,CL.email,CL.cin,CL.tel,CL.adresse,
+    $query = "SELECT CL.nom_entreprise,CL.nom,CL.email,CL.cin,CL.tel,CL.adresse,
               V.type,V.pimm,V.id_voiture,MM.Model,MM.Marque,
               C.id_contrat,C.duree,C.moyen_caution,C.caution,C.cautioncheque,C.NbrekmInclus,C.type_location,C.num_cheque_caution,C.num_cb_caution,C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,
               CM.designation_contrat, CM.num_serie_contrat, 
               CC.designation_composant, CC.num_serie_composant,
               A.lieu_agence
-              FROM contrat_client_avenant AS CA
-              LEFT JOIN contrat_client AS C ON CA.id_contrat_client =C.id_contrat 
+              FROM contrat_client AS C 
               LEFT JOIN materiel_contrat_client AS CM ON CM.id_contrat =C.id_contrat 
               LEFT JOIN composant_materiels_contrat AS CC ON CC.id_contrat =CM.id_contrat
               LEFT JOIN client AS CL ON C.id_client=CL.id_client
-              LEFT JOIN voiture AS V ON V.id_voiture=CA.id_voiture_avenant
+              LEFT JOIN voiture AS V ON V.id_voiture=C.id_voiture
               LEFT JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel 
               LEFT JOIN agence as A on C.id_agence=A.id_agence
               WHERE C.type_location = 'Pack'
               AND C.id_client =CL.id_client
-              AND CA.id_contrat_avenant = $id_contrat";
+              AND C.id_contrat = $id_contrat";
 
     $result = mysqli_query($conn, $query);
     $list_composant = [];
@@ -45,7 +43,6 @@ $id_contrat = $_GET['id'];
                 $contrat_materiel_adresse = $row['adresse'];
 
                 $id_voiture = $row['id_voiture'];
-                $pimm = $row['pimm'];
                 if ($row['id_voiture'] != 0) {
                     $contrat_materiel_imm = 'Immatriculation :' . $row['pimm'];
                     $contrat_materiel_marque = 'Marque :' . $row['Marque'] . ' ' . $row['Model'];
@@ -57,9 +54,9 @@ $id_contrat = $_GET['id'];
                 $Contrat_duration = $row['duree'];
                 $Lieu_agence = $row['lieu_agence'];
 
-                $contrat_materiel_datedebut = $row['debut_contrat_avenant'];
+                $contrat_materiel_datedebut = $row['date_debut'];
                 $contrat_materiel_datedebut = date("d-m-Y", strtotime($contrat_materiel_datedebut));
-                $contrat_materiel_datefin = $row['fin_contrat_avenant'];
+                $contrat_materiel_datefin = $row['date_fin'];
                 $contrat_materiel_datefin = date("d-m-Y", strtotime($contrat_materiel_datefin));
                 $contrat_materiel_prix = $row['prix'];
                 $contrat_materiel_prix_ttc = $row['prix'] + ($row['prix'] * 0.2);
@@ -80,7 +77,7 @@ $id_contrat = $_GET['id'];
                 $Contrat_num_caution_cb = $row['num_cb_caution'];
             }
         } 
-        $query1 = " SELECT * FROM composant_materiels_contrat WHERE id_contrat_avenant='$id_contrat'";
+        $query1 = " SELECT * FROM composant_materiels_contrat WHERE id_contrat='$id_contrat'";
         $result1 = mysqli_query($conn, $query1);
         
         while ($row = mysqli_fetch_assoc($result1)) {
@@ -94,7 +91,7 @@ $id_contrat = $_GET['id'];
           }
         }
 
-        $query2 = " SELECT * FROM materiel_contrat_client WHERE id_contrat_avenant='$id_contrat'";
+        $query2 = " SELECT * FROM materiel_contrat_client WHERE id_contrat='$id_contrat'";
         $result2 = mysqli_query($conn, $query2);
 
         while ($row = mysqli_fetch_assoc($result2)) {
@@ -106,18 +103,7 @@ $id_contrat = $_GET['id'];
             $list_materiel[1][] = $row['num_serie_contrat'];
           }
         }
-
-        $query3 = "SELECT designation_contrat,num_serie_contrat
-                      FROM materiels AS M
-                      LEFT JOIN materiels_agence AS MA ON MA.id_materiels =M.id_materiels 
-                      LEFT JOIN materiel_contrat_client AS CM ON CM.id_materiels_agence =MA.id_materiels_agence 
-                      WHERE CM.id_contrat_avenant='$id_contrat'
-                      AND M.famille_materiel = 'SOUDEUSE'";
-        $result3 = mysqli_query($conn, $query3);
-        $row3 = mysqli_fetch_assoc($result3);
-        $designation_materiel = $row3['designation_contrat'];
-        $numserie_materiel = $row3['num_serie_contrat'];
-        
+       
 require('fpdf.php');
 class PDF extends FPDF{
 protected $col = 0; // Colonne courante
@@ -353,11 +339,11 @@ $pdf = new PDF('P','mm','A4');
 // Nouvelle page A4 (incluant ici logo, titre et pied de page)
 $pdf->AddPage();
 define('EURO',chr(128));
-$pdf->SetTitle(utf8_decode("Avenant au Contrat Pack_N°:".$contrat_materiel_id."_".$contrat_materiel_name));
+$pdf->SetTitle(utf8_decode("Contrat Pack_N°:".$contrat_materiel_id."_".$contrat_materiel_name));
 if (empty($list_composant[0])){
 $pdf->Image('logok2.jpg',10,15,20,15);
 $pdf->SetFont('Arial','B',8);
-$pdf->Cell(50,4,utf8_decode('Avenant au Contrat de location N°'). $contrat_materiel_id,0,2,'',false);
+$pdf->Cell(50,4,utf8_decode('CONTRAT DE LOCATION N°'). $contrat_materiel_id,0,2,'',false);
 $position=$pdf->getY();
 
 if($pdf->getY()>$position){
@@ -436,14 +422,7 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-if($designation_materiel == ""){
-  $texte22 = "Cet avenant prend effet du ".$contrat_materiel_datedebut." au ".$contrat_materiel_datefin.", suite à la mise à disposition du véhicule immatriculé ".$pimm.", le temps de l'intervention.";
-}else if($id_voiture == 0){
-  $texte22 = "Cet avenant prend effet du ".$contrat_materiel_datedebut." au ".$contrat_materiel_datefin.", suite à la mise à disposition du matériel ".$designation_materiel." dont le N°de série ".$numserie_materiel.", le temps de l'intervention.";
-}else{
-  $texte22 = "Cet avenant prend effet du ".$contrat_materiel_datedebut." au ".$contrat_materiel_datefin.", suite à la mise à disposition : du véhicule immatriculé ".$pimm." et du matériel ".$designation_materiel." dont le N°de série ".$numserie_materiel.", le temps de l'intervention.";
-}
-$pdf->MultiCell(0,5,utf8_decode($texte22));
+$pdf->MultiCell(0,5,"Du"." ".$contrat_materiel_datedebut." "."au"." ".$contrat_materiel_datefin);
 $pdf->VerifPage();
 $pdf->Ln(5);
 $pdf->SetFont('Arial','B',7);
@@ -579,7 +558,7 @@ else{
 
 $pdf->Image('logok2.jpg',10,15,20,15);
 $pdf->SetFont('Arial','B',8);
-$pdf->Cell(50,4,utf8_decode('Avenant au Contrat de location N°'). $contrat_materiel_id,0,2,'',false);
+$pdf->Cell(50,4,utf8_decode('CONTRAT DE LOCATION N°'). $contrat_materiel_id,0,2,'',false);
 $position=$pdf->getY();
 
 if($pdf->getY()>$position){
@@ -667,13 +646,7 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-if($designation_materiel == ""){
-  $texte22 = "Cet avenant prend effet du ".$contrat_materiel_datedebut." au ".$contrat_materiel_datefin.", suite à la mise à disposition du véhicule immatriculé ".$pimm.", le temps de l'intervention.";
-}else if($id_voiture == 0){
-  $texte22 = "Cet avenant prend effet du ".$contrat_materiel_datedebut." au ".$contrat_materiel_datefin.", suite à la mise à disposition du matériel ".$designation_materiel." dont le N°de série ".$numserie_materiel.", le temps de l'intervention.";
-}else{
-  $texte22 = "Cet avenant prend effet du ".$contrat_materiel_datedebut." au ".$contrat_materiel_datefin.", suite à la mise à disposition : du véhicule immatriculé ".$pimm." et du matériel ".$designation_materiel." dont le N°de série ".$numserie_materiel.", le temps de l'intervention.";
-}$pdf->MultiCell(0,5,utf8_decode($texte22));
+$pdf->MultiCell(0,5,"Du"." ".$contrat_materiel_datedebut." "."au"." ".$contrat_materiel_datefin);
 $pdf->VerifPage();
 $pdf->Ln(5);
 $pdf->SetFont('Arial','B',7);
@@ -803,7 +776,7 @@ $titre = "CONDITIONS GÉNÉRALES DE LOCATION DE MATÉRIEL - K2" ;
 $pdf->AjouterChapitre(1,utf8_decode($titre),'conditiongeneral.txt');
 $pdf->Image('logok2.jpg',10,13,20,15);
 }
-$pdf->Output('I',utf8_decode("Avenant au Contrat Pack_N°:".$contrat_materiel_id."_".$contrat_materiel_name.".pdf"));
+$pdf->Output('I',utf8_decode("Contrat Pack_N°:".$contrat_materiel_id."_".$contrat_materiel_name.".pdf"));
   }
 else {
   echo "erreur";
