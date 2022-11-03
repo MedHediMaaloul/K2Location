@@ -278,6 +278,7 @@ function CorpsChapitre($fichier)
     $this->MultiCell(47,2.4,utf8_decode($txt));
     $this->Ln();
     // Mention
+    $this->SetFont('Arial','B',6);
     $this->Cell(0,"2","Paraphe");
     // Retour en première colonne
     $this->SetCol(0);
@@ -452,7 +453,7 @@ $texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
 $texte11 = "             précédée de la mention manuscrite Bon pour accord";
 $texte12 = "Signature du LOUEUR et cachet commercial";
 $pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
-$pdf->SetX($pdf->GetX()+100);
+$pdf->SetX($pdf->GetX()+120);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
@@ -627,7 +628,7 @@ $texte10 = "             Cachet commercial et signature du LOCATAIRE (client)";
 $texte11 = "             précédée de la mention manuscrite Bon pour accord";
 $texte12 = "Signature du LOUEUR et cachet commercial";
 $pdf->Cell($x4 + 100,0,utf8_decode($texte10),0,'C');
-$pdf->SetX($pdf->GetX()+100);
+$pdf->SetX($pdf->GetX()+120);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte12),0,'C');
 $pdf->Ln(5);
 $pdf->Cell($x4 + 100,0,utf8_decode($texte11),0,'C');
