@@ -366,8 +366,8 @@ for ($i=0; $i < count($list_materiel[0]); $i++) {
 //Tableau
 $position=0;
 $datas = array();
-$datas[] = array("Nom: ".$contrat_materiel_name."\n"."Mail: ".$contrat_materiel_mail."\n"."Tel: ".$contrat_materiel_tel."\n"."Adresse: ".utf8_decode($contrat_materiel_adresse),utf8_decode($contrat_materiel_imm)."\n".utf8_decode($contrat_materiel_marque),
-utf8_decode("Nom de Matériel:"."\n".implode("\n",$materiel)),utf8_decode("Num de Série:"."\n".implode("\n",$num_serie))."\n"." ");
+$datas[] = array("Nom: ".utf8_decode($contrat_materiel_name)."\n"."Mail: ".utf8_decode($contrat_materiel_mail)."\n"."Tel: ".utf8_decode($contrat_materiel_tel)."\n"."Adresse: ".utf8_decode($contrat_materiel_adresse),utf8_decode($contrat_materiel_imm)."\n".utf8_decode($contrat_materiel_marque),
+utf8_decode("Nom de Matériel:"."\n".implode("\n",$materiel)),utf8_decode("Num de Série:"."\n".implode("\n",$num_serie)."\n"." "));
 //Tableau contenant les titres des colonnes
 $header=array(utf8_decode('INFORMATIONS CLIENT'),utf8_decode('INFORMATIONS VÉHICULE'),utf8_decode('                                      INFORMATIONS MATÉRIEL')," ");
 //Tableau contenant la largeur des colonnes
@@ -630,7 +630,7 @@ for ($i=0; $i < count($list_composant[0]); $i++) {
 $position=0;
 $datas = array();
 // for ($i=0; $i < count($list_materiel[0]); $i++) {
-$datas[] = array("Nom: ".$contrat_materiel_name."\n"."Mail: ".$contrat_materiel_mail."\n"."Tel: ".$contrat_materiel_tel."\n"."Adresse: ".utf8_decode($contrat_materiel_adresse),
+$datas[] = array("Nom: ".utf8_decode($contrat_materiel_name)."\n"."Mail: ".utf8_decode($contrat_materiel_mail)."\n"."Tel: ".utf8_decode($contrat_materiel_tel)."\n"."Adresse: ".utf8_decode($contrat_materiel_adresse),
 utf8_decode($contrat_materiel_imm)."\n".utf8_decode($contrat_materiel_marque),
 utf8_decode("Nom de Matériel:"."\n".implode("\n",$materiel)."\n"."Nom de Composants: "."\n".implode("\n",$composant)),
 utf8_decode("Num de Série:"."\n".implode("\n",$num_serie)."\n"."Num de Série: "."\n".implode("\n",$num_serie_compo)));

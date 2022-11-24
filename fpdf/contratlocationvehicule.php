@@ -317,7 +317,7 @@ $prixTotalHorsTaxes=0;
 $totalTtc=0;
 //Création des données qui seront contenues la table
 $datas = array();
-$datas[] = array("Nom: ".$Client_name."\n"."Mail: ".$Client_mail."\n"."Tel: ".$Client_tel."\n"."Adresse: ".utf8_decode($Client_adress),utf8_decode("Véhicule: ".$Vehicule."\n"."Marque: ".$Vehicule_marque." ".$Vehicule_model."\n"."Immatriculation: ".$Vehicule_imm));
+$datas[] = array("Nom: ".utf8_decode($Client_name)."\n"."Mail: ".utf8_decode($Client_mail)."\n"."Tel: ".utf8_decode($Client_tel)."\n"."Adresse: ".utf8_decode($Client_adress),utf8_decode("Véhicule: ".$Vehicule."\n"."Marque: ".$Vehicule_marque." ".$Vehicule_model."\n"."Immatriculation: ".$Vehicule_imm));
 //Tableau contenant les titres des colonnes
 $header=array(utf8_decode('INFORMATIONS CLIENT'),utf8_decode('INFORMATIONS VÉHICULE'));
 //Tableau contenant la largeur des colonnes

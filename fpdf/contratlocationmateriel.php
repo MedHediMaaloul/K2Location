@@ -320,7 +320,7 @@ $pdf->SetXY(10,$position+2);
 //Tableau
 $position=0;
 $datas = array();
-$datas[] = array("Nom: ".$Client_name."\n"."Mail: ".$Client_mail."\n"."Tel: ".$Client_tel."\n"."Adresse: ".utf8_decode($Client_adress),utf8_decode("Nom de Matériel:"."\n".$Materiel_Designation),utf8_decode("Num de Série:"."\n".$Materiel_num_serie)."\n"." ");
+$datas[] = array("Nom: ".utf8_decode($Client_name)."\n"."Mail: ".utf8_decode($Client_mail)."\n"."Tel: ".utf8_decode($Client_tel)."\n"."Adresse: ".utf8_decode($Client_adress),utf8_decode("Nom de Matériel:"."\n".$Materiel_Designation),utf8_decode("Num de Série:"."\n".$Materiel_num_serie)."\n"." ");
 //Tableau contenant les titres des colonnes
 $header=array(utf8_decode('INFORMATIONS CLIENT'),utf8_decode('                                                         INFORMATIONS MATÉRIEL')," ");
 //Tableau contenant la largeur des colonnes
@@ -502,7 +502,7 @@ for ($i=0; $i < count($list_composant[0]); $i++) {
   $num_serie[] = $list_composant[1][$i];
 }
 
-$datas[] = array("Nom: ".$Client_name."\n"."Mail: ".$Client_mail."\n"."Tel: ".$Client_tel."\n"."Adresse: ".utf8_decode($Client_adress),
+$datas[] = array("Nom: ".utf8_decode($Client_name)."\n"."Mail: ".utf8_decode($Client_mail)."\n"."Tel: ".utf8_decode($Client_tel)."\n"."Adresse: ".utf8_decode($Client_adress),
 utf8_decode("Nom de Matériel:"."\n".$Materiel_Designation."\n"."Nom de Composants: "."\n".implode("\n",$composant)."\n"." "),
 utf8_decode("Num de Série:"."\n".$Materiel_num_serie."\n"."Num de Série: "."\n".implode("\n",$num_serie)."\n"." "));
 
