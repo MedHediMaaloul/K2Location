@@ -4,11 +4,10 @@ if (isset($_GET['id'])){
 
 include("../Gestion_location/inc/connect_db.php");
 $id_contrat = $_GET['id'];
-$query = "SELECT CL.nom_entreprise,CL.nom, CL.email, CL.tel, CL.adresse, 
-      C.id_contrat, C.date_debut, C.date_fin, C.prix,
-      C.mode_de_paiement, C.date_prelevement,C.caution,C.cautioncheque,C.moyen_caution, C.num_cheque_caution,C.num_cb_caution,
-      CM.designation_contrat, CM.num_serie_contrat, CC.designation_composant, 
-      CC.num_serie_composant 
+$query = "SELECT CL.nom_entreprise,CL.nom,CL.email,CL.tel,CL.adresse, 
+      C.id_contrat,C.date_debut,C.date_fin,C.prix,
+      C.mode_de_paiement,C.date_prelevement,C.caution,C.cautioncheque,C.moyen_caution, C.num_cheque_caution,C.num_cb_caution,C.contratcadre,
+      CM.designation_contrat,CM.num_serie_contrat,CC.designation_composant,CC.num_serie_composant 
     FROM materiel_contrat_client AS CM 
     LEFT JOIN contrat_client AS C ON CM.id_contrat = C.id_contrat
     LEFT JOIN client AS CL ON CL.id_client = C.id_client 
@@ -54,6 +53,8 @@ if ($result->num_rows > 0) {
       $Client_adress = $row['adresse'];
       $Materiel_Designation = $row['designation_contrat'];
       $Materiel_num_serie = $row['num_serie_contrat'];
+
+      $Contrat_cadre = $row['contratcadre'];
   }
 }
 $query1 = " SELECT * FROM composant_materiels_contrat WHERE id_contrat='$id_contrat'";
@@ -357,7 +358,11 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte2 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+if($Contrat_cadre == "1"){
+  $texte2 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. En cas de perte et/ou détérioration de matériel loué, le montant facturé sera égal au prix de vente du ou des articles concernés";
+}else{
+  $texte2 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+}
 $pdf->MultiCell(0,5,utf8_decode($texte2));
 $pdf->VerifPage();
 $pdf->Ln(5);
@@ -389,8 +394,12 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
-if ($Contrat_mode_paiement == "Virements bancaires"){
+if($Contrat_cadre == "1"){
+  $texte4 = "Les paiements sont à échoir.";
+  $texte5 = "Le mode de règlement sera en fonction des termes fixés sur le bon de commande.";
+}else{
+  $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
+  if ($Contrat_mode_paiement == "Virements bancaires"){
     $texte5 = "Des Virements bancaires seront effectués.";
   } else if ($Contrat_mode_paiement == "Carte bancaire") {
     $texte5 = "Des paiements par carte bancaire seront effectués.";
@@ -401,6 +410,8 @@ if ($Contrat_mode_paiement == "Virements bancaires"){
   } else {
     $texte5 = "Chèque";
   }
+}
+
 $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5));
 $pdf->VerifPage();
 $pdf->Ln(5);
@@ -536,7 +547,11 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte2 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+if($Contrat_cadre == "1"){
+  $texte2 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. En cas de perte et/ou détérioration de matériel loué, le montant facturé sera égal au prix de vente du ou des articles concernés";
+}else{
+  $texte2 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+}
 $pdf->MultiCell(0,5,utf8_decode($texte2));
 $pdf->VerifPage();
 $pdf->Ln(5);
@@ -565,8 +580,12 @@ $pdf->Cell(0,0,utf8_decode('Mode de paiement:'),0,0);
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
-if ($Contrat_mode_paiement == "Virements bancaires"){
+if($Contrat_cadre == "1"){
+  $texte4 = "Les paiements sont à échoir.";
+  $texte5 = "Le mode de règlement sera en fonction des termes fixés sur le bon de commande.";
+}else{
+  $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
+  if ($Contrat_mode_paiement == "Virements bancaires"){
     $texte5 = "Des Virements bancaires seront effectués.";
   } else if ($Contrat_mode_paiement == "Carte bancaire") {
     $texte5 = "Des paiements par carte bancaire seront effectués.";
@@ -575,8 +594,9 @@ if ($Contrat_mode_paiement == "Virements bancaires"){
   } else if ($Contrat_mode_paiement == "Espèces") {
     $texte5 = "Des paiements en espèces seront effectués.";
   } else {
-    $texte5 = "Chèque.";
+    $texte5 = "Chèque";
   }
+}
 $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5));
 $pdf->VerifPage();
 $pdf->Ln(5);

@@ -14,7 +14,7 @@
     <title>K2 Gestion De Location</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="20x20" href="plugins/images/K2.png" />
     <!-- Custom CSS -->
     <link href="plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet" />
     <link href="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" rel="stylesheet" />
@@ -301,7 +301,7 @@
                                 <li class="sidebar-item active">
                                     <a href="vehicule.php" class="sidebar-link">
                                         <i class="mdi mdi-account-box"></i>
-                                        <span class="hide-menu">Véhicule disponible</span>
+                                        <span class="hide-menu">Liste des véhicules</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">

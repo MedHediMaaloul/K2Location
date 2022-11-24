@@ -969,7 +969,6 @@ if (!isset($_SESSION['User'])) {
         <!-- /.col -->
     </div>
 </div>
-
 <?php
 include('Gestion_location/inc/footer.php')
 ?>

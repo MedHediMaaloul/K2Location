@@ -95,7 +95,6 @@ $(document).ready(function () {
   get_Controle_technique_mecanicien_record();
   update_Controle_technique_record();
   update_Controle_technique_mecanicien_record();
-  delete_Controletechnique_record();
   realisation_Controletechnique_record();
   //contrat
   //Contrat mixte-------------------
@@ -341,7 +340,7 @@ $(document).ready(function () {
 
 
 //insert Record in the data base 
-function insertRecord() {
+function insertRecord(element) {
   $(document).on("click", "#btn-register-client", function () {
     $("#Registration-Client").scrollTop(0);
     var type = $("#Clienttype").val();
@@ -364,7 +363,7 @@ function insertRecord() {
     var kbis = $("#userKBIS").prop("files")[0];
     var rib = $("#userRIB").prop("files")[0];
     var attestation_civile = $("#userAttestation").prop("files")[0];
-
+    alert(element.value);
     /********************Test Champs obligatoire CLIENT PRO */
     if(type == "CLIENT PRO"){
       nom = nom2;
@@ -2357,43 +2356,6 @@ function realisation_entretien_record() {
 }
 
 
-
-//supprimer entretien
-function delete_Controletechnique_record() {
-  $(document).on("click", "#btn-delete-Controletechnique", function () {
-    // console.log("hee");
-    var Delete_ID = $(this).attr("data-id1");
-    // console.log(Delete_ID);
-    $("#deleteControleTechnique").modal("show");
-    $(document).on("click", "#btn_delete_Controletechnique", function () {
-      $.ajax({
-        url: "DeleteControletechnique.php",
-        method: "post",
-        data: {
-          id_entretien: Delete_ID
-        },
-        success: function (data) {
-          $("#delete_message").addClass("alert alert-success").html(data);
-          $("#deleteControleTechnique").modal("toggle");
-          // view_Entretien_record_materiel();
-          view_Controletechnique_record();
-          Type_Controle_dispo();
-          searchControleTechnique();
-          load_unseen_notification_entretien();
-          setTimeout(function () {
-            if ($("#delete_message").length > 0) {
-              $("#delete_message").remove();
-            }
-          }, 2500);
-        },
-      });
-    });
-    $(document).on('hide.bs.modal', '#deleteControletechnique', function () {
-      Delete_ID = "";
-    });
-  });
-}
-
 function get_Controle_technique_record() {
   $(document).on("click", "#btn-edit-Controletechnique", function () {
     var ID = $(this).attr("data-id");
@@ -2729,6 +2691,9 @@ function insertContratVoitureRecord() {
     var ContratCaution = $("#CautionContrat").val();
     var ContratCautionCheque = $("#CautionContratcheque").val();
     var NbreKilometreContrat = $("#NbreKilometreContrat").val();
+    var klillimite = $('#klillimite:checked').val();
+    var NbreKilometreContratCadreObj = $("#NbreKilometreContratCadre").val();
+    var NbreKilometreContratCadreNObj = $("#NbreKilometreObligContrat").val();
     var ContratMoyenCaution = $("#moyenCaution").val();
     var ContratNumCaution = $("#numCaution").val();
     var ContratNumCautionCB = $("#numCautionCB").val();
@@ -2737,11 +2702,22 @@ function insertContratVoitureRecord() {
     var ContratAvenantDateDebut = $("#DateDebutContratAvenant").val();
     var ContratAvenantDateFin = $("#DateFinContratAvenant").val();
     var ContratAvenant_voiture = $("#list_materiel_avenant").val();
+
     if (Contrat_voiture == undefined){
       Contrat_voiture = ContratAvenant_voiture;
     }
     if(contratvehiculeagence == undefined){
       contratvehiculeagence = "";
+    }
+    
+    if(klillimite == undefined){
+      klillimite = "0";
+      NbreKilometreContratCadre = NbreKilometreContratCadreObj;
+    }else{
+      NbreKilometreContratCadre = NbreKilometreContratCadreNObj;
+    }
+    if(type == "CONTRAT CADRE"){
+      NbreKilometreContrat = NbreKilometreContratCadre;
     }
     if (type == "CONTRAT" && (contratvehiculeagence == null && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" ||
         ContratMoyenCaution == "" || ContratPaiement == "" || Contrat_voiture == null))){
@@ -2749,17 +2725,24 @@ function insertContratVoitureRecord() {
       } else if (type == "CONTRAT" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" ||
           ContratMoyenCaution == "" || ContratPaiement == "" || Contrat_voiture == null || NbreKilometreContrat == "")){
           $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
-      }
-      else if (type == "CONTRAT" && (ContratDateDebut > ContratDateFin)) {
+      } else if (type == "CONTRAT" && (ContratDateDebut > ContratDateFin)) {
           $("#messagevoiture").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
     
     }else if (type == "CONTRAT AVENANT" && (ContratAvenant == null && (ContratAvenantDateDebut == "" || ContratAvenantDateFin == ""))){
         $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
         } else if (type == "CONTRAT AVENANT" && (Contrat_voiture == null || ContratAvenantDateDebut == "" || ContratAvenantDateFin == "")){
             $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
-        }
-        else if (type == "CONTRAT AVENANT" && (ContratAvenantDateDebut > ContratAvenantDateFin)) {
+        } else if (type == "CONTRAT AVENANT" && (ContratAvenantDateDebut > ContratAvenantDateFin)) {
             $("#messagevoiture").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
+    
+    }else if (type == "CONTRAT CADRE" && (klillimite == "1" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" ||
+    ContratMoyenCaution == "" || ContratPaiement == "" || Contrat_voiture == null))){
+      $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
+    } else if (type == "CONTRAT CADRE" && (klillimite == "0" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" ||
+    ContratMoyenCaution == "" || ContratPaiement == "" || Contrat_voiture == null || NbreKilometreContrat == ""))){
+      $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
+    } else if (type == null ){
+      $("#messagevoiture").addClass("alert alert-danger").html("Veuillez choisir le type de contrat!");
     
     }else {
       $.ajax({
@@ -2789,6 +2772,7 @@ function insertContratVoitureRecord() {
           ContratAvenant: ContratAvenant,
           ContratAvenantDateDebut: ContratAvenantDateDebut,
           ContratAvenantDateFin: ContratAvenantDateFin,
+          checkobgkm: klillimite,
         },
         success: function (data) {
           $("#messagevoiture").addClass("alert alert-success").html(data);
@@ -2838,7 +2822,7 @@ function insertContratMaterielRecord() {
     var ContratAvenantDateDebut = $("#DateDebutContratAvenant").val();
     var ContratAvenantDateFin = $("#DateFinContratAvenant").val();
     var ContratAvenant_materiel = $("#materielContratAvenant").val();
-    console.log(ContratDuree);
+
     if (Id_materiel == undefined){
       Id_materiel = ContratAvenant_materiel;
     }
@@ -2846,19 +2830,29 @@ function insertContratMaterielRecord() {
       contratmaterielagence = "";
     }
     if (type == "CONTRAT" && (contratmaterielagence == null && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" ||
-        ContratClient == null || ContratPrixContrat == "" || ContratPaiement == "" || moyenCaution == "" || Id_materiel == null))) {
-        $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires !");
+      ContratClient == null || ContratPrixContrat == "" || ContratPaiement == "" || moyenCaution == "" || Id_materiel == null))) {
+      $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires !");
       } else if (type == "CONTRAT" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null ||
         ContratPrixContrat == "" || ContratPaiement == "" || moyenCaution == "" || Id_materiel == null)){
         $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires !");
       } else if (type == "CONTRAT" && (ContratDateDebut > ContratDateFin)) {
-      $("#message").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
+        $("#message").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
+    }else if (type == "CONTRAT CADRE" && (contratmaterielagence == null && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" ||
+      ContratClient == null || ContratPrixContrat == "" || ContratPaiement == "" || moyenCaution == "" || Id_materiel == null))) {
+      $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires !");
+      } else if (type == "CONTRAT CADRE" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null ||
+        ContratPrixContrat == "" || ContratPaiement == "" || moyenCaution == "" || Id_materiel == null)){
+        $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires !");
+      } else if (type == "CONTRAT CADRE" && (ContratDateDebut > ContratDateFin)) {
+        $("#message").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
     }else if (type == "CONTRAT AVENANT" && (ContratAvenant == null && (ContratAvenantDateDebut == "" || ContratAvenantDateFin == ""))){
-      $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
+      $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
       }else if (type == "CONTRAT AVENANT" && (Id_materiel == null || ContratAvenantDateDebut == "" || ContratAvenantDateFin == "")){
-          $("#messagevoiture").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
+          $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
       }else if (type == "CONTRAT AVENANT" && (ContratAvenantDateDebut > ContratAvenantDateFin)) {
-          $("#messagevoiture").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
+          $("#message").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
+    }else if (type == null){
+      $("#message").addClass("alert alert-danger").html("Veuillez choisir le type de contrat!");
     } else {
       $.ajax({
         url: "AjoutContratMateriel.php",
@@ -2930,9 +2924,6 @@ function insertContratRecord() {
     var ContratNumCautionMateriel = $("#numCautionMateriel").val();
     var ContratDuree = $("#dureeContrat").val();
     var Id_materiel = $("#list_materiel").val();
-    alert(ContratDateDebut);
-    //console.log(ContratVoitureModel+"the pimm:"+ContratVoiturePIMM);
-    console.log(ClientContrat);
 
     if (
       ContratDateDebut == "" ||
@@ -4654,8 +4645,8 @@ function searchStockMateriel() {
       data: {
         query: search
       },
-      success: function (data) {
-        $("#stock-list-materiel").html(data.html);    
+      success: function (response) {
+        $("#stock-list-materiel").html(response);    
       },
     });
   });
@@ -6530,6 +6521,9 @@ function insertContratPackRecord() {
     var ContratDateDebut = $("#DateDebutContrat").val();
     var ContratDateFin = $("#DateFinContrat").val();
     var ContratPrixContrat = $("#PrixContratMixte").val();
+    var klillimite = $('#klillimite:checked').val();
+    var NbreKilometreContratCadreObj = $("#NbreKilometreContratCadre").val();
+    var NbreKilometreContratCadreNObj = $("#NbreKilometreObligContrat").val();
     var ContratAssurence = $("#AssuranceContratMixte").val();
     var ContratPaiement = $("#ModePaiementContratMixte").val();
     var ContratDatePaiement = $("#DatePrelevementContratMixte").val();
@@ -6570,6 +6564,17 @@ function insertContratPackRecord() {
     if(VehiculePack == undefined){
       VehiculePack = 0;
     }
+
+    if(klillimite == undefined){
+      klillimite = "0";
+      NbreKilometreContratCadre = NbreKilometreContratCadreObj;
+    }else{
+      NbreKilometreContratCadre = NbreKilometreContratCadreNObj;
+    }
+    if(type == "CONTRAT CADRE"){
+      NbreKilometreContrat = NbreKilometreContratCadre;
+    }
+
     if(type == "CONTRAT" && (VehiculePack!=0 && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" || 
       ContratmoyenCaution == "" || id_pack == null || ContratPaiement == ""))){
         $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
@@ -6581,6 +6586,19 @@ function insertContratPackRecord() {
       }else if (type == "CONTRAT" && (notfound == 1)) {
         $("#message").addClass("alert alert-danger").html("Veuillez vérifier la liste de matériels!");
       }else if (type == "CONTRAT" && (VehiculePack == null)) {
+        $("#message").addClass("alert alert-danger").html("Veuillez vérifier la liste de véhicules!");
+
+    }else if(type == "CONTRAT CADRE" && (klillimite == "1" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" || 
+      ContratmoyenCaution == "" || id_pack == null || ContratPaiement == ""))){
+        $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
+      }else if(type == "CONTRAT CADRE" && (klillimite == "0" && (ContratDateDebut == "" || ContratDateFin == "" || ContratDuree == "" || ContratClient == null || ContratPrixContrat == "" || 
+      ContratmoyenCaution == "" || id_pack == null || ContratPaiement == "" || NbreKilometreContrat == ""))){
+        $("#message").addClass("alert alert-danger").html("Veuillez remplir tous les champs obligatoires!");
+      }else if (type == "CONTRAT CADRE" && (ContratDateDebut > ContratDateFin)) {
+        $("#message").addClass("alert alert-danger").html("La date de début ne peut pas être postérieure à la date de fin!");
+      }else if (type == "CONTRAT CADRE" && (notfound == 1)) {
+        $("#message").addClass("alert alert-danger").html("Veuillez vérifier la liste de matériels!");
+      }else if (type == "CONTRAT CADRE" && (VehiculePack == 0)) {
         $("#message").addClass("alert alert-danger").html("Veuillez vérifier la liste de véhicules!");
 
     }else if (type == "CONTRAT AVENANT" && (ContratAvenant == null && (ContratAvenantDateDebut == "" || ContratAvenantDateFin == ""))){
@@ -6620,6 +6638,7 @@ function insertContratPackRecord() {
       form_data.append("ContratAvenantDateFin", ContratAvenantDateFin);
       form_data.append("ContratAvenantmaterielListe", ContratAvenantmaterielListe);
       form_data.append("ContratAvenantquantiteListe", ContratAvenantquantiteListe);
+      form_data.append("checkobgkm", klillimite);
 
       $.ajax({
         url: "AjoutContratPack.php",

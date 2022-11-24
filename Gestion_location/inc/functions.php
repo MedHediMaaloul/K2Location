@@ -2670,30 +2670,6 @@ function update_Controle_technique_mecanicien()
     }
 }
 
-function delete_Controletechnique()
-{
-    global $conn;
-    $Del_ID = $_POST['id_entretien'];
-
-    $queryidv = "SELECT id_voiture FROM entretien where id_entretien='$Del_ID'";
-    $resultidv = mysqli_query($conn, $queryidv);
-    $row = mysqli_fetch_row($resultidv);
-    $id_voiture = $row[0];
-
-    $query = "DELETE FROM entretien WHERE id_entretien='$Del_ID'";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-
-        $qt = "UPDATE voiture set etat_voiture= 'Disponible' where  id_voiture=$id_voiture  ";
-        $res = mysqli_query($conn, $qt);
-
-        echo "<div class='text-danger'>L'entretien est supprimé avec succés</div>";
-    } else {
-        echo "<div class='text-success'>SVP vérifier votre requette !</div>";
-    }
-}
-
 function Confirmation_Controletechnique()
 {
     global $conn;
@@ -4169,7 +4145,49 @@ function InsertContratMateriel()
     $ContratAvenantDateDebut = $_POST['ContratAvenantDateDebut'];
     $ContratAvenantDateFin = $_POST['ContratAvenantDateFin'];
 
-    if($typecontratavenant == "CONTRAT"){
+    if($typecontratavenant == "CONTRAT AVENANT"){
+        $querydatecontrat = "SELECT date_debut,date_fin FROM contrat_client WHERE id_contrat='$ContratAvenant'";
+        $resultdatecontrat = mysqli_query($conn, $querydatecontrat);
+        $rowdatecontrat = mysqli_fetch_assoc($resultdatecontrat);
+        $datedebutcontrat = $rowdatecontrat['date_debut'];
+        $datefincontrat = $rowdatecontrat['date_fin'];
+        if(($datedebutcontrat <= $ContratAvenantDateDebut) && ($datefincontrat >= $ContratAvenantDateFin)){
+            $query = "INSERT INTO 
+                    contrat_client_avenant(debut_contrat_avenant,fin_contrat_avenant,id_voiture_avenant,id_materiel_avenant,id_pack_avenant,id_contrat_client) 
+                    VALUES ('$ContratAvenantDateDebut','$ContratAvenantDateFin','0','$Id_materiel','0' ,'$ContratAvenant')";
+            $result = mysqli_query($conn, $query);
+            if($result){
+                $query_get_max_id_contrat = "SELECT max(id_contrat_avenant)
+                    FROM contrat_client_avenant";
+                    $result_query_get_max_id_contrat = mysqli_query($conn, $query_get_max_id_contrat);
+                    $row = mysqli_fetch_row($result_query_get_max_id_contrat);
+                    $id_contrat_avenant = $row[0];
+                $query_materiels ="SELECT code_materiel,designation,num_serie_materiels,id_materiels_agence 
+                    FROM materiels,materiels_agence
+                    where materiels.id_materiels = materiels_agence.id_materiels 
+                    AND id_materiels_agence = '$Id_materiel'";
+                $exection_materiel = mysqli_query($conn, $query_materiels);
+                $resultat = mysqli_fetch_array($exection_materiel);
+                $querymaterielcontrat = "INSERT INTO materiel_contrat_client
+                (id_contrat_avenant,id_materiels_agence,num_serie_contrat,code_materiel_contrat,designation_contrat,quantite_contrat,ContratDateDebut,ContratDateFin) 
+                VALUES ('$id_contrat_avenant','$resultat[id_materiels_agence]','$resultat[num_serie_materiels]','$resultat[code_materiel]','$resultat[designation]','1','$ContratAvenantDateDebut', '$ContratAvenantDateFin')";
+                $resultmaterielcontrat = mysqli_query($conn, $querymaterielcontrat);
+
+                $query_materiels_comp ="SELECT * FROM composant_materiels where id_materiels_agence = '$resultat[id_materiels_agence]'";
+                $exection_materiel_comp = mysqli_query($conn, $query_materiels_comp);
+                while ($resultat_comp = mysqli_fetch_array($exection_materiel_comp)) {
+                    $query_composant = "INSERT INTO composant_materiels_contrat
+                        (id_contrat_avenant,id_materiels_agence,designation_composant,num_serie_composant) 
+                        VALUES ('$id_contrat_avenant','$Id_materiel','$resultat_comp[designation_composant]','$resultat_comp[num_serie_composant]')";
+                    $result_composant = mysqli_query($conn, $query_composant);
+                }
+                echo "<div class='text-success'>Le contrat avenant est ajouté avec succés</div>";
+            }
+        }else{
+            echo "<div class='text-danger'>SVP! Vérifiez les dates</div>";
+        }   
+
+    }else{
         if ($contratmaterielagence == NULL) {
             $id_agence = $_SESSION['id_agence'];;
         } else {
@@ -4189,13 +4207,21 @@ function InsertContratMateriel()
             if ($AgenceRetClient == "") {
                 $AgenceRetClient = $AgenceDepClient;
             }
-            $query = "INSERT INTO 
+            if($typecontratavenant == "CONTRAT CADRE"){
+                $query = "INSERT INTO 
                 contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,type_location,duree,date_debut,date_fin,
-                prix,assurance,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,date_prelevement,id_user,id_agence) 
+                prix,assurance,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,date_prelevement,contratcadre,id_user,id_agence) 
                 VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','0','$Id_materiel','0' ,'$ContratType','$ContratDuree','$ContratDateDebut',
-                '$ContratDateFin','$ContratPrixContrat','$ContratAssurence','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$ContratNbreKilometre','$moyenCaution','$ContratnumCaution','$ContratNumCautionCB','$ContratDatePaiement',
+                '$ContratDateFin','$ContratPrixContrat','$ContratAssurence','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$ContratNbreKilometre','$moyenCaution','$ContratnumCaution','$ContratNumCautionCB','$ContratDatePaiement','1',
                 '$id_user','$id_agence')";
-
+            }else{
+                $query = "INSERT INTO 
+                contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,type_location,duree,date_debut,date_fin,
+                prix,assurance,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,date_prelevement,contratcadre,id_user,id_agence) 
+                VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','0','$Id_materiel','0' ,'$ContratType','$ContratDuree','$ContratDateDebut',
+                '$ContratDateFin','$ContratPrixContrat','$ContratAssurence','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$ContratNbreKilometre','$moyenCaution','$ContratnumCaution','$ContratNumCautionCB','$ContratDatePaiement','0',
+                '$id_user','$id_agence')";
+            }
             $result = mysqli_query($conn, $query);
 
             $queryContratID = "SELECT id_contrat,date_ajoute FROM contrat_client WHERE id_contrat=(SELECT max(id_contrat) from contrat_client)";
@@ -4283,48 +4309,6 @@ function InsertContratMateriel()
         } else {
             echo "<div class='text-danger'>SVP! Choisissez l'agence</div>";
         }
-    }else{
-        $querydatecontrat = "SELECT date_debut,date_fin FROM contrat_client WHERE id_contrat='$ContratAvenant'";
-        $resultdatecontrat = mysqli_query($conn, $querydatecontrat);
-        $rowdatecontrat = mysqli_fetch_assoc($resultdatecontrat);
-        $datedebutcontrat = $rowdatecontrat['date_debut'];
-        $datefincontrat = $rowdatecontrat['date_fin'];
-        if(($datedebutcontrat <= $ContratAvenantDateDebut) && ($datefincontrat >= $ContratAvenantDateFin)){
-            $query = "INSERT INTO 
-                    contrat_client_avenant(debut_contrat_avenant,fin_contrat_avenant,id_voiture_avenant,id_materiel_avenant,id_pack_avenant,id_contrat_client) 
-                    VALUES ('$ContratAvenantDateDebut','$ContratAvenantDateFin','0','$Id_materiel','0' ,'$ContratAvenant')";
-            $result = mysqli_query($conn, $query);
-            if($result){
-                $query_get_max_id_contrat = "SELECT max(id_contrat_avenant)
-                    FROM contrat_client_avenant";
-                    $result_query_get_max_id_contrat = mysqli_query($conn, $query_get_max_id_contrat);
-                    $row = mysqli_fetch_row($result_query_get_max_id_contrat);
-                    $id_contrat_avenant = $row[0];
-                $query_materiels ="SELECT code_materiel,designation,num_serie_materiels,id_materiels_agence 
-                    FROM materiels,materiels_agence
-                    where materiels.id_materiels = materiels_agence.id_materiels 
-                    AND id_materiels_agence = '$Id_materiel'";
-                $exection_materiel = mysqli_query($conn, $query_materiels);
-                $resultat = mysqli_fetch_array($exection_materiel);
-                $querymaterielcontrat = "INSERT INTO materiel_contrat_client
-                (id_contrat_avenant,id_materiels_agence,num_serie_contrat,code_materiel_contrat,designation_contrat,quantite_contrat,ContratDateDebut,ContratDateFin) 
-                VALUES ('$id_contrat_avenant','$resultat[id_materiels_agence]','$resultat[num_serie_materiels]','$resultat[code_materiel]','$resultat[designation]','1','$ContratAvenantDateDebut', '$ContratAvenantDateFin')";
-                $resultmaterielcontrat = mysqli_query($conn, $querymaterielcontrat);
-
-                $query_materiels_comp ="SELECT * FROM composant_materiels where id_materiels_agence = '$resultat[id_materiels_agence]'";
-                $exection_materiel_comp = mysqli_query($conn, $query_materiels_comp);
-                while ($resultat_comp = mysqli_fetch_array($exection_materiel_comp)) {
-                    $query_composant = "INSERT INTO composant_materiels_contrat
-                        (id_contrat_avenant,id_materiels_agence,designation_composant,num_serie_composant) 
-                        VALUES ('$id_contrat_avenant','$Id_materiel','$resultat_comp[designation_composant]','$resultat_comp[num_serie_composant]')";
-                    $result_composant = mysqli_query($conn, $query_composant);
-                }
-                echo "<div class='text-success'>Le contrat avenant est ajouté avec succés</div>";
-            }
-        }else{
-            echo "<div class='text-danger'>SVP! Vérifiez les dates</div>";
-        }   
-
     }
 }
 
@@ -4354,8 +4338,24 @@ function InsertContratVoiture()
     $ContratAvenant = $_POST['ContratAvenant'];
     $ContratAvenantDateDebut = $_POST['ContratAvenantDateDebut'];
     $ContratAvenantDateFin = $_POST['ContratAvenantDateFin'];
+    $checkobgkm = $_POST['checkobgkm'];
 
-    if($typecontratavenant == "CONTRAT"){
+    if($typecontratavenant == "CONTRAT AVENANT"){
+        $querydatecontrat = "SELECT date_debut,date_fin FROM contrat_client WHERE id_contrat='$ContratAvenant'";
+        $resultdatecontrat = mysqli_query($conn, $querydatecontrat);
+        $rowdatecontrat = mysqli_fetch_assoc($resultdatecontrat);
+        $datedebutcontrat = $rowdatecontrat['date_debut'];
+        $datefincontrat = $rowdatecontrat['date_fin'];
+        if(($datedebutcontrat <= $ContratAvenantDateDebut) && ($datefincontrat >= $ContratAvenantDateFin)){
+            $query = "INSERT INTO 
+                    contrat_client_avenant(debut_contrat_avenant,fin_contrat_avenant,id_voiture_avenant,id_materiel_avenant,id_pack_avenant,id_contrat_client) 
+                    VALUES ('$ContratAvenantDateDebut','$ContratAvenantDateFin','$Contrat_voiture','0','0' ,'$ContratAvenant')";
+            $result = mysqli_query($conn, $query);
+            echo "<div class='text-success'>Le contrat avenant est ajouté avec succés</div>";
+        }else{
+            echo "<div class='text-danger'>SVP! Vérifiez les dates</div>";
+        }   
+    }else{
         if ($contratvehiculeagence == "") {
             $id_agence = $_SESSION['id_agence'];
         } else {
@@ -4375,12 +4375,22 @@ function InsertContratVoiture()
                 if ($AgenceRetClient == "") {
                     $AgenceRetClient = $AgenceDepClient;
                 }
-                $query = "INSERT INTO 
+
+                if($typecontratavenant == "CONTRAT CADRE"){
+                    $query = "INSERT INTO 
                     contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,type_location,duree,date_debut,date_fin,
-                    prix,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,assurance,date_prelevement,id_user,id_agence) 
+                    prix,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,assurance,date_prelevement,contratcadre,checkkm,id_user,id_agence) 
                     VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','$Contrat_voiture','0','0' ,'$ContratType','$ContratDuree','$ContratDateDebut',
                     '$ContratDateFin','$ContratPrixContrat','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$NbreKilometreContrat','$ContratMoyenCaution','$ContratnumCaution',
-                    '$ContratNumCautionCB','$ContratAssurence','$ContratDatePaiement','$id_user','$id_agence')";
+                    '$ContratNumCautionCB','$ContratAssurence','$ContratDatePaiement','1','$checkobgkm','$id_user','$id_agence')";
+                }else{
+                    $query = "INSERT INTO 
+                    contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,type_location,duree,date_debut,date_fin,
+                    prix,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,assurance,date_prelevement,checkkm,id_user,id_agence) 
+                    VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','$Contrat_voiture','0','0' ,'$ContratType','$ContratDuree','$ContratDateDebut',
+                    '$ContratDateFin','$ContratPrixContrat','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$NbreKilometreContrat','$ContratMoyenCaution','$ContratnumCaution',
+                    '$ContratNumCautionCB','$ContratAssurence','$ContratDatePaiement','$checkobgkm','$id_user','$id_agence')";
+                }
                 $result = mysqli_query($conn, $query);
                 $queryContratVehiculeID = "SELECT id_contrat,date_ajoute FROM contrat_client WHERE id_contrat=(SELECT max(id_contrat) from contrat_client)";
                 $resultContratVehiculeID = mysqli_query($conn, $queryContratVehiculeID);
@@ -4444,23 +4454,7 @@ function InsertContratVoiture()
         } else {
             echo "<div class='text-danger'>SVP! Choisissez l'agence</div>";
         }
-    }else{
-        $querydatecontrat = "SELECT date_debut,date_fin FROM contrat_client WHERE id_contrat='$ContratAvenant'";
-        $resultdatecontrat = mysqli_query($conn, $querydatecontrat);
-        $rowdatecontrat = mysqli_fetch_assoc($resultdatecontrat);
-        $datedebutcontrat = $rowdatecontrat['date_debut'];
-        $datefincontrat = $rowdatecontrat['date_fin'];
-        if(($datedebutcontrat <= $ContratAvenantDateDebut) && ($datefincontrat >= $ContratAvenantDateFin)){
-            $query = "INSERT INTO 
-                    contrat_client_avenant(debut_contrat_avenant,fin_contrat_avenant,id_voiture_avenant,id_materiel_avenant,id_pack_avenant,id_contrat_client) 
-                    VALUES ('$ContratAvenantDateDebut','$ContratAvenantDateFin','$Contrat_voiture','0','0' ,'$ContratAvenant')";
-            $result = mysqli_query($conn, $query);
-            echo "<div class='text-success'>Le contrat avenant est ajouté avec succés</div>";
-        }else{
-            echo "<div class='text-danger'>SVP! Vérifiez les dates</div>";
-        }   
     }
-    
 }
 
 
@@ -5212,22 +5206,24 @@ function DisplayControletechniqueRecordVoiture()
     LEFT JOIN type_controle_technique AS T ON CT.type_controletechnique = T.id_type_controle 
     WHERE V.actions ='T'";
     $result = mysqli_query($conn, $query);
-    $clr=0;
-    $colors = array('#DFE9F2','#F2F2F2');
+    $colors = array('#DFE9F2','#F0F0FG','#FGF8F8');
     while ($row = mysqli_fetch_assoc($result)) {
         $disponibilte = disponibilite_Vehicule1($row['id_voiture']);
         $localisation = localisation_Vehicule($row['id_voiture']);
-        $numtel ="";
         if ($disponibilte == 'disponibile') {
+            $numtel = "";
         } else {
             $row['lieu_agence'] = $localisation;
             $numtel = telclient_VehiculeLoue($row['id_voiture']);
         }
 
-        if($clr < 3){
+        if($row['id_type_controle'] == 1){
             $i = 0;
-        }else{
+        }
+        else if($row['id_type_controle'] == 2){
             $i = 1;
+        }else{
+            $i = 2;
         }
         $style = $colors[$i];
 
@@ -5263,15 +5259,10 @@ function DisplayControletechniqueRecordVoiture()
         else if ($_SESSION['Role'] == "responsable") {
             $value .= '<td class="border-top-0" bgcolor="'.$style.'">
                 <button type="button" title="Modifier le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-edit-Controletechnique" data-id=' . $row['id_controletechnique'] . '><i class="fas fa-edit"></i></button>
-                <button type="button" title="Supprimer le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-delete-Controletechnique" data-id1=' . $row['id_controletechnique'] . '><i class="fas fa-trash-alt"></i></button>
                 <button type="button" title="Confirmer la réalisation de controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-confirmation-Controletechnique" data-id2=' . $row['id_controletechnique'] . '><i class="fas fa-check"></i></button>
             </td>';
         }
         $value .= '</tr>';
-        $clr++;
-        if($clr==6){
-         $clr=0;
-        }
     }
     $value .= '</table>';
     echo $value;
@@ -5323,6 +5314,7 @@ function searchControleTechnique()
                 OR comment_declar LIKE ('%" . $search . "%')
                 OR comment_interv LIKE ('%" . $search . "%'))");
         $result = mysqli_query($conn, $query);
+        $colors = array('#DFE9F2','#F0F0FG','#FGF8F8');
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $disponibilte = disponibilite_Vehicule1($row['id_voiture']);
@@ -5334,7 +5326,15 @@ function searchControleTechnique()
                     $row['lieu_agence'] = $localisation;
                     $numtel = telclient_VehiculeLoue($row['id_voiture']);
                 }
-                $style = "#F2F2F2";
+                if($row['id_type_controle'] == 1){
+                    $i = 0;
+                }
+                else if($row['id_type_controle'] == 2){
+                    $i = 1;
+                }else{
+                    $i = 2;
+                }
+                $style = $colors[$i];
                 $date = date("Y-m-d");
                 $date_controletechnique = $row['date_controletechnique'];
                 if(($date_controletechnique != "0000-00-00") && ($date_controletechnique >= $date)){
@@ -5367,7 +5367,6 @@ function searchControleTechnique()
                 else if ($_SESSION['Role'] == "responsable") {
                     $value .= '<td class="border-top-0" bgcolor="'.$style.'">
                         <button type="button" title="Modifier le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-edit-Controletechnique" data-id=' . $row['id_controletechnique'] . '><i class="fas fa-edit"></i></button>
-                        <button type="button" title="Supprimer le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-delete-Controletechnique" data-id1=' . $row['id_controletechnique'] . '><i class="fas fa-trash-alt"></i></button>
                         <button type="button" title="Confirmer la réalisation de controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-confirmation-Controletechnique" data-id2=' . $row['id_controletechnique'] . '><i class="fas fa-check"></i></button>
                     </td>';
                 }
@@ -5423,8 +5422,7 @@ function searchTypeControleTechnique()
             WHERE V.actions ='T'
             AND type_controletechnique = '$search'";
         $result = mysqli_query($conn, $query);
-        $clr=0;
-        $colors = array('#DFE9F2','#F2F2F2');
+        $colors = array('#DFE9F2','#F0F0FG','#FGF8F8');
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $disponibilte = disponibilite_Vehicule1($row['id_voiture']);
@@ -5435,7 +5433,16 @@ function searchTypeControleTechnique()
                     $row['lieu_agence'] = $localisation;
                     $numtel = telclient_VehiculeLoue($row['id_voiture']);
                 }
-                $style = $colors[$clr];
+
+                if($row['id_type_controle'] == 1){
+                    $i = 0;
+                }
+                else if($row['id_type_controle'] == 2){
+                    $i = 1;
+                }else{
+                    $i = 2;
+                }
+                $style = $colors[$i];
                 $date = date("Y-m-d");
                 $date_controletechnique = $row['date_controletechnique'];
                 if(($date_controletechnique != "0000-00-00") && ($date_controletechnique >= $date)){
@@ -5468,15 +5475,10 @@ function searchTypeControleTechnique()
                 else if ($_SESSION['Role'] == "responsable") {
                     $value .= '<td class="border-top-0" bgcolor="'.$style.'">
                         <button type="button" title="Modifier le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-edit-Controletechnique" data-id=' . $row['id_controletechnique'] . '><i class="fas fa-edit"></i></button>
-                        <button type="button" title="Supprimer le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-delete-Controletechnique" data-id1=' . $row['id_controletechnique'] . '><i class="fas fa-trash-alt"></i></button>
                         <button type="button" title="Confirmer la réalisation de controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-confirmation-Controletechnique" data-id2=' . $row['id_controletechnique'] . '><i class="fas fa-check"></i></button>
                     </td>';
                 }
                 $value .= '</tr>';
-                $clr++;
-                if($clr==2){
-                 $clr=0;
-                }
             }
             $value .= '</table>';
             echo $value;
@@ -5492,8 +5494,9 @@ function searchTypeControleTechnique()
             LEFT JOIN type_controle_technique AS T ON CT.type_controletechnique = T.id_type_controle 
             WHERE V.actions ='T'";
         $result = mysqli_query($conn, $query);
-        $clr=0;
-        $colors = array('#DFE9F2','#F2F2F2');
+        // $hexaLetters = array('FA','F2','F9','FD','8E','GF');
+        // $color = '#';
+        $colors = array('#DFE9F2','#F0F0FG','#FGF8F8');
         while ($row = mysqli_fetch_assoc($result)) {
             $disponibilte = disponibilite_Vehicule1($row['id_voiture']);
             $localisation = localisation_Vehicule($row['id_voiture']);
@@ -5503,10 +5506,15 @@ function searchTypeControleTechnique()
                 $row['lieu_agence'] = $localisation;
                 $numtel = telclient_VehiculeLoue($row['id_voiture']);
             }
-            if($clr < 3){
+
+            if($row['id_type_controle'] == 1){
+                // $color .= $hexaLetters[rand(0, count($hexaLetters) - 1)];
                 $i = 0;
-            }else{
+            }
+            else if($row['id_type_controle'] == 2){
                 $i = 1;
+            }else{
+                $i = 2;
             }
             $style = $colors[$i];
             $date = date("Y-m-d");
@@ -5541,15 +5549,10 @@ function searchTypeControleTechnique()
             else if ($_SESSION['Role'] == "responsable") {
                 $value .= '<td class="border-top-0" bgcolor="'.$style.'">
                     <button type="button" title="Modifier le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-edit-Controletechnique" data-id=' . $row['id_controletechnique'] . '><i class="fas fa-edit"></i></button>
-                    <button type="button" title="Supprimer le controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-delete-Controletechnique" data-id1=' . $row['id_controletechnique'] . '><i class="fas fa-trash-alt"></i></button>
                     <button type="button" title="Confirmer la réalisation de controle technique" class="btn waves-effect waves-light btn-outline-dark" style="width:55px; height:45px;" id="btn-confirmation-Controletechnique" data-id2=' . $row['id_controletechnique'] . '><i class="fas fa-check"></i></button>
                 </td>';
             }
             $value .= '</tr>';
-            $clr++;
-            if($clr==6){
-                $clr=0;
-            }
         }
         $value .= '</table>';
         echo $value;
@@ -7274,11 +7277,16 @@ function searchStockMateriel()
     $id_agence = $_SESSION['id_agence'];
     $value = '<table class="table">
     <tr>
-    <th class="border-top-0">ID</th>
-    <th class="border-top-0">Matériel</th>
-    <th class="border-top-0">N° série de matériel</th>
-    <th class="border-top-0">Agence</th>
+        <th class="border-top-0">ID</th>
+        <th class="border-top-0">Code de matériel</th>
+        <th class="border-top-0">N° de série</th>
+        <th class="border-top-0">Désignation</th>
+        <th class="border-top-0">Quantité disponible</th>
+        <th class="border-top-0">Localisation</th>
+        <th class="border-top-0">Disponibilité</th>
+        <th class="border-top-0">Transfert</th>
     </tr>';
+
     if (isset($_POST['query'])) {
         $search = $_POST['query'];
         if ($id_agence != "0") {
@@ -7289,36 +7297,94 @@ function searchStockMateriel()
             and materiels_agence.id_agence = '$id_agence'
             AND  (materiels.id_materiels LIKE ('%" . $search . "%')
                 OR materiels.code_materiel LIKE ('%" . $search . "%')
-                OR materiels_agence.num_serie_materiels LIKE ('%" . $search . "%')       
-                OR agence.lieu_agence LIKE ('%" . $search . "%'))");
+                OR materiels_agence.id_materiels_agence LIKE ('%" . $search . "%')     
+                OR materiels.designation LIKE ('%" . $search . "%')  
+                OR materiels_agence.num_serie_materiels LIKE ('%" . $search . "%')    
+                OR agence.lieu_agence LIKE ('%" . $search . "%'))");          
         } else {
             $query = ("SELECT * FROM materiels_agence,materiels,agence 
             where materiels_agence.id_materiels = materiels.id_materiels
             AND materiels_agence.id_agence = agence.id_agence
             and  materiels_agence.etat_materiels !='F'
             AND  (materiels.id_materiels LIKE ('%" . $search . "%')
-                OR materiels.code_materiel LIKE ('%" . $search . "%')       
+                OR materiels.code_materiel LIKE ('%" . $search . "%')
+                OR materiels_agence.id_materiels_agence LIKE ('%" . $search . "%')     
+                OR materiels.designation LIKE ('%" . $search . "%')         
                 OR materiels_agence.num_serie_materiels LIKE ('%" . $search . "%')
                 OR agence.lieu_agence LIKE ('%" . $search . "%'))");
         }
         $result = mysqli_query($conn, $query);
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $value .= '
-                <tbody>          
-                    <tr>
-                        <td class="border-top-0">' . $row['id_materiels'] . '</td>
-                        <td class="border-top-0">' . $row['code_materiel'] . '</td>
-                        <td class="border-top-0">' . $row['num_serie_materiels'] . '</td>
-                        <td class="border-top-0">' . $row['lieu_agence'] . '</td>          
-                    </tr>
-                </tbody>';
+                if ($row['etat_materiels'] == "HS") {
+                    $color = "badge bg-light-info text-white fw-normal";
+                    $color1 = "background-color: #ffc36d!important";
+                    $etat = "HORS SERVICE";
+                    $qti = 0;
+                } elseif ($row['etat_materiels'] == "T") {
+                    $id_materiels_agence = $row['id_materiels_agence'];
+                    if ($row['num_serie_obg'] == "T") {
+                        $disponibilte = disponibilite_materiel_num_seriee($row['id_materiels_agence']);
+                        $localisation = Localisation_materiel($row['id_materiels_agence']);
+                        if ($disponibilte == "0") {
+                            $color = "badge bg-light-success text-white fw-normal";
+                            $color1 = "background-color: #2cd07e!important";
+                            $etat = "DISPONIBLE";
+                            $qti = 1;
+                        } else {
+                            $color = "badge bg-light-info text-white fw-normal";
+                            $color1 = "background-color: #ff5050!important";
+                            $etat = "En Location";
+                            $qti = 0;
+                            $row['lieu_agence'] = $localisation;
+                        }
+                    }
+                    //si le matiriel ne pas de n serie
+                    else {
+                        $disponibilteqti = disponibilite_materiel_qti_num_seriee($row['id_materiels_agence'], $row['quantite_materiels']);
+                        $localisation = Localisation_materiel($row['id_materiels_agence']);
+                        if ($disponibilteqti > 0) {
+                            $color = "badge bg-light-success text-white fw-normal";
+                            $color1 = "background-color: #2cd07e!important";
+                            $etat = "DISPONIBLE";
+                            $qti = $disponibilteqti;
+                        } else {
+                            $color = "badge bg-light-info text-white fw-normal";
+                            $color1 = "background-color: #ff5050!important";
+                            $etat = "En Location";
+                            $qti = $disponibilteqti;
+                            $row['lieu_agence'] = $localisation;
+                        }
+                    }
+                    $value .= '
+                        <tbody>          
+                            <tr>
+                                <td class="border-top-0">' . $row['id_materiels_agence'] . '</td>
+                                <td class="border-top-0">' . $row['code_materiel'] . '</td>
+                                <td class="border-top-0">' . $row['num_serie_materiels'] . '</td>
+                                <td class="border-top-0">' . $row['designation'] . '</td>
+                                <td class="border-top-0">' .   $qti . '</td>
+                                <td class="border-top-0">' . $row['lieu_agence'] . '</td>          
+                                <td><span class="' . $color . '" style ="' . $color1 . '">' . $etat . '</span></td>
+                                <td class="border-top-0">';
+                                    if ($row['num_serie_obg'] == "T") {
+                                        $value .= '
+                                        <button title="Transférer le matériel" class="btn waves-effect waves-light btn-outline-dark" id="btn-transfert-materiel" data-id=' . $row['id_materiels_agence'] . ' ><i class="fas fa-exchange-alt"></i></button>';
+                                    } else {
+                                        $value .= '<button title="Transférer le matériel" class="btn waves-effect waves-light btn-outline-dark" id="btn-transfert-materiel-quantite" data-id=' . $row['id_materiels_agence'] . ' ><i class="fas fa-exchange-alt"></i></button>';
+                                    }
+                                $value .= '</td>
+                            </tr>
+                        </tbody>';
+                }
             }
             $value .= '</table>';
             echo $value;
         } else {
             echo "<h4>Aucune donnée correspond à votre recherche!</h4>";
         }
+    }else {
+        selectMaterielQtiDispo();
     }
 }
 //end
@@ -10539,7 +10605,6 @@ function InsertContratPack()
 {
     global $conn;
     $id_user = $_SESSION['id_user'];
-    $email_user = $_SESSION['mail_user'];
     $ContratmaterielListe = isset($_POST['ContratmaterielListe']) ? $_POST['ContratmaterielListe'] : [];
     $ContratmaterielListe = explode(',', $ContratmaterielListe);
     $ContratquantiteListe = isset($_POST['ContratquantiteListe']) ? $_POST['ContratquantiteListe'] : [];
@@ -10558,12 +10623,13 @@ function InsertContratPack()
     $ContratDatePaiement = isset($_POST['ContratDatePaiement']) ? $_POST['ContratDatePaiement'] :  "";
     $ContratCaution = isset($_POST['ContratCaution']) ? $_POST['ContratCaution'] :  "";
     $ContratCautionCheque = isset($_POST['ContratCautionCheque']) ? $_POST['ContratCautionCheque'] :  "";
-    $NbreKilometreContrat = "0";
+    $NbreKilometreContrat = isset($_POST['NbreKilometreContrat']) ? $_POST['NbreKilometreContrat'] :  "0";
     $ContratmoyenCaution = isset($_POST['ContratmoyenCaution']) ? $_POST['ContratmoyenCaution'] :  "";
     $ContratnumCaution = isset($_POST['ContratNumCaution']) ? $_POST['ContratNumCaution'] :  "";
     $ContratNumCautionCB = isset($_POST['ContratNumCautionCB']) ? $_POST['ContratNumCautionCB'] :  "";
     $ContratVoiturekMPrevu = "0";
     $contratpackagence = isset($_POST['contratpackagence']) ? $_POST['contratpackagence'] :  "";
+    $checkobgkm = $_POST['checkobgkm'];
 
     $ContratAvenantmaterielListe = isset($_POST['ContratAvenantmaterielListe']) ? $_POST['ContratAvenantmaterielListe'] : [];
     $ContratAvenantmaterielListe = explode(',', $ContratAvenantmaterielListe);
@@ -10588,14 +10654,73 @@ function InsertContratPack()
         echo json_encode($errors);
         return;
     }
-    if($typecontratavenant == "CONTRAT"){
+
+    if($typecontratavenant == "CONTRAT AVENANT"){
+        $querydatecontrat = "SELECT date_debut,date_fin FROM contrat_client WHERE id_contrat='$ContratAvenant'";
+        $resultdatecontrat = mysqli_query($conn, $querydatecontrat);
+        $rowdatecontrat = mysqli_fetch_assoc($resultdatecontrat);
+        $datedebutcontrat = $rowdatecontrat['date_debut'];
+        $datefincontrat = $rowdatecontrat['date_fin'];
+        if(($datedebutcontrat <= $ContratAvenantDateDebut) && ($datefincontrat >= $ContratAvenantDateFin)){
+            $query = "INSERT INTO 
+                    contrat_client_avenant(debut_contrat_avenant,fin_contrat_avenant,id_voiture_avenant,id_materiel_avenant,id_pack_avenant,id_contrat_client) 
+                    VALUES ('$ContratAvenantDateDebut','$ContratAvenantDateFin','$VehiculePack','0','$id_pack','$ContratAvenant')";
+            $result = mysqli_query($conn, $query);
+            if($result){
+                $query_get_max_id_contrat = "SELECT max(id_contrat_avenant) FROM contrat_client_avenant";
+                $result_query_get_max_id_contra = mysqli_query($conn, $query_get_max_id_contrat);
+                $row = mysqli_fetch_row($result_query_get_max_id_contra);
+                $id_contrat = $row[0];
+                for ($i = 0; $i < $countavenant; $i++) {
+                    $Id_materiel = $ContratAvenantmaterielListe[$i];
+                    $quantite = $ContratAvenantquantiteListe[$i];
+                    $query_materiels = "SELECT code_materiel,designation,num_serie_materiels,id_materiels_agence 
+                        FROM materiels,materiels_agence
+                        where materiels.id_materiels = materiels_agence.id_materiels 
+                        AND id_materiels_agence = '$Id_materiel'";
+                    $exection_materiel = mysqli_query($conn, $query_materiels);
+                    $resultat = mysqli_fetch_array($exection_materiel);
+                    $querymateriel = "INSERT INTO materiel_contrat_client
+                        (id_contrat_avenant,id_materiels_agence,num_serie_contrat,code_materiel_contrat,designation_contrat,quantite_contrat,ContratDateDebut,ContratDateFin) 
+                        VALUES ('$id_contrat','$resultat[id_materiels_agence]','$resultat[num_serie_materiels]','$resultat[code_materiel]','$resultat[designation]','$quantite', '$ContratAvenantDateDebut', '$ContratAvenantDateFin')";
+                    $resultmateriel = mysqli_query($conn, $querymateriel);
+                    $query_materiels_comp ="SELECT * 
+                        FROM composant_materiels 
+                        where id_materiels_agence ='$resultat[id_materiels_agence]'";
+                    $exection_materiel_comp = mysqli_query($conn, $query_materiels_comp);
+                    while ($resultat_comp = mysqli_fetch_array($exection_materiel_comp)) {
+                        $querycomposant = "INSERT INTO 
+                            composant_materiels_contrat(id_contrat_avenant,id_materiels_agence,designation_composant,num_serie_composant) 
+                            VALUES ('$id_contrat','$Id_materiel','$resultat_comp[designation_composant]','$resultat_comp[num_serie_composant]')";
+                        $resultcomposant = mysqli_query($conn, $querycomposant);
+                    }
+                }
+            }
+            echo "<div class='text-success'>Le contrat avenant est ajouté avec succés</div>";
+        }else{
+            echo "<div class='text-danger'>SVP! Vérifiez les dates</div>";
+        }  
+    }else{
         if ($id_agence != "0") {
             if ($AgenceRetClient == 'null') {
                 $AgenceRetClient = $AgenceDepClient;
             }
-            $query = "INSERT INTO 
-                contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,date_contrat,type_location,duree,date_debut,date_fin,prix,assurance,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,KMPrevu,date_prelevement,id_user,id_agence) 
-                VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','$VehiculePack','0','$id_pack','$ContratDate','$ContratType','$ContratDuree','$ContratDateDebut','$ContratDateFin','$ContratPrixContrat','$ContratAssurence','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$NbreKilometreContrat','$ContratmoyenCaution','$ContratnumCaution','$ContratNumCautionCB','$ContratVoiturekMPrevu','$ContratDatePaiement','$id_user','$id_agence')";
+
+            if($typecontratavenant == "CONTRAT CADRE"){
+                $query = "INSERT INTO 
+                contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,date_contrat,type_location,duree,date_debut,date_fin,prix,
+                assurance,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,KMPrevu,date_prelevement,contratcadre,checkkm,id_user,id_agence) 
+                VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','$VehiculePack','0','$id_pack','$ContratDate','$ContratType','$ContratDuree','$ContratDateDebut',
+                '$ContratDateFin','$ContratPrixContrat','$ContratAssurence','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$NbreKilometreContrat',
+                '$ContratmoyenCaution','$ContratnumCaution','$ContratNumCautionCB','$ContratVoiturekMPrevu','$ContratDatePaiement','1','$checkobgkm','$id_user','$id_agence')";
+            }else{
+                $query = "INSERT INTO 
+                contrat_client(id_client,id_agencedep,id_agenceret,id_voiture,id_materiels_contrat,id_group_pack,date_contrat,type_location,duree,date_debut,date_fin,prix,
+                assurance,mode_de_paiement,caution,cautioncheque,NbrekmInclus,moyen_caution,num_cheque_caution,num_cb_caution,KMPrevu,date_prelevement,contratcadre,checkkm,id_user,id_agence) 
+                VALUES ('$ContratClient','$AgenceDepClient','$AgenceRetClient','$VehiculePack','0','$id_pack','$ContratDate','$ContratType','$ContratDuree','$ContratDateDebut',
+                '$ContratDateFin','$ContratPrixContrat','$ContratAssurence','$ContratPaiement','$ContratCaution','$ContratCautionCheque','$NbreKilometreContrat',
+                '$ContratmoyenCaution','$ContratnumCaution','$ContratNumCautionCB','$ContratVoiturekMPrevu','$ContratDatePaiement','0','$checkobgkm','$id_user','$id_agence')";
+            }
             $result = mysqli_query($conn, $query);
             if ($result) {
                 $queryContratID = "SELECT id_contrat,date_ajoute FROM contrat_client WHERE id_contrat=(SELECT max(id_contrat) from contrat_client)";
@@ -10681,51 +10806,6 @@ function InsertContratPack()
         } else {
             echo "<div class='text-danger'>SVP! Choisissez l'agence</div>";
         }
-    }else {
-        $querydatecontrat = "SELECT date_debut,date_fin FROM contrat_client WHERE id_contrat='$ContratAvenant'";
-        $resultdatecontrat = mysqli_query($conn, $querydatecontrat);
-        $rowdatecontrat = mysqli_fetch_assoc($resultdatecontrat);
-        $datedebutcontrat = $rowdatecontrat['date_debut'];
-        $datefincontrat = $rowdatecontrat['date_fin'];
-        if(($datedebutcontrat <= $ContratAvenantDateDebut) && ($datefincontrat >= $ContratAvenantDateFin)){
-            $query = "INSERT INTO 
-                    contrat_client_avenant(debut_contrat_avenant,fin_contrat_avenant,id_voiture_avenant,id_materiel_avenant,id_pack_avenant,id_contrat_client) 
-                    VALUES ('$ContratAvenantDateDebut','$ContratAvenantDateFin','$VehiculePack','0','$id_pack','$ContratAvenant')";
-            $result = mysqli_query($conn, $query);
-            if($result){
-                $query_get_max_id_contrat = "SELECT max(id_contrat_avenant) FROM contrat_client_avenant";
-                $result_query_get_max_id_contra = mysqli_query($conn, $query_get_max_id_contrat);
-                $row = mysqli_fetch_row($result_query_get_max_id_contra);
-                $id_contrat = $row[0];
-                for ($i = 0; $i < $countavenant; $i++) {
-                    $Id_materiel = $ContratAvenantmaterielListe[$i];
-                    $quantite = $ContratAvenantquantiteListe[$i];
-                    $query_materiels = "SELECT code_materiel,designation,num_serie_materiels,id_materiels_agence 
-                        FROM materiels,materiels_agence
-                        where materiels.id_materiels = materiels_agence.id_materiels 
-                        AND id_materiels_agence = '$Id_materiel'";
-                    $exection_materiel = mysqli_query($conn, $query_materiels);
-                    $resultat = mysqli_fetch_array($exection_materiel);
-                    $querymateriel = "INSERT INTO materiel_contrat_client
-                        (id_contrat_avenant,id_materiels_agence,num_serie_contrat,code_materiel_contrat,designation_contrat,quantite_contrat,ContratDateDebut,ContratDateFin) 
-                        VALUES ('$id_contrat','$resultat[id_materiels_agence]','$resultat[num_serie_materiels]','$resultat[code_materiel]','$resultat[designation]','$quantite', '$ContratAvenantDateDebut', '$ContratAvenantDateFin')";
-                    $resultmateriel = mysqli_query($conn, $querymateriel);
-                    $query_materiels_comp ="SELECT * 
-                        FROM composant_materiels 
-                        where id_materiels_agence ='$resultat[id_materiels_agence]'";
-                    $exection_materiel_comp = mysqli_query($conn, $query_materiels_comp);
-                    while ($resultat_comp = mysqli_fetch_array($exection_materiel_comp)) {
-                        $querycomposant = "INSERT INTO 
-                            composant_materiels_contrat(id_contrat_avenant,id_materiels_agence,designation_composant,num_serie_composant) 
-                            VALUES ('$id_contrat','$Id_materiel','$resultat_comp[designation_composant]','$resultat_comp[num_serie_composant]')";
-                        $resultcomposant = mysqli_query($conn, $querycomposant);
-                    }
-                }
-            }
-            echo "<div class='text-success'>Le contrat avenant est ajouté avec succés</div>";
-        }else{
-            echo "<div class='text-danger'>SVP! Vérifiez les dates</div>";
-        }  
     }
 }
 
@@ -11053,6 +11133,233 @@ function display_grp_pack_record()
     }
     $value .= '</table>';
     echo json_encode(['status' => 'success', 'html' => $value]);
+}
+
+/// SelectVoiteurDispoStock
+function selectMaterielQtiDispo()
+{
+    global $conn;
+    $id_agence = $_SESSION['id_agence'];
+    $debut = date('');
+    $fin = date('');
+
+    $value = '<table class="table">
+    <tr>
+        <th class="border-top-0">ID</th>
+        <th class="border-top-0">Code de matériel</th>
+        <th class="border-top-0">N° de série</th>
+        <th class="border-top-0">Désignation</th>
+        <th class="border-top-0">Quantité disponible</th>
+        <th class="border-top-0">Localisation</th>
+        <th class="border-top-0">Disponibilité</th>
+        <th class="border-top-0">Transfert</th>
+    </tr>';
+
+    if ($id_agence != "0") {
+        $query = "SELECT * FROM materiels_agence,materiels,agence
+         where materiels_agence.id_materiels = materiels.id_materiels
+         AND materiels_agence.id_agence = agence.id_agence
+     and  materiels_agence.etat_materiels !='F'
+    and materiels_agence.id_agence = '$id_agence'
+    ORDER BY id_materiels_agence ASC";
+    } else {
+        $query = "SELECT * FROM materiels_agence,materiels,agence 
+        where materiels_agence.id_materiels = materiels.id_materiels
+         AND materiels_agence.id_agence = agence.id_agence
+        and  materiels_agence.etat_materiels !='F'
+        ORDER BY id_materiels_agence ASC";
+    }
+
+    $result = mysqli_query($conn, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($row['etat_materiels'] == "HS") {
+            $color = "badge bg-light-info text-white fw-normal";
+            $color1 = "background-color: #ffc36d!important";
+            $etat = "HORS SERVICE";
+            $qti = 0;
+        } elseif ($row['etat_materiels'] == "T") {
+            $id_materiels_agence = $row['id_materiels_agence'];
+            if ($row['num_serie_obg'] == "T") {
+                $disponibilte = disponibilite_materiel_num_seriee($row['id_materiels_agence']);
+                $localisation = Localisation_materiel($row['id_materiels_agence']);
+                if ($disponibilte == "0") {
+                    $color = "badge bg-light-success text-white fw-normal";
+                    $color1 = "background-color: #2cd07e!important";
+                    $etat = "DISPONIBLE";
+                    $qti = 1;
+                    $update_query = "UPDATE materiels_agence SET quantite_materiels_dispo=1 WHERE id_materiels_agence=$id_materiels_agence";
+                    mysqli_query($conn, $update_query);
+                } else {
+                    $color = "badge bg-light-info text-white fw-normal";
+                    $color1 = "background-color: #ff5050!important";
+                    $etat = "En Location";
+                    $qti = 0;
+                    $row['lieu_agence'] = $localisation;
+                    $update_query = "UPDATE materiels_agence SET quantite_materiels_dispo=0 WHERE id_materiels_agence='$id_materiels_agence'";
+                    mysqli_query($conn, $update_query);
+                }
+            }
+            //si le matiriel ne pas de n serie
+            else {
+                $disponibilteqti = disponibilite_materiel_qti_num_seriee($row['id_materiels_agence'], $row['quantite_materiels']);
+                $localisation = Localisation_materiel($row['id_materiels_agence']);
+                if ($disponibilteqti > 0) {
+                    $color = "badge bg-light-success text-white fw-normal";
+                    $color1 = "background-color: #2cd07e!important";
+                    $etat = "DISPONIBLE";
+                    $qti = $disponibilteqti;
+                    $update_query = "UPDATE materiels_agence SET quantite_materiels_dispo=$qti WHERE id_materiels_agence='$id_materiels_agence'";
+                    mysqli_query($conn, $update_query);
+                } else {
+                    $color = "badge bg-light-info text-white fw-normal";
+                    $color1 = "background-color: #ff5050!important";
+                    $etat = "En Location";
+                    $qti = $disponibilteqti;
+                    $row['lieu_agence'] = $localisation;
+                    $update_query = "UPDATE materiels_agence SET quantite_materiels_dispo=$qti WHERE id_materiels_agence='$id_materiels_agence'";
+                    mysqli_query($conn, $update_query);
+                }
+            }
+            $value .= '
+                <tbody>          
+                    <tr>
+                        <td class="border-top-0">' . $row['id_materiels_agence'] . '</td>
+                        <td class="border-top-0">' . $row['code_materiel'] . '</td>
+                        <td class="border-top-0">' . $row['num_serie_materiels'] . '</td>
+                        <td class="border-top-0">' . $row['designation'] . '</td>
+                        <td class="border-top-0">' .   $qti . '</td>
+                        <td class="border-top-0">' . $row['lieu_agence'] . '</td>          
+                        <td><span class="' . $color . '" style ="' . $color1 . '">' . $etat . '</span></td>
+                        <td class="border-top-0">';
+                            if ($row['num_serie_obg'] == "T") {
+                                $value .= '
+                                <button title="Transférer le matériel" class="btn waves-effect waves-light btn-outline-dark" id="btn-transfert-materiel" data-id=' . $row['id_materiels_agence'] . ' ><i class="fas fa-exchange-alt"></i></button>';
+                            } else {
+                                $value .= '<button title="Transférer le matériel" class="btn waves-effect waves-light btn-outline-dark" id="btn-transfert-materiel-quantite" data-id=' . $row['id_materiels_agence'] . ' ><i class="fas fa-exchange-alt"></i></button>';
+                            }
+                        $value .= '</td>
+                    </tr>
+                </tbody>';
+        }
+    }
+    
+    $value .= '</table>';
+
+    echo json_encode(['status' => 'success', 'html' => $value]);
+}
+
+function disponibilite_materiel_num_seriee($id_materiels_agence)
+{
+    global $conn;
+    $date = date('Y-m-d');
+
+    $queryp = "SELECT * FROM contrat_client,materiel_contrat_client
+    where contrat_client.id_contrat =materiel_contrat_client.id_contrat
+    and id_materiels_agence ='$id_materiels_agence'
+    and etat_contrat ='A'
+    and (ContratDateDebut <= '$date' and ContratDateFin>= '$date')";
+    $resultp = mysqli_query($conn, $queryp);
+    $queryavenant = "SELECT * FROM contrat_client,contrat_client_avenant,materiel_contrat_client
+    where contrat_client_avenant.id_contrat_avenant =materiel_contrat_client.id_contrat_avenant
+    AND contrat_client_avenant.id_contrat_client =contrat_client.id_contrat
+    and materiel_contrat_client.id_materiels_agence ='$id_materiels_agence'
+    and contrat_client.etat_contrat ='A'
+    and (materiel_contrat_client.ContratDateDebut <= '$date' and materiel_contrat_client.ContratDateFin>= '$date')";
+    $resultavenant = mysqli_query($conn, $queryavenant);
+    
+    if ($resultp->num_rows > 0 || $resultavenant->num_rows > 0)  {
+        return "1";  
+    }else{
+        return "0";  
+    }
+}
+
+function Localisation_materiel($id_materiels_agence)
+{
+    global $conn;
+    $date = date('Y-m-d');
+    
+    $queryi = "SELECT CL.nom_entreprise,CL.nom FROM materiel_contrat_client As C,client AS CL,contrat_client AS CC
+    where C.id_materiels_agence ='$id_materiels_agence'
+    and C.id_contrat =CC.id_contrat
+    and CC.id_client = CL.id_client
+    and CC.etat_contrat ='A'
+    and (C.ContratDateDebut <= '$date' and C.ContratDateFin>= '$date')";    
+    $resulti = mysqli_query($conn, $queryi);
+
+    $queryavenant = "SELECT CL.nom_entreprise,CL.nom 
+    FROM contrat_client AS CC,contrat_client_avenant AS CA,materiel_contrat_client AS C,client AS CL
+    where CA.id_contrat_avenant =C.id_contrat_avenant
+    AND CA.id_contrat_client =CC.id_contrat
+    and CC.id_client = CL.id_client
+    and C.id_materiels_agence ='$id_materiels_agence'
+    and CC.etat_contrat ='A'
+    and (C.ContratDateDebut <= '$date' and C.ContratDateFin>= '$date')";
+    $resultavenant = mysqli_query($conn, $queryavenant);
+
+    if($resulti->num_rows > 0){
+        $row = mysqli_fetch_row($resulti);
+        $nomentreprise = $row[0];
+        $nom = $row[1];
+        if ($nomentreprise == ""){
+            $nomclient=$nom;
+        }else if ($nom == ""){
+            $nomclient=$nomentreprise;
+        }else{
+            $nomclient=$nomentreprise . " / Conducteur : " . $nom;
+        }
+    }else if($resultavenant->num_rows > 0){
+        $row1 = mysqli_fetch_row($resultavenant);
+        $nomentreprise1 = $row1[0];
+        $nom1 = $row1[1];
+        if ($nomentreprise1 == ""){
+            $nomclient=$nom1;
+        }else if ($nom1 == ""){
+            $nomclient=$nomentreprise1;
+        }else{
+            $nomclient=$nomentreprise1 . " / Conducteur : " . $nom1;
+        }
+    }else{
+        $nomclient = "";
+    }
+    return $nomclient;
+}
+
+function disponibilite_materiel_qti_num_seriee($id_materiels_agence, $quantite_materiels)
+{
+    global $conn;
+    $date = date('Y-m-d');
+    $qti = $quantite_materiels;
+    $queryi = "SELECT SUM(quantite_contrat) AS qutite FROM materiel_contrat_client AS MC,contrat_client AS C
+    where  MC.id_contrat = C.id_contrat
+    and C.etat_contrat ='A'
+    and ( MC.ContratDateDebut <= '$date' and MC.ContratDateFin >= '$date')
+    and MC.id_materiels_agence = $id_materiels_agence";
+    $resulti = mysqli_query($conn, $queryi);
+
+    $queryavenant = "SELECT SUM(quantite_contrat) AS qutite
+    FROM contrat_client AS C,contrat_client_avenant AS CA,materiel_contrat_client AS MC
+    where CA.id_contrat_avenant = MC.id_contrat_avenant
+    AND CA.id_contrat_client =C.id_contrat
+    and MC.id_materiels_agence ='$id_materiels_agence'
+    and C.etat_contrat ='A'
+    and (MC.ContratDateDebut <= '$date' and MC.ContratDateFin >= '$date')";
+    $resultavenant = mysqli_query($conn, $queryavenant);
+
+    if($resulti->num_rows > 0 && $resultavenant->num_rows == 0){
+        $row = mysqli_fetch_assoc($resulti);
+        $qtite = $qti - $row['qutite'];
+    }else if($resultavenant->num_rows > 0 && $resulti->num_rows == 0){
+        $row1 = mysqli_fetch_assoc($resultavenant);
+        $qtite = $qti - $row1['qutite'];
+    }else if($resultavenant->num_rows > 0 && $resulti->num_rows > 0){
+        $row1 = mysqli_fetch_assoc($resultavenant);
+        $row = mysqli_fetch_assoc($resulti);
+        $qtite = $qti - $row1['qutite'] - $row['qutite'];
+    }else{
+        $qtite =  $qti;
+    }
+    return $qtite;
 }
 
 /// SelectVoiteurDispoStock

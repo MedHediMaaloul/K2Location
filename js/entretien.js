@@ -349,6 +349,24 @@ $(function () {
   });
 });
 
+$(function () {
+  $("#klillimite").click(function () {
+      if ($(this).is(":checked")) {
+          $("#cont_NbreKilometreNotOblig").show();
+          $("#cont_NbreKilometreOblig").hide();
+      } else {
+          $("#cont_NbreKilometreNotOblig").hide();
+          $("#cont_NbreKilometreOblig").show();
+      }
+  });
+});
+
+$(function() {
+  $('#ClientContrat').select2({
+      dropdownParent: $('#ClientContrat').parent()
+  });
+});
+
 function affichier_materiel_dispo() {
   var DateFinContrat = $("#DateFinContrat").val();
   var DateDebutContrat = $("#DateDebutContrat").val();
@@ -534,6 +552,7 @@ function selectclient(data) {
   //$("#VoiturePimmMixte").html(data);
   if (data == "CLIENT PRO") {
     $("#cont_nom_complet_pro").show();
+    $("#cont_contrat_type").show();
     $("#cont_nom_complet_part").hide();
     $("#cont_email").show();
     $("#cont_telephone").show();
@@ -571,6 +590,7 @@ function selectclient(data) {
   } else {
     $("#cont_nom_complet_pro").hide();
     $("#cont_nom_complet_part").show();
+    $("#cont_contrat_type").show();
     $("#cont_email").show();
     $("#cont_telephone").show();
     $("#cont_adresse").show();
@@ -592,27 +612,7 @@ function selectclient(data) {
 }
 
 function selectcontratvoiture(data) {
-  //$("#VoiturePimmMixte").html(data);
-  if (data == "CONTRAT") {
-    $("#cont_DateDebutContrat").show();
-    $("#cont_DateFinContrat").show();
-    $("#cont_dureeContrat").show();
-    $("#inputDatePrelevementContrat").show();
-    $("#cont_ClientContrat").show();
-    $("#cont_ClientAgenceRet").show();
-    $("#cont_PrixContrat").show();
-    $("#cont_NbreKilometreContrat").show();
-    $("#cont_moyenCaution").show();
-    $("#inputNumCB").show();
-    $("#inputNumChequeCaution").show();
-    $("#cont_ModePaiementContrat").show();
-    $("#cont_contratvehiculeagence").show();
-    $("#materielVoiteur").show();
-    $("#cont_listecontrat").hide();
-    $("#cont_DateDebutContratAvenant").hide();
-    $("#cont_DateFinContratAvenant").hide();
-    $("#materielVoiteurContratAvenant").hide();
-  } else {
+  if (data == "CONTRAT AVENANT") {
     $("#cont_DateDebutContrat").hide();
     $("#cont_DateFinContrat").hide();
     $("#cont_dureeContrat").hide();
@@ -631,6 +631,46 @@ function selectcontratvoiture(data) {
     $("#cont_DateDebutContratAvenant").show();
     $("#cont_DateFinContratAvenant").show();
     $("#materielVoiteurContratAvenant").show();
+    $("#cont_ChocheKilometreillimite").hide();
+  } else if (data == "CONTRAT CADRE"){
+    $("#cont_DateDebutContrat").show();
+    $("#cont_DateFinContrat").show();
+    $("#cont_dureeContrat").show();
+    $("#inputDatePrelevementContrat").show();
+    $("#cont_ClientContrat").show();
+    $("#cont_ClientAgenceRet").show();
+    $("#cont_PrixContrat").show();
+    $("#cont_moyenCaution").show();
+    $("#inputNumCB").show();
+    $("#inputNumChequeCaution").show();
+    $("#cont_ModePaiementContrat").show();
+    $("#cont_contratvehiculeagence").show();
+    $("#materielVoiteur").show();
+    $("#cont_listecontrat").hide();
+    $("#cont_DateDebutContratAvenant").hide();
+    $("#cont_DateFinContratAvenant").hide();
+    $("#materielVoiteurContratAvenant").hide();
+    $("#cont_ChocheKilometreillimite").show();
+  }else {
+    $("#cont_DateDebutContrat").show();
+    $("#cont_DateFinContrat").show();
+    $("#cont_dureeContrat").show();
+    $("#inputDatePrelevementContrat").show();
+    $("#cont_ClientContrat").show();
+    $("#cont_ClientAgenceRet").show();
+    $("#cont_PrixContrat").show();
+    $("#cont_NbreKilometreContrat").show();
+    $("#cont_moyenCaution").show();
+    $("#inputNumCB").show();
+    $("#inputNumChequeCaution").show();
+    $("#cont_ModePaiementContrat").show();
+    $("#cont_contratvehiculeagence").show();
+    $("#materielVoiteur").show();
+    $("#cont_listecontrat").hide();
+    $("#cont_DateDebutContratAvenant").hide();
+    $("#cont_DateFinContratAvenant").hide();
+    $("#materielVoiteurContratAvenant").hide();
+    $("#cont_ChocheKilometreillimite").hide();
   }
 }
 
@@ -654,7 +694,25 @@ function selectcontratmateriel(data) {
     $("#cont_DateDebutContratAvenant").hide();
     $("#cont_DateFinContratAvenant").hide();
     $("#materielContratAvenant").hide();
-  } else {
+  } else if (data == "CONTRAT CADRE"){
+    $("#cont_DateDebutContrat").show();
+    $("#cont_DateFinContrat").show();
+    $("#cont_dureeContrat").show();
+    $("#inputDatePrelevementContrat").show();
+    $("#cont_ClientContrat").show();
+    $("#cont_ClientAgenceRet").show();
+    $("#cont_PrixContrat").show();
+    $("#cont_moyenCaution").show();
+    $("#inputNumCB").show();
+    $("#inputNumChequeCaution").show();
+    $("#cont_ModePaiementContrat").show();
+    $("#cont_contratmaterielagence").show();
+    $("#materiel").show();
+    $("#cont_listecontrat").hide();
+    $("#cont_DateDebutContratAvenant").hide();
+    $("#cont_DateFinContratAvenant").hide();
+    $("#materielContratAvenant").hide();
+  }else {
     $("#cont_DateDebutContrat").hide();
     $("#cont_DateFinContrat").hide();
     $("#cont_dureeContrat").hide();
@@ -696,7 +754,28 @@ function selectcontratpack(data) {
     $("#cont_DateFinContratAvenant").hide();
     $("#cont_Cochevehiculemateriel").hide();
     $("#materielPack_ContratAvenant").hide();
-  } else {
+    $("#cont_ChocheKilometreillimite").hide();
+  } else if (data == "CONTRAT CADRE"){
+    $("#cont_DateDebutContrat").show();
+    $("#cont_DateFinContrat").show();
+    $("#cont_dureeContrat").show();
+    $("#inputDatePrelevementContrat").show();
+    $("#cont_ClientContrat").show();
+    $("#cont_ClientAgenceRet").show();
+    $("#cont_PrixContrat").show();
+    $("#cont_moyenCaution").show();
+    $("#inputNumCB").show();
+    $("#inputNumChequeCaution").show();
+    $("#cont_ModePaiementContrat").show();
+    $("#cont_contratmaterielagence").show();
+    $("#materielPack").show();
+    $("#cont_listecontrat").hide();
+    $("#cont_DateDebutContratAvenant").hide();
+    $("#cont_DateFinContratAvenant").hide();
+    $("#cont_Cochevehiculemateriel").hide();
+    $("#materielPack_ContratAvenant").hide();
+    $("#cont_ChocheKilometreillimite").show();
+  }else {
     $("#cont_DateDebutContrat").hide();
     $("#cont_DateFinContrat").hide();
     $("#cont_dureeContrat").hide();
@@ -715,6 +794,7 @@ function selectcontratpack(data) {
     $("#cont_DateFinContratAvenant").show();
     $("#cont_Cochevehiculemateriel").show();
     $("#materielPack_ContratAvenant").show();
+    $("#cont_ChocheKilometreillimite").hide();
   }
 }
 

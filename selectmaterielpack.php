@@ -8,7 +8,7 @@ if ($_POST['id_pack']) {
     }
     $debut = $_POST['DateDebutContrat'];
     $fin = $_POST['DateFinContrat'];
-    $query = "SELECT type_voiture FROM group_packs where   id_group_packs=" .  $_POST['id_pack'];
+    $query = "SELECT type_voiture FROM group_packs where id_group_packs=" .  $_POST['id_pack'];
     $result = mysqli_query($conn, $query);
     $row = $result->fetch_assoc();
 
@@ -144,6 +144,22 @@ function disponibilite_materielp($id_materiels_agence,$debut,$fin,$id_agence)
                     AND materiels_agence.id_agence=" . $id_agence;
     $result = mysqli_query($conn, $query_m);
     $nb_res = mysqli_num_rows($result);
+    $row = $result->fetch_assoc();
+    if($nb_res > 0){
+        $nbrmaterielloue = (int)($row['quantite_materiels']/$row['quantite_contrat']);
+        if($row['num_serie_materiels'] == ""){
+            if($nb_res == $nbrmaterielloue){
+                return "Non disponible";
+            }else{
+                return "disponible";
+            }
+        }else{
+            return "Non disponible";
+        }
+    }else{
+        return "disponible";
+    }
+    
 
     $query_m_avenant = "SELECT * 
                     FROM materiels,materiels_agence,materiel_contrat_client
@@ -157,10 +173,20 @@ function disponibilite_materielp($id_materiels_agence,$debut,$fin,$id_agence)
                     AND materiels_agence.id_agence=" . $id_agence;
     $resultavenant = mysqli_query($conn, $query_m_avenant);
     $nb_res_avenant = mysqli_num_rows($resultavenant);
+    $rowavenant = $resultavenant->fetch_assoc();
 
-    if ($nb_res == 0 && $nb_res_avenant == 0) {
+    if($nb_res_avenant > 0){
+        $nbrmaterielloue = (int)($rowavenant['quantite_materiels']/$rowavenant['quantite_contrat']);
+        if($rowavenant['num_serie_materiels'] == ""){
+            if($nb_res_avenant == $nbrmaterielloue){
+                return "Non disponible";
+            }else{
+                return "disponible";
+            }
+        }else{
+            return "Non disponible";
+        }
+    }else{
         return "disponible";
-    } else {
-        return "Non disponible";
     }
 }        

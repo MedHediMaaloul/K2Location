@@ -147,15 +147,13 @@ function disponibilite_materielp($id_group_pack, $id_agence)
                         $t = "N";
                     }
                 }  
-            }
-            if (strpos($t, 'T') !== false) {
-                $res = "True";
-            }else{
+            }  
+            if (strpos($t, 'T') === false) {
                 $res = "False";
-            }     
+            }    
         }else{
             $res = "False";
-        }
+        } 
     }
     if ($res == "False") {
         return "Non disponible";
@@ -182,6 +180,21 @@ function disponibilite_matp($id_materiels_agence, $debut, $fin, $id_agence)
                     AND materiels_agence.id_agence=" . $id_agence;
     $result = mysqli_query($conn, $query_m);
     $nb_res = mysqli_num_rows($result);
+    $row = $result->fetch_assoc();
+    if($nb_res > 0){
+        $nbrmaterielloue = (int)($row['quantite_materiels']/$row['quantite_contrat']);
+        if($row['num_serie_materiels'] == ""){
+            if($nb_res == $nbrmaterielloue){
+                return 1;
+            }else{
+                return 0;
+            }    
+        }else{
+            return 1;
+        }
+    }else{
+        return 0;
+    }
 
     $query_m_avenant = "SELECT * 
                     FROM materiels,materiels_agence,materiel_contrat_client
@@ -195,10 +208,21 @@ function disponibilite_matp($id_materiels_agence, $debut, $fin, $id_agence)
                     AND materiels_agence.id_agence=" . $id_agence;
     $resultavenant = mysqli_query($conn, $query_m_avenant);
     $nb_res_avenant = mysqli_num_rows($resultavenant);
+    $rowavenant = $resultavenant->fetch_assoc();
 
-    if ($nb_res != 0 || $nb_res_avenant != 0) {
-        return 1;
+    if($nb_res_avenant > 0){
+        $nbrmaterielloueavenant = (int)($rowavenant['quantite_materiels']/$rowavenant['quantite_contrat']);
+        if($rowavenant['num_serie_materiels'] == ""){
+            if($nb_res_avenant == $nbrmaterielloueavenant){
+                return 1;
+            }else{
+                return 0;
+            }    
+        }else{
+            return 1;
+        }
     }else{
         return 0;
     }
+
 }        

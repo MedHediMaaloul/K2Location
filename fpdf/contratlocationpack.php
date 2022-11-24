@@ -7,7 +7,7 @@ $id_contrat = $_GET['id'];
 
     $query = "SELECT CL.nom_entreprise,CL.nom,CL.email,CL.cin,CL.tel,CL.adresse,
               V.type,V.pimm,V.id_voiture,MM.Model,MM.Marque,
-              C.id_contrat,C.duree,C.moyen_caution,C.caution,C.cautioncheque,C.NbrekmInclus,C.type_location,C.num_cheque_caution,C.num_cb_caution,C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,
+              C.id_contrat,C.duree,C.moyen_caution,C.caution,C.cautioncheque,C.NbrekmInclus,C.type_location,C.num_cheque_caution,C.num_cb_caution,C.date_debut,C.date_fin,C.prix,C.assurance,C.mode_de_paiement,C.contratcadre,C.checkkm,
               CM.designation_contrat, CM.num_serie_contrat, 
               CC.designation_composant, CC.num_serie_composant,
               A.lieu_agence
@@ -75,6 +75,9 @@ $id_contrat = $_GET['id'];
                 }
                 $Contrat_num_caution_cheque = $row['num_cheque_caution'];
                 $Contrat_num_caution_cb = $row['num_cb_caution'];
+
+                $Contrat_cadre = $row['contratcadre'];
+                $Check_km = $row['checkkm'];
             }
         } 
         $query1 = " SELECT * FROM composant_materiels_contrat WHERE id_contrat='$id_contrat'";
@@ -412,7 +415,11 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte21 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+if($Contrat_cadre == "1"){
+  $texte21 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. En cas de perte et/ou détérioration de matériel loué, le montant facturé sera égal au prix de vente du ou des articles concernés.";
+}else{
+  $texte21 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+}
 $pdf->MultiCell(0,5,utf8_decode($texte21));
 $pdf->VerifPage();
 $pdf->Ln(5);
@@ -433,23 +440,41 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-// $Contrat_price_ttc = $Contrat_price + $Contrat_price* 0.2 ;
 if ($id_voiture != 0) {
-  if ($Contrat_duration == "Standard") {
+  if ($Check_km == "1"){
+    if ($Contrat_duration == "Standard") {
+      $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+      " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "Par Jour") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "Par Semaine") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "Par Mois") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "LLD") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    }
+  }else{
+    if ($Contrat_duration == "Standard") {
       $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
       " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "Par Jour") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "Par Semaine") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "Par Mois") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "LLD") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "Par Jour") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "Par Semaine") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "Par Mois") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "LLD") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    }
   }
 }else{
   $texte3 = $contrat_materiel_prix." euros HT par mois auquel se rajouterons le montant de la TVA (20%), soit un prix TTC de " . $contrat_materiel_prix_ttc." euros. "."\n";
@@ -464,8 +489,13 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
-if ($contrat_materiel_mode_paiement == "Virements bancaires"){
+if ($Contrat_cadre == "1"){
+  $texte4 = "Les paiements sont à échoir.";
+  $texte5 = "Le mode de règlement sera en fonction des termes fixés sur le bon de commande.";
+  $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5));
+}else{
+  $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
+  if ($contrat_materiel_mode_paiement == "Virements bancaires"){
     $texte5 = "Des Virements bancaires seront effectués.";
   } else if ($contrat_materiel_mode_paiement == "Carte bancaire") {
     $texte5 = "Des paiements par carte bancaire seront effectués.";
@@ -476,12 +506,26 @@ if ($contrat_materiel_mode_paiement == "Virements bancaires"){
   } else {
     $texte5 = "Chèque";
   }
-$texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
-$pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
+  $texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
+  $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
+}
 $pdf->VerifPage();
 $pdf->Ln(5);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
+if ($Contrat_cadre == "1"){
+  $pdf->Cell(0,0,utf8_decode('Franchises Applicables:'),0,0);
+  $pdf->SetY($pdf->GetY()+2);
+  $pdf->SetFont('Arial','',8);
+  $pdf->SetTextColor(0);
+  $textefranchise = "* Le montant de la franchise en cas de vol exclu la perte de clef, dans ce cas, le montant facturé sera égal à la valeur du véhicule"; 
+  $pdf->MultiCell(0,5,utf8_decode("1ère catégorie : (Type Berlingo / Kangoo / Jumpy / Trafic) : 1500 ").EURO." maximum / Franchise en cas de vol 2200 ".EURO."*".
+  "\n".utf8_decode("2ème catégorie : (Type Master / Jumper) : 2500 ").EURO." maximum / Franchise en cas de vol 3000 ".EURO."*".
+  "\n".utf8_decode("3ème catégorie : (Type Fourgon Nacelle) : 6000 ").EURO." maximum / Franchise en cas de vol 7000 ".EURO."*"."\n".utf8_decode($textefranchise));
+  $pdf->SetY($pdf->GetY()+5);
+  $pdf->SetFont('Arial','B',7);
+  $pdf->VerifPage();
+}
 $pdf->Cell(0,0,utf8_decode('Dépôt de garantie:'),0,0);
 $pdf->VerifPage();
 $pdf->Ln(2);
@@ -637,7 +681,11 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte21 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+if($Contrat_cadre == "1"){
+  $texte21 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. En cas de perte et/ou détérioration de matériel loué, le montant facturé sera égal au prix de vente du ou des articles concernés.";
+}else{
+  $texte21 = "Lors de la remise du matériel et lors de sa restitution, une fiche de contrôle de l'état sera établie entre le locataire et le loueur. Le matériel devra être restitué dans le même état que lors de sa mise à disposition au locataire. Toutes les détériorations constatées sur le matériel seront à la charge du locataire et/ou être déduites en partie ou totalité sur le montant de la caution.";
+}
 $pdf->MultiCell(0,5,utf8_decode($texte21));
 $pdf->VerifPage();
 $pdf->Ln(5);
@@ -659,21 +707,40 @@ $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
 if ($id_voiture != 0) {
-  if ($Contrat_duration == "Standard") {
+  if ($Check_km == "1"){
+    if ($Contrat_duration == "Standard") {
+      $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+      " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "Par Jour") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "Par Semaine") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "Par Mois") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    } else if ($Contrat_duration == "LLD") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage illimité inclus.";
+    }
+  }else{
+    if ($Contrat_duration == "Standard") {
       $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
       " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "Par Jour") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "Par Semaine") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "Par Mois") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
-  } else if ($Contrat_duration == "LLD") {
-      $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
-      " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "Par Jour") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par jour auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/jour (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "Par Semaine") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par semaine auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/semaine (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "Par Mois") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    } else if ($Contrat_duration == "LLD") {
+        $texte3 = $contrat_materiel_prix. " Euros HT par mois auquel se rajouterons le montant de la TVA (20%), Soit un prix TTC de : ".$contrat_materiel_prix_ttc.
+        " euros. "."\n"."Kilométrage prévu ".$Contrat_km." km/mois (tarification du kilomètre supplémentaire 0.12 euros HT).";
+    }
   }
 }else{
   $texte3 = $contrat_materiel_prix." euros HT par mois auquel se rajouterons le montant de la TVA (20%), soit un prix TTC de " . $contrat_materiel_prix_ttc." euros. "."\n";
@@ -688,8 +755,13 @@ $pdf->VerifPage();
 $pdf->Ln(2);
 $pdf->SetFont('Arial','',8);
 $pdf->SetTextColor(0);
-$texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
-if ($contrat_materiel_mode_paiement == "Virements bancaires"){
+if ($Contrat_cadre == "1"){
+  $texte4 = "Les paiements sont à échoir.";
+  $texte5 = "Le mode de règlement sera en fonction des termes fixés sur le bon de commande.";
+  $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5));
+}else{
+  $texte4 = "Les loyers sont dus à date échu. Le premier paiement s'effectuera le jour de la mise à disposition du matériel.";
+  if ($contrat_materiel_mode_paiement == "Virements bancaires"){
     $texte5 = "Des Virements bancaires seront effectués.";
   } else if ($contrat_materiel_mode_paiement == "Carte bancaire") {
     $texte5 = "Des paiements par carte bancaire seront effectués.";
@@ -700,12 +772,26 @@ if ($contrat_materiel_mode_paiement == "Virements bancaires"){
   } else {
     $texte5 = "Chèque";
   }
-$texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
-$pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
+  $texte51 = "Toute rupture de contrat avec un engagement minimum de 6 mois, engendre des frais de résiliation à hauteur de 30% de la totalité des factures restantes.";
+  $pdf->MultiCell(0,5,utf8_decode($texte4)."\n".utf8_decode($texte5)."\n".utf8_decode($texte51));
+}
 $pdf->VerifPage();
 $pdf->Ln(5);
 $pdf->SetFont('Arial','B',7);
 $pdf->SetTextColor(0);
+if ($Contrat_cadre == "1"){
+  $pdf->Cell(0,0,utf8_decode('Franchises Applicables:'),0,0);
+  $pdf->SetY($pdf->GetY()+2);
+  $pdf->SetFont('Arial','',8);
+  $pdf->SetTextColor(0);
+  $textefranchise = "* Le montant de la franchise en cas de vol exclu la perte de clef, dans ce cas, le montant facturé sera égal à la valeur du véhicule"; 
+  $pdf->MultiCell(0,5,utf8_decode("1ère catégorie : (Type Berlingo / Kangoo / Jumpy / Trafic) : 1500 ").EURO." maximum / Franchise en cas de vol 2200 ".EURO."*".
+  "\n".utf8_decode("2ème catégorie : (Type Master / Jumper) : 2500 ").EURO." maximum / Franchise en cas de vol 3000 ".EURO."*".
+  "\n".utf8_decode("3ème catégorie : (Type Fourgon Nacelle) : 6000 ").EURO." maximum / Franchise en cas de vol 7000 ".EURO."*"."\n".utf8_decode($textefranchise));
+  $pdf->SetY($pdf->GetY()+5);
+  $pdf->SetFont('Arial','B',7);
+  $pdf->VerifPage();
+}
 $pdf->Cell(0,0,utf8_decode('Dépôt de garantie:'),0,0);
 $pdf->VerifPage();
 $pdf->Ln(2);

@@ -74,32 +74,6 @@ if (!isset($_SESSION['User'])) {
                             <div class="col-sm-12">
                                 <div class="white-box">
                                     <div class="table-responsive" id="Controle-technique-list"></div>
-                                    <!-- delete Controle-technique model -->
-                                    <div class="modal fade" id="deleteControleTechnique" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Supprimer
-                                                    Contrôle périodique
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>Voulez-vous supprimer Contrôle périodique ?</p>
-                                                    <button class="btn btn-success"
-                                                        id="btn_delete_Controletechnique">Supprimer
-                                                        Contrôle périodique</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"
-                                                        id="btn-close">Fermer</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end  DELETE Controle-technique modal -->
                                     <!-- realisation Controle-technique model -->
                                     <div class="modal fade" id="realisationControleTechnique" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
