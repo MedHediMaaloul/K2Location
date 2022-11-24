@@ -340,7 +340,7 @@ $(document).ready(function () {
 
 
 //insert Record in the data base 
-function insertRecord(element) {
+function insertRecord() {
   $(document).on("click", "#btn-register-client", function () {
     $("#Registration-Client").scrollTop(0);
     var type = $("#Clienttype").val();
@@ -363,7 +363,6 @@ function insertRecord(element) {
     var kbis = $("#userKBIS").prop("files")[0];
     var rib = $("#userRIB").prop("files")[0];
     var attestation_civile = $("#userAttestation").prop("files")[0];
-    alert(element.value);
     /********************Test Champs obligatoire CLIENT PRO */
     if(type == "CLIENT PRO"){
       nom = nom2;
