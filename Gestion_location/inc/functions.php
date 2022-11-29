@@ -10813,12 +10813,13 @@ function InsertContratPack()
 function disponibilite_materiel_num_serie($id_materiels_agence, $debut, $fin)
 {
     global $conn;
-    $query = "SELECT * FROM contrat_client, materiel_contrat_client
-    where  contrat_client.id_contrat= materiel_contrat_client.id_contrat and 
-    id_materiels_agence ='$id_materiels_agence' and 
-    ((date_debut <='$debut' and date_fin >='$debut' )
-     or (date_debut <='$fin' and date_fin >='$fin' ) 
-     or (date_debut >='$debut' and date_fin <='$fin' ))";
+    $query = "SELECT * 
+        FROM contrat_client, materiel_contrat_client
+        where contrat_client.id_contrat= materiel_contrat_client.id_contrat 
+        and id_materiels_agence ='$id_materiels_agence' 
+        and ((date_debut <='$debut' and date_fin >='$debut' )
+        or (date_debut <='$fin' and date_fin >='$fin' ) 
+        or (date_debut >='$debut' and date_fin <='$fin' ))";
     $result = mysqli_query($conn, $query);
     $nb_res = mysqli_num_rows($result);
     if ($nb_res == 0) {
@@ -10831,13 +10832,13 @@ function disponibilite_materiel_num_serie($id_materiels_agence, $debut, $fin)
 function disponibilite_voiture($id_voiture, $debut, $fin)
 {
     global $conn;
-    $query = "SELECT * FROM contrat_client, voiture
-    where  contrat_client.id_voiture= voiture.id_voiture and 
-    contrat_client.id_voiture ='$id_voiture' and 
-    ((date_debut <='$debut' and date_fin >='$debut' )
-     or (date_debut <='$fin' and date_fin >='$fin' ) 
-     or (date_debut >='$debut' and date_fin <='$fin' ))      
-    ";
+    $query = "SELECT * 
+        FROM contrat_client, voiture
+        where  contrat_client.id_voiture= voiture.id_voiture 
+        and contrat_client.id_voiture ='$id_voiture' 
+        and ((date_debut <='$debut' and date_fin >='$debut' )
+        or (date_debut <='$fin' and date_fin >='$fin' ) 
+        or (date_debut >='$debut' and date_fin <='$fin'))";
     $result = mysqli_query($conn, $query);
     $nb_res = mysqli_num_rows($result);
     if ($nb_res == 0) {
@@ -10850,17 +10851,19 @@ function disponibilite_voiture($id_voiture, $debut, $fin)
 function disponibilite_quantite_materiel($id_materiels_agence, $debut, $fin, $quantite)
 {
     global $conn;
-    $sqlqtidispo = "SELECT quantite_materiels_dispo from   materiels_agence where  id_materiels_agence ='$id_materiels_agence' ";
+    $sqlqtidispo = "SELECT quantite_materiels_dispo 
+        from materiels_agence 
+        where  id_materiels_agence ='$id_materiels_agence' ";
     $resultqtidispo = mysqli_query($conn, $sqlqtidispo);
     $row = mysqli_fetch_assoc($resultqtidispo);
     $quantite_materiels_dispo = $row['quantite_materiels_dispo'];
     $query = "SELECT SUM(quantite_contrat) as quantite_loue
-    FROM contrat_client, materiel_contrat_client
-    where  contrat_client.id_contrat= materiel_contrat_client.id_contrat and 
-    id_materiels_agence ='$id_materiels_agence' and 
-    ((date_debut <='$debut' and date_fin >='$debut' )
-    or (date_debut <='$fin' and date_fin >='$fin' ) 
-    or (date_debut >='$debut' and date_fin <='$fin' )) ";
+        FROM contrat_client, materiel_contrat_client
+        where  contrat_client.id_contrat= materiel_contrat_client.id_contrat 
+        and id_materiels_agence ='$id_materiels_agence' 
+        and ((date_debut <='$debut' and date_fin >='$debut')
+        or (date_debut <='$fin' and date_fin >='$fin') 
+        or (date_debut >='$debut' and date_fin <='$fin'))";
     $result = mysqli_query($conn, $query);
     $row_quantite = mysqli_fetch_assoc($result);
     $quantite_loue = $row_quantite['quantite_loue'];
@@ -10889,7 +10892,9 @@ function InsertCategorie()
     $type_location = $_POST['type_location'];
     $num_serie_obg = $_POST['num_serie_obg'];
     $id_user = $_SESSION['id_user'];
-    $sql_e = "SELECT * FROM materiels WHERE code_materiel='$code_materiel' and  etat_materiels_categorie='T' ";
+    $sql_e = "SELECT * FROM materiels 
+        WHERE code_materiel='$code_materiel' 
+        and etat_materiels_categorie='T' ";
     $res_e = mysqli_query($conn, $sql_e);
     if (mysqli_num_rows($res_e) > 0) {
         echo '<div class="text-danger" role="alert">
@@ -10936,7 +10941,10 @@ function update_categorie()
     $updateCategorieTypelocation = $_POST['updateCategorieTypelocation'];
     $updateCategorieNumserie = $_POST['updateCategorieNumserie'];
     $id_user = $_SESSION['id_user'];
-    $sql_e = "SELECT * FROM materiels WHERE id_materiels!='$updateCategorieId' AND code_materiel='$updateCategorieCodemateriel' AND etat_materiels_categorie='T'";
+    $sql_e = "SELECT * FROM materiels 
+        WHERE id_materiels!='$updateCategorieId' 
+        AND code_materiel='$updateCategorieCodemateriel' 
+        AND etat_materiels_categorie='T'";
     $res_e = mysqli_query($conn, $sql_e);
     if (mysqli_num_rows($res_e) > 0) {
         echo '<div class="text-danger" role="alert">
@@ -11074,8 +11082,10 @@ function DisplaySettingmateriel()
                     <th class="border-top-0"> Quantite </th>
                     <th class="border-top-0"> Action</th>
                 </tr>';
-    $query = "SELECT * FROM `materiels` , materiel_group_packs , group_packs WHERE materiels.id_materiels=materiel_group_packs.id_materiels
-and group_packs.id_group_packs=materiel_group_packs.id_group_packs ORDER BY `group_packs`.`designation_pack` ASC";
+    $query = "SELECT * FROM `materiels` , materiel_group_packs , group_packs 
+        WHERE materiels.id_materiels=materiel_group_packs.id_materiels
+        and group_packs.id_group_packs=materiel_group_packs.id_group_packs 
+        ORDER BY `group_packs`.`designation_pack` ASC";
     $result = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $value .= ' <tr>
@@ -11510,14 +11520,13 @@ function selectMaterielDispoStock()
     $id_agence = $_SESSION['id_agence'];
 
     $value = '<div class="table-responsive">
-    <table  class="table customize-table mb-0 v-middle">
+    <table class="table customize-table mb-0 v-middle">
     <thead class="table-light">
         <tr>
             <th class="border-top-0">ID</th>
             <th class="border-top-0">N° série de matériel </th>
             <th class="border-top-0">Quantité disponible ss</th>
-            <th class="border-top-0">Disponibilité</th>  
-            
+            <th class="border-top-0">Disponibilité</th>   
         </tr>
     </thead>';
     if ($id_agence != "0") {
@@ -12165,7 +12174,6 @@ function view_chauffeur()
     $value .= '</table>';
     echo json_encode(['status' => 'success', 'html' => $value]);
 }
-
 
 // dispaly client data function
 function view_k2voiture()
