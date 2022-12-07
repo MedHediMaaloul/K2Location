@@ -4,6 +4,7 @@ files:
   - source: /
     destination: /var/www/html/
 hooks:
+  BeforeInstall:
   AfterInstall:
     - location: afterinstall.sh
       timeout: 300
