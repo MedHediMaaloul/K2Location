@@ -113,7 +113,6 @@ function InsertClient()
     $permis_filename = $unique_id . "_permis." . strtolower(pathinfo($permis["name"], PATHINFO_EXTENSION));
     $rib_filename = $unique_id . "_rib." . strtolower(pathinfo($rib["name"], PATHINFO_EXTENSION));
 
-    // move_uploaded_file($cin["tmp_name"], "./uploads/${cin_filename}");
     $size = $cin["size"] / 1024;
     $valid_ext = array('png', 'jpg', 'jpeg', 'gif');
     $location = "./uploads/${cin_filename}";
@@ -556,8 +555,6 @@ function get_id_client()
     }
     echo json_encode($ClientId);
 }
-
-
 
 // update Client pro
 function update_client_value()
