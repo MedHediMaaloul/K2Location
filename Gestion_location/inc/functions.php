@@ -11109,10 +11109,7 @@ function delete_Settingmaterielgrp_record()
         echo ' Veuillez vérifier votre requête ';
     }
 }
-/*
- * 
- * 
- */
+/**/
 
 function display_grp_pack_record()
 {
