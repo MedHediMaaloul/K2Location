@@ -545,75 +545,7 @@ if (!isset($_SESSION['User'])) {
                             chart.draw(data, options);
                         }
                         </script>
-
-                        <div class="row  no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Véhicule
-                                    disponibles</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <?php
-                                        function disponibilite_Vehicule1($id_voiture)
-                                        {
-                                            global $conn;
-                                            $query = "SELECT * FROM contrat_client 
-                                               where  
-                                               id_voiture ='$id_voiture' and 
-                                               etat_contrat = 'A' and
-                                               ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW()) ))  ";
-                                            $result = mysqli_query($conn, $query);
-                                            $nb_res = mysqli_num_rows($result);
-                                            if ($nb_res == 0) {
-                                                return "disponibile";
-                                            } else {
-                                                return "non disponibile";
-                                            }
-                                        }
-                                        $value = '<table class="table table-striped table-bordered table-hover">
-                                                    <tr class="thead-dark">
-                                                        <th class="border-top-0">ID Voiture</th>
-                                                        <th class="border-top-0">Marque Voiture</th>
-                                                        <th class="border-top-0">Modèle Voiture</th>
-                                                        <th class="border-top-0">Immatriculation Voiture</th>
-                                                    </tr>';
-                                            if($_SESSION['Role'] == "superadmin" || $_SESSION['Role'] == "responsable"){
-                                            $query = "SELECT V.id_voiture,V.pimm,MM.Marque,MM.Model
-                                            FROM voiture as V 
-                                            left JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel
-                                            WHERE V.etat_voiture='Disponible'
-                                            AND V.actions != 'S'
-                                            ORDER BY V.id_voiture";
-                                            } else {
-                                                $query = "SELECT V.id_voiture,V.pimm,MM.Marque,MM.Model
-                                                FROM voiture as V 
-                                                left JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel
-                                                WHERE V.etat_voiture='Disponible'
-                                                AND V.actions != 'S'
-                                                AND V.id_agence = $id_agence
-                                                ORDER BY V.id_voiture";
-                                            }
-                                        
-                                        $result = mysqli_query($conn, $query);
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            $disponibilte = disponibilite_Vehicule1($row['id_voiture']);
-                                            if ($disponibilte == 'disponibile') {
-                                            $value .= '               
-                                                <tr>
-                                                    <td class="border-top-0 font-weight-bold">' . $row['id_voiture'] . '</td>
-                                                    <td class="border-top-0 font-weight-bold">' . $row['Marque'] . '</td>
-                                                    <td class="border-top-0 font-weight-bold">' . $row['Model'] . '</td>
-                                                    <td class="border-top-0 font-weight-bold">' . $row['pimm'] . '</td>
-                                                </tr>';
-                                            }
-                                        }
-                                        $value .= '</table>';
-                                        echo $value;
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Contrats qui
