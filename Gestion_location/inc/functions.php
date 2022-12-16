@@ -4314,8 +4314,6 @@ function InsertContratMateriel()
                     $mail->AltBody    = $bodyText;
                     $mail->Send();
                     echo "Email sent!" , PHP_EOL;
-                } catch (phpmailerException $e) {
-                    echo "An error occurred. {$e->errorMessage()}", PHP_EOL;
                 } catch (Exception $e) {
                     echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
                 }
@@ -4494,8 +4492,6 @@ function InsertContratVoiture()
                         $mail->AltBody    = $bodyText;
                         $mail->Send();
                         echo "Email sent!" , PHP_EOL;
-                    } catch (phpmailerException $e) {
-                        echo "An error occurred. {$e->errorMessage()}", PHP_EOL;
                     } catch (Exception $e) {
                         echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
                     }
@@ -10861,8 +10857,6 @@ function InsertContratPack()
                     $mail->AltBody    = $bodyText;
                     $mail->Send();
                     echo "Email sent!" , PHP_EOL;
-                } catch (phpmailerException $e) {
-                    echo "An error occurred. {$e->errorMessage()}", PHP_EOL;
                 } catch (Exception $e) {
                     echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
                 }
