@@ -4282,7 +4282,7 @@ function InsertContratMateriel()
                 }
                 
                 /////////////////////////Mail AWS/////////////////////////////////
-                require '/var/www/html/MailAWS/vendor/autoload.php';
+                require '/var/www/html/Gestion_location/inc/MailAWS/vendor/autoload.php';
                 
 				$sender = 'maaloulmedhedi@gmail.com';
                 $senderName = 'K2Location Sender Mail';
@@ -4462,7 +4462,7 @@ function InsertContratVoiture()
                         $nomclient = $rownomclient['nom_entreprise'];
                     }
                     /////////////////////////Mail AWS/////////////////////////////////
-                    require '/var/www/html/MailAWS/vendor/autoload.php';
+                    require '/var/www/html/Gestion_location/inc/MailAWS/vendor/autoload.php';
                     
 				    $sender = 'maaloulmedhedi@gmail.com';
                     $senderName = 'K2Location Sender Mail';
@@ -10829,7 +10829,7 @@ function InsertContratPack()
                 }
 
                 /////////////////////////Mail AWS/////////////////////////////////
-                require '/var/www/html/MailAWS/vendor/autoload.php';
+                require '/var/www/html/Gestion_location/inc/MailAWS/vendor/autoload.php';
                 
 				$sender = 'maaloulmedhedi@gmail.com';
                 $senderName = 'K2Location Sender Mail';
