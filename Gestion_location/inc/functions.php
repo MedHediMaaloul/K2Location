@@ -1,6 +1,8 @@
 <?php
 
 use PhpMyAdmin\Console;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 session_start();
 require_once('connect_db.php');
@@ -4278,15 +4280,54 @@ function InsertContratMateriel()
                 while ($rownomclient = mysqli_fetch_assoc($resultnomclient)) {
                     $nomclient = $rownomclient['nom_entreprise'];
                 }
-                $to = "$mailuser";
-                $subject = "Ajoutcontratmateriel";
-                $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                $header = "From:appk2contrat@gmail.com \r\n";
-                $header .= "Cc:appk2contrat@gmail.com \r\n";
-                $header .= "MIME-Version: 1.0\r\n";
-                $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                mail($to, $subject, $message, $header);
-                //////////////////////////////////////////////////////////
+                
+                /////////////////////////Mail AWS/////////////////////////////////
+                require '/var/www/html/MailAWS/vendor/autoload.php';
+                
+				$sender = 'maaloulmedhedi@gmail.com';
+                $senderName = 'K2Location Sender Mail';
+                $recipient = "$mailuser";
+                $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
+                $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
+                $configurationSet = 'ConfigSet';
+                $host = 'email-smtp.eu-west-3.amazonaws.com';
+                $port = 465;
+                $subject = 'K2Location App (Contrat Location Materiel)';
+                $bodyText =  "";
+                $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
+                Ce contrat a été crée par $nomuser .</body></html>";
+                $mail = new PHPMailer(true);
+                try {
+                    $mail->isSMTP(true);
+                    $mail->setFrom($sender, $senderName);
+                    $mail->Username   = $usernameSmtp;
+                    $mail->Password   = $passwordSmtp;
+                    $mail->Host       = $host;
+                    $mail->Port       = $port;
+                    $mail->SMTPAuth   = true;
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->CharSet = 'utf-8';
+                    $mail->addAddress($recipient);
+                    $mail->isHTML(true);
+                    $mail->Subject    = $subject;
+                    $mail->Body       = $bodyHtml;
+                    $mail->AltBody    = $bodyText;
+                    $mail->Send();
+                    echo "Email sent!" , PHP_EOL;
+                } catch (phpmailerException $e) {
+                    echo "An error occurred. {$e->errorMessage()}", PHP_EOL;
+                } catch (Exception $e) {
+                    echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
+                }
+                // $to = "$mailuser";
+                // $subject = "Ajoutcontratmateriel";
+                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
+                // $header = "From:appk2contrat@gmail.com \r\n";
+                // $header .= "Cc:appk2contrat@gmail.com \r\n";
+                // $header .= "MIME-Version: 1.0\r\n";
+                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
+                // mail($to, $subject, $message, $header);
+                /////////////////////////Mail AWS/////////////////////////////////
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
                 $liste_user1_query = mysqli_query($conn, $liste_user1);
@@ -4420,15 +4461,53 @@ function InsertContratVoiture()
                     while ($rownomclient = mysqli_fetch_assoc($resultnomclient)) {
                         $nomclient = $rownomclient['nom_entreprise'];
                     }
-                    $to = "$mailuser";
-                    $subject = "Ajoutcontratvoiture";
-                    $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                    $header = "From:appk2contrat@gmail.com \r\n";
-                    $header .= "Cc:appk2contrat@gmail.com \r\n";
-                    $header .= "MIME-Version: 1.0\r\n";
-                    $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                    mail($to, $subject, $message, $header);
-                    /////////////////////////////////
+                    /////////////////////////Mail AWS/////////////////////////////////
+                    require '/var/www/html/MailAWS/vendor/autoload.php';
+                    
+				    $sender = 'maaloulmedhedi@gmail.com';
+                    $senderName = 'K2Location Sender Mail';
+                    $recipient = "$mailuser";
+                    $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
+                    $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
+                    $configurationSet = 'ConfigSet';
+                    $host = 'email-smtp.eu-west-3.amazonaws.com';
+                    $port = 465;
+                    $subject = 'Ajoutcontratvoiture';
+                    $bodyText =  "";
+                    $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
+                    Ce contrat a été crée par $nomuser .</body></html>";
+                    $mail = new PHPMailer(true);
+                    try {
+                        $mail->isSMTP(true);
+                        $mail->setFrom($sender, $senderName);
+                        $mail->Username   = $usernameSmtp;
+                        $mail->Password   = $passwordSmtp;
+                        $mail->Host       = $host;
+                        $mail->Port       = $port;
+                        $mail->SMTPAuth   = true;
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->CharSet = 'utf-8';
+                        $mail->addAddress($recipient);
+                        $mail->isHTML(true);
+                        $mail->Subject    = $subject;
+                        $mail->Body       = $bodyHtml;
+                        $mail->AltBody    = $bodyText;
+                        $mail->Send();
+                        echo "Email sent!" , PHP_EOL;
+                    } catch (phpmailerException $e) {
+                        echo "An error occurred. {$e->errorMessage()}", PHP_EOL;
+                    } catch (Exception $e) {
+                        echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
+                    }
+                    // $to = "$mailuser";
+                    // $subject = "Ajoutcontratvoiture";
+                    // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
+                    // $header = "From:appk2contrat@gmail.com \r\n";
+                    // $header .= "Cc:appk2contrat@gmail.com \r\n";
+                    // $header .= "MIME-Version: 1.0\r\n";
+                    // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
+                    // mail($to, $subject, $message, $header);
+                    /////////////////////////Mail AWS/////////////////////////////////
                     $date_now = date("Y-m-d H:i:s");
                     $liste_user1 = "SELECT * FROM user";
                     $liste_user1_query = mysqli_query($conn, $liste_user1);
@@ -7190,7 +7269,7 @@ function searchStock()
                 OR voiture.date_achat LIKE ('%" . $search . "%')
                 OR agence.lieu_agence LIKE ('%" . $search . "%')       
                 OR voiture.etat_voiture LIKE ('%" . $search . "%'))
-                ORDER BY voiture.etat_voiture ASC ");
+                ORDER BY voiture.id_voiture ASC ");
         } else {
             $sql = ("SELECT * FROM voiture,agence,marquemodel
             WHERE voiture.id_agence = agence.id_agence 
@@ -7206,7 +7285,7 @@ function searchStock()
                 OR voiture.date_achat LIKE ('%" . $search . "%')
                 OR agence.lieu_agence LIKE ('%" . $search . "%')       
                 OR voiture.etat_voiture LIKE ('%" . $search . "%'))
-                ORDER BY voiture.etat_voiture ASC ");
+                ORDER BY voiture.id_voiture ASC ");
         }
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
@@ -7214,29 +7293,31 @@ function searchStock()
                 if ($row['etat_voiture'] == "Loue") {
                     $color = "badge bg-light-warning text-warning fw-normal";
                     $color1 = "background-color: #ffedd4!important";
-                    $rowETAT = "LOUE";
+                    $row['etat_voiture'] = "LOUE";
                 } elseif ($row['etat_voiture'] == "Entretien") {
                     $color = "badge bg-light-info text-white fw-normal";
                     $color1 = "background-color: #ffc36d!important";
-                    $rowETAT = "ENTRETIEN";
+                    $row['etat_voiture'] = "ENTRETIEN";
                 } elseif ($row['etat_voiture'] == "Vendue") {
                     $color = "badge bg-light-info text-white fw-normal";
                     $color1 = "background-color: #ff5050!important";
-                    $rowETAT = "VENDUE";
+                    $row['etat_voiture'] = "VENDUE";
                 } elseif ($row['etat_voiture'] == "HS") {
                     $color = "badge bg-light-info text-white fw-normal";
                     $color1 = "background-color: #343a40!important";
-                    $rowETAT = "HORS SERVICE";
+                    $row['etat_voiture'] = "HORS SERVICE";
                 } elseif ($row['etat_voiture'] == "Disponible") {
                     $disponibilte = disponibilite_Vehicule1($row['id_voiture']);
+                    $localisation = localisation_Vehicule($row['id_voiture']);
                     if ($disponibilte == 'disponibile') {
                         $color = "badge bg-light-success text-white fw-normal";
                         $color1 = "background-color: #2cd07e!important";
-                        $rowETAT = "DISPONIBLE";
+                        $row['etat_voiture'] = "DISPONIBLE";
                     } else {
                         $color = "badge bg-light-info text-white fw-normal";
                         $color1 = "background-color: #ff5050!important";
-                        $rowETAT = "En Location";
+                        $row['etat_voiture'] = "En Location";
+                        $row['lieu_agence'] = $localisation;
                     }
                 }
                 $value .= '
@@ -7250,7 +7331,7 @@ function searchStock()
                         <td class="border-top-1">' . $row['type_carburant'] . '</td>
                         <td class="border-top-1">' . $row['date_achat'] . '</td>
                         <td class="border-top-1">' . $row['lieu_agence'] . '</td>
-                        <td><span class="' . $color . '" style ="' . $color1 . '">' . $rowETAT . '</span></td>';
+                        <td><span class="' . $color . '" style ="' . $color1 . '">' . $row['etat_voiture'] . '</span></td>';
                 if ($row['etat_voiture'] != "VENDU") {
                     $value .= '<td><button title="Transférer la voiture" class="btn waves-effect waves-light btn-outline-dark" id="btn-transfert" data-id=' . $row['id_voiture'] . '><i class="fas fa-exchange-alt"></i></button></td>';
                 }
@@ -10746,14 +10827,55 @@ function InsertContratPack()
                 while ($rownomclient = mysqli_fetch_assoc($resultnomclient)) {
                     $nomclient = $rownomclient['nom_entreprise'];
                 }
-                $to = "$mailuser";
-                $subject = "Ajoutcontratpack";
-                $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser.".";
-                $header = "From:appk2contrat@gmail.com \r\n";
-                $header .= "Cc:appk2contrat@gmail.com \r\n";
-                $header .= "MIME-Version: 1.0\r\n";
-                $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                mail($to, $subject, $message, $header);
+
+                /////////////////////////Mail AWS/////////////////////////////////
+                require '/var/www/html/MailAWS/vendor/autoload.php';
+                
+				$sender = 'maaloulmedhedi@gmail.com';
+                $senderName = 'K2Location Sender Mail';
+                $recipient = "$mailuser";
+                $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
+                $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
+                $configurationSet = 'ConfigSet';
+                $host = 'email-smtp.eu-west-3.amazonaws.com';
+                $port = 465;
+                $subject = 'Ajoutcontratpack';
+                $bodyText =  "";
+                $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
+                Ce contrat a été crée par $nomuser .</body></html>";
+                $mail = new PHPMailer(true);
+                try {
+                    $mail->isSMTP(true);
+                    $mail->setFrom($sender, $senderName);
+                    $mail->Username   = $usernameSmtp;
+                    $mail->Password   = $passwordSmtp;
+                    $mail->Host       = $host;
+                    $mail->Port       = $port;
+                    $mail->SMTPAuth   = true;
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->CharSet = 'utf-8';
+                    $mail->addAddress($recipient);
+                    $mail->isHTML(true);
+                    $mail->Subject    = $subject;
+                    $mail->Body       = $bodyHtml;
+                    $mail->AltBody    = $bodyText;
+                    $mail->Send();
+                    echo "Email sent!" , PHP_EOL;
+                } catch (phpmailerException $e) {
+                    echo "An error occurred. {$e->errorMessage()}", PHP_EOL;
+                } catch (Exception $e) {
+                    echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
+                }
+                // $to = "$mailuser";
+                // $subject = "Ajoutcontratpack";
+                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser.".";
+                // $header = "From:appk2contrat@gmail.com \r\n";
+                // $header .= "Cc:appk2contrat@gmail.com \r\n";
+                // $header .= "MIME-Version: 1.0\r\n";
+                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
+                // mail($to, $subject, $message, $header);
+                /////////////////////////Mail AWS/////////////////////////////////
+                
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
                 $liste_user1_query = mysqli_query($conn, $liste_user1);
@@ -11390,13 +11512,13 @@ function selectVoiteurDispoStock()
         AND voiture.id_MarqueModel = marquemodel.id_MarqueModel
         AND voiture.id_agence = '$id_agence'
         AND voiture.actions !='S'
-        ORDER BY `etat_voiture` ASC";
+        ORDER BY voiture.id_voiture ASC";
     } else {
         $query = "SELECT * FROM voiture,agence,marquemodel
          WHERE voiture.id_agence = agence.id_agence
          AND voiture.id_MarqueModel = marquemodel.id_MarqueModel 
          AND  voiture.actions !='S'
-         ORDER BY `etat_voiture` ASC";
+         ORDER BY voiture.id_voiture ASC";
     }
     $result = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($result)) {

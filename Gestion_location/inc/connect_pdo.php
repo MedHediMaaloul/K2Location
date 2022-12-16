@@ -14,7 +14,7 @@
 // $password = 'K2Location';
 // $dbname = 'db_k2loc';
 try {
-        $bdd = new PDO('mysql:host=Localhost;dbname=db_k2loc;charset=utf8', 'root', 'K2Location');
+        $bdd = new PDO('mysql:host=127.0.0.1;dbname=devkestnwgadmin;charset=utf8', 'root', '');
 } catch (Exception $e) {
         die('Erreur : ' . $e->getMessage());
 }
