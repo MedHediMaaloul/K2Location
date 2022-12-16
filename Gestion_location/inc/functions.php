@@ -10832,7 +10832,6 @@ function InsertContratPack()
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
                 $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
-                $configurationSet = 'ConfigSet';
                 $host = 'email-smtp.eu-west-3.amazonaws.com';
                 $port = 465;
                 $subject = 'Ajoutcontratpack';
