@@ -4317,14 +4317,6 @@ function InsertContratMateriel()
                 } catch (Exception $e) {
                     echo "Email non envoyé. {$mail->ErrorInfo}", PHP_EOL;
                 }
-                // $to = "$mailuser";
-                // $subject = "Ajoutcontratmateriel";
-                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                // $header = "From:appk2contrat@gmail.com \r\n";
-                // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                // $header .= "MIME-Version: 1.0\r\n";
-                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                // mail($to, $subject, $message, $header);
                 /////////////////////////Mail AWS/////////////////////////////////
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
