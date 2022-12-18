@@ -4279,53 +4279,49 @@ function InsertContratMateriel()
                     $nomclient = $rownomclient['nom_entreprise'];
                 }
                 
-                /////////////////////////Mail AWS/////////////////////////////////
-
-                use PHPMailer\PHPMailer\PHPMailer;
-                use PHPMailer\PHPMailer\Exception;
-                require 'phpmailerlibrary/vendor/autoload.php';
+                // require '/var/www/html/Gestion_location/inc/MailAWS/vendor/autoload.php';
                 
-				$sender = 'maaloulmedhedi@gmail.com';
-                $senderName = 'K2Location Sender Mail';
-                $recipient = "medhedimaaloul@ste-sitem.com";
-                $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
-                $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
-                $configurationSet = 'ConfigSet';
-                $host = 'email-smtp.eu-west-3.amazonaws.com';
-                $port = 465;
-                $subject = 'K2Location(Ajoutcontratmateriel)';
-                $bodyText =  "";
-                $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
-                Ce contrat a été crée par $nomuser .</body></html>";
-                $mail = new PHPMailer(true);
-                try {
-                    $mail->isSMTP(true);
-                    $mail->setFrom($sender, $senderName);
-                    $mail->Username   = $usernameSmtp;
-                    $mail->Password   = $passwordSmtp;
-                    $mail->Host       = $host;
-                    $mail->Port       = $port;
-                    $mail->SMTPAuth   = true;
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->CharSet = 'utf-8';
-                    $mail->addAddress($recipient);
-                    $mail->isHTML(true);
-                    $mail->Subject    = $subject;
-                    $mail->Body       = $bodyHtml;
-                    $mail->AltBody    = $bodyText;
-                    $mail->Send();
-                    echo "Email sent!" , PHP_EOL;
-                } catch (Exception $e) {
-                    echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
-                }
-                // $to = "$mailuser";
-                // $subject = "Ajoutcontratmateriel";
-                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                // $header = "From:appk2contrat@gmail.com \r\n";
-                // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                // $header .= "MIME-Version: 1.0\r\n";
-                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                // mail($to, $subject, $message, $header);
+				// $sender = 'maaloulmedhedi@gmail.com';
+                // $senderName = 'K2Location Sender Mail';
+                // $recipient = "$mailuser";
+                // $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
+                // $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
+                // $configurationSet = 'ConfigSet';
+                // $host = 'email-smtp.eu-west-3.amazonaws.com';
+                // $port = 465;
+                // $subject = 'K2Location App (Contrat Location Materiel)';
+                // $bodyText =  "";
+                // $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
+                // Ce contrat a été crée par $nomuser .</body></html>";
+                // $mail = new PHPMailer(true);
+                // try {
+                //     $mail->isSMTP(true);
+                //     $mail->setFrom($sender, $senderName);
+                //     $mail->Username   = $usernameSmtp;
+                //     $mail->Password   = $passwordSmtp;
+                //     $mail->Host       = $host;
+                //     $mail->Port       = $port;
+                //     $mail->SMTPAuth   = true;
+                //     $mail->SMTPSecure = 'ssl';
+                //     $mail->CharSet = 'utf-8';
+                //     $mail->addAddress($recipient);
+                //     $mail->isHTML(true);
+                //     $mail->Subject    = $subject;
+                //     $mail->Body       = $bodyHtml;
+                //     $mail->AltBody    = $bodyText;
+                //     $mail->Send();
+                //     echo "Email sent!" , PHP_EOL;
+                // } catch (Exception $e) {
+                //     echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
+                // }
+                $to = "$mailuser";
+                $subject = "Ajoutcontratmateriel";
+                $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
+                $header = "From:appk2contrat@gmail.com \r\n";
+                $header .= "Cc:appk2contrat@gmail.com \r\n";
+                $header .= "MIME-Version: 1.0\r\n";
+                $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
+                mail($to, $subject, $message, $header);
                 /////////////////////////Mail AWS/////////////////////////////////
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
@@ -4461,51 +4457,49 @@ function InsertContratVoiture()
                         $nomclient = $rownomclient['nom_entreprise'];
                     }
                     /////////////////////////Mail AWS/////////////////////////////////
-                    use PHPMailer\PHPMailer\PHPMailer;
-                    use PHPMailer\PHPMailer\Exception;
-                    require 'phpmailerlibrary/vendor/autoload.php';
+                    // require '/var/www/html/Gestion_location/inc/MailAWS/vendor/autoload.php';
                     
-				    $sender = 'maaloulmedhedi@gmail.com';
-                    $senderName = 'K2Location Sender Mail';
-                    $recipient = "medhedimaaloul@ste-sitem.com";
-                    $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
-                    $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
-                    $configurationSet = 'ConfigSet';
-                    $host = 'email-smtp.eu-west-3.amazonaws.com';
-                    $port = 465;
-                    $subject = 'K2Location(Ajoutcontratvoiture)';
-                    $bodyText =  "";
-                    $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
-                    Ce contrat a été crée par $nomuser .</body></html>";
-                    $mail = new PHPMailer(true);
-                    try {
-                        $mail->isSMTP(true);
-                        $mail->setFrom($sender, $senderName);
-                        $mail->Username   = $usernameSmtp;
-                        $mail->Password   = $passwordSmtp;
-                        $mail->Host       = $host;
-                        $mail->Port       = $port;
-                        $mail->SMTPAuth   = true;
-                        $mail->SMTPSecure = 'ssl';
-                        $mail->CharSet = 'utf-8';
-                        $mail->addAddress($recipient);
-                        $mail->isHTML(true);
-                        $mail->Subject    = $subject;
-                        $mail->Body       = $bodyHtml;
-                        $mail->AltBody    = $bodyText;
-                        $mail->Send();
-                        echo "Email sent!" , PHP_EOL;
-                    } catch (Exception $e) {
-                        echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
-                    }
-                    // $to = "$mailuser";
-                    // $subject = "Ajoutcontratvoiture";
-                    // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                    // $header = "From:appk2contrat@gmail.com \r\n";
-                    // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                    // $header .= "MIME-Version: 1.0\r\n";
-                    // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                    // mail($to, $subject, $message, $header);
+				    // $sender = 'maaloulmedhedi@gmail.com';
+                    // $senderName = 'K2Location Sender Mail';
+                    // $recipient = "$mailuser";
+                    // $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
+                    // $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
+                    // $configurationSet = 'ConfigSet';
+                    // $host = 'email-smtp.eu-west-3.amazonaws.com';
+                    // $port = 465;
+                    // $subject = 'Ajoutcontratvoiture';
+                    // $bodyText =  "";
+                    // $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
+                    // Ce contrat a été crée par $nomuser .</body></html>";
+                    // $mail = new PHPMailer(true);
+                    // try {
+                    //     $mail->isSMTP(true);
+                    //     $mail->setFrom($sender, $senderName);
+                    //     $mail->Username   = $usernameSmtp;
+                    //     $mail->Password   = $passwordSmtp;
+                    //     $mail->Host       = $host;
+                    //     $mail->Port       = $port;
+                    //     $mail->SMTPAuth   = true;
+                    //     $mail->SMTPSecure = 'ssl';
+                    //     $mail->CharSet = 'utf-8';
+                    //     $mail->addAddress($recipient);
+                    //     $mail->isHTML(true);
+                    //     $mail->Subject    = $subject;
+                    //     $mail->Body       = $bodyHtml;
+                    //     $mail->AltBody    = $bodyText;
+                    //     $mail->Send();
+                    //     echo "Email sent!" , PHP_EOL;
+                    // } catch (Exception $e) {
+                    //     echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
+                    // }
+                    $to = "$mailuser";
+                    $subject = "Ajoutcontratvoiture";
+                    $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
+                    $header = "From:appk2contrat@gmail.com \r\n";
+                    $header .= "Cc:appk2contrat@gmail.com \r\n";
+                    $header .= "MIME-Version: 1.0\r\n";
+                    $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
+                    mail($to, $subject, $message, $header);
                     /////////////////////////Mail AWS/////////////////////////////////
                     $date_now = date("Y-m-d H:i:s");
                     $liste_user1 = "SELECT * FROM user";
@@ -10828,51 +10822,47 @@ function InsertContratPack()
                 }
 
                 /////////////////////////Mail AWS/////////////////////////////////
-                use PHPMailer\PHPMailer\PHPMailer;
-                use PHPMailer\PHPMailer\Exception;
-                require 'phpmailerlibrary/vendor/autoload.php';
-                
-				$sender = 'maaloulmedhedi@gmail.com';
-                $senderName = 'K2Location Sender Mail';
-                $recipient = "medhedimaaloul@ste-sitem.com";
-                $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
-                $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
-                $configurationSet = 'ConfigSet';
-                $host = 'email-smtp.eu-west-3.amazonaws.com';
-                $port = 465;
-                $subject = 'K2Location(Ajoutcontratpack)';
-                $bodyText =  "";
-                $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
-                Ce contrat a été crée par $nomuser .</body></html>";
-                $mail = new PHPMailer(true);
-                try {
-                    $mail->isSMTP(true);
-                    $mail->setFrom($sender, $senderName);
-                    $mail->Username   = $usernameSmtp;
-                    $mail->Password   = $passwordSmtp;
-                    $mail->Host       = $host;
-                    $mail->Port       = $port;
-                    $mail->SMTPAuth   = true;
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->CharSet = 'utf-8';
-                    $mail->addAddress($recipient);
-                    $mail->isHTML(true);
-                    $mail->Subject    = $subject;
-                    $mail->Body       = $bodyHtml;
-                    $mail->AltBody    = $bodyText;
-                    $mail->Send();
-                    echo "Email sent!" , PHP_EOL;
-                } catch (Exception $e) {
-                    echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
-                }
-                // $to = "$mailuser";
-                // $subject = "Ajoutcontratpack";
-                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser.".";
-                // $header = "From:appk2contrat@gmail.com \r\n";
-                // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                // $header .= "MIME-Version: 1.0\r\n";
-                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                // mail($to, $subject, $message, $header);
+                // require '/var/www/html/Gestion_location/inc/MailAWS/vendor/autoload.php';
+				// $sender = 'maaloulmedhedi@gmail.com';
+                // $senderName = 'K2Location Sender Mail';
+                // $recipient = "$mailuser";
+                // $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
+                // $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
+                // $host = 'email-smtp.eu-west-3.amazonaws.com';
+                // $port = 465;
+                // $subject = 'Ajoutcontratpack';
+                // $bodyText =  "";
+                // $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
+                // Ce contrat a été crée par $nomuser .</body></html>";
+                // $mail = new PHPMailer(true);
+                // try {
+                //     $mail->isSMTP(true);
+                //     $mail->setFrom($sender, $senderName);
+                //     $mail->Username   = $usernameSmtp;
+                //     $mail->Password   = $passwordSmtp;
+                //     $mail->Host       = $host;
+                //     $mail->Port       = $port;
+                //     $mail->SMTPAuth   = true;
+                //     $mail->SMTPSecure = 'ssl';
+                //     $mail->CharSet = 'utf-8';
+                //     $mail->addAddress($recipient);
+                //     $mail->isHTML(true);
+                //     $mail->Subject    = $subject;
+                //     $mail->Body       = $bodyHtml;
+                //     $mail->AltBody    = $bodyText;
+                //     $mail->Send();
+                //     echo "Email sent!" , PHP_EOL;
+                // } catch (Exception $e) {
+                //     echo "Email not sent. {$mail->ErrorInfo}", PHP_EOL;
+                // }
+                $to = "$mailuser";
+                $subject = "Ajoutcontratpack";
+                $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser.".";
+                $header = "From:appk2contrat@gmail.com \r\n";
+                $header .= "Cc:appk2contrat@gmail.com \r\n";
+                $header .= "MIME-Version: 1.0\r\n";
+                $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
+                mail($to, $subject, $message, $header);
                 /////////////////////////Mail AWS/////////////////////////////////
                 
                 $date_now = date("Y-m-d H:i:s");
