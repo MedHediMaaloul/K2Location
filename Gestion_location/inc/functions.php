@@ -4296,7 +4296,7 @@ function InsertContratMateriel()
                 $bodyText =  "";
                 $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                 Ce contrat a été crée par $nomuser .</body></html>";
-                $mail = new \PHPMailer\PHPMailer\PHPMailer();
+                $mail = new PHPMailer(true);
                 try {
                     $mail->isSMTP(true);
                     $mail->setFrom($sender, $senderName);
@@ -4467,7 +4467,7 @@ function InsertContratVoiture()
                     $bodyText =  "";
                     $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                     Ce contrat a été crée par $nomuser .</body></html>";
-                    $mail = new \PHPMailer\PHPMailer\PHPMailer();
+                    $mail = new PHPMailer(true);
                     try {
                         $mail->isSMTP(true);
                         $mail->setFrom($sender, $senderName);
@@ -10832,7 +10832,7 @@ function InsertContratPack()
                 $bodyText =  "";
                 $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                 Ce contrat a été crée par $nomuser .</body></html>";
-                $mail = new \PHPMailer\PHPMailer\PHPMailer();
+                $mail = new PHPMailer(true);
                 try {
                     $mail->isSMTP(true);
                     $mail->setFrom($sender, $senderName);
