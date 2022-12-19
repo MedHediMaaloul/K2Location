@@ -4284,7 +4284,7 @@ function InsertContratMateriel()
                 require("PHPMailer/src/Exception.php");
                 require("PHPMailer/src/PHPMailer.php");
                 require("PHPMailer/src/SMTP.php");
-				$sender = 'maaloulmedhedi@gmail.com';
+				$sender = 'medhedimaaloul@ste-sitem.com';
                 $senderName = 'K2Location Sender Mail';
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -4455,7 +4455,7 @@ function InsertContratVoiture()
                     require("PHPMailer/src/Exception.php");
                     require("PHPMailer/src/PHPMailer.php");
                     require("PHPMailer/src/SMTP.php");
-				    $sender = 'maaloulmedhedi@gmail.com';
+				    $sender = 'medhedimaaloul@ste-sitem.com';
                     $senderName = 'K2Location Sender Mail';
                     $recipient = "$mailuser";
                     $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -4463,11 +4463,11 @@ function InsertContratVoiture()
                     $configurationSet = 'ConfigSet';
                     $host = 'email-smtp.eu-west-3.amazonaws.com';
                     $port = 465;
-                    $subject = 'K2Location App (Ajoutcontratvoiture)';
+                    $subject = 'K2Location App (Contrat Location Vehicule)';
                     $bodyText =  "";
                     $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                     Ce contrat a été crée par $nomuser .</body></html>";
-                    $mail = new PHPMailer(true);
+                    $mail = new \PHPMailer\PHPMailer\PHPMailer();
                     try {
                         $mail->isSMTP(true);
                         $mail->setFrom($sender, $senderName);
@@ -10821,18 +10821,18 @@ function InsertContratPack()
                 require("PHPMailer/src/Exception.php");
                 require("PHPMailer/src/PHPMailer.php");
                 require("PHPMailer/src/SMTP.php");
-				$sender = 'maaloulmedhedi@gmail.com';
+				$sender = 'medhedimaaloul@ste-sitem.com';
                 $senderName = 'K2Location Sender Mail';
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
                 $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
                 $host = 'email-smtp.eu-west-3.amazonaws.com';
                 $port = 465;
-                $subject = 'K2Location App (Ajoutcontratpack)';
+                $subject = 'K2Location App (Contrat Location Pack)';
                 $bodyText =  "";
                 $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                 Ce contrat a été crée par $nomuser .</body></html>";
-                $mail = new PHPMailer(true);
+                $mail = new \PHPMailer\PHPMailer\PHPMailer();
                 try {
                     $mail->isSMTP(true);
                     $mail->setFrom($sender, $senderName);
