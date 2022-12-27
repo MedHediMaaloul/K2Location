@@ -544,49 +544,159 @@ if (!isset($_SESSION['User'])) {
                             var chart = new google.visualization.PieChart(document.getElementById('contratchart'));
                             chart.draw(data, options);
                         }
+                        
                         </script>
                         
-                        <div class="row no-gutters align-items-center">
+                        <div class="row  no-gutters align-items-center mb-4">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Contrats qui
-                                    prendront fin</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-3">Véhicule disponibles ( Nombre Total : 
+                                    <?php   
+                                        function number_vehicule_dispo(){
+                                            global $conn;
+                                            $id_agence = $_SESSION['id_agence'];
+                                            if($_SESSION['Role'] == "superadmin" || $_SESSION['Role'] == "responsable"){
+                                                $number_vehicule_loue = "SELECT COUNT(*) AS Numbervehiculeloue FROM contrat_client 
+                                                where type_location = 'Vehicule' 
+                                                AND etat_contrat = 'A' 
+                                                AND ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
+                                                $resultnumber_vehicule_loue = mysqli_query($conn, $number_vehicule_loue);
+                                            }else{
+                                                $number_vehicule_loue = "SELECT COUNT(*) AS Numbervehiculeloue FROM contrat_client 
+                                                where type_location = 'Vehicule' 
+                                                AND etat_contrat = 'A' 
+                                                AND (id_agence = $id_agence OR id_agenceret = $id_agence)
+                                                AND ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
+                                                $resultnumber_vehicule_loue = mysqli_query($conn, $number_vehicule_loue);
+                                            }
+                                            $number_vehicule_loue = mysqli_fetch_assoc($resultnumber_vehicule_loue);
 
+                                            if($_SESSION['Role'] == "superadmin" || $_SESSION['Role'] == "responsable"){
+                                                $number_vehicule_total = "SELECT COUNT(*) AS Numbervehiculetotal FROM voiture 
+                                                where actions !='S' 
+                                                AND etat_voiture = 'Disponible'";
+                                                $resultnumber_vehicule_total = mysqli_query($conn, $number_vehicule_total);
+                                            }else{
+                                                $number_vehicule_total = "SELECT COUNT(*) AS Numbervehiculetotal FROM voiture 
+                                                where actions !='S' 
+                                                AND id_agence = $id_agence
+                                                AND etat_voiture = 'Disponible'";
+                                                $resultnumber_vehicule_total = mysqli_query($conn, $number_vehicule_total);
+                                            }
+                                            $number_vehicule_total = mysqli_fetch_assoc($resultnumber_vehicule_total);
+
+                                            return $number_vehicule_total['Numbervehiculetotal'] - $number_vehicule_loue['Numbervehiculeloue'];   
+                                        }
+                                        $number_vehicule_dispo = number_vehicule_dispo();
+                                        echo $number_vehicule_dispo?> )
                                 </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                 <div class="row">
-                                    <div class="col-9">
+                                    <div class="col-12 table-responsive" style="height:300px;">
                                         <?php
                                         $value = '<table class="table table-striped table-bordered table-hover">
-                <tr class="thead-dark">
-                    <th class="border-top-0">ID Contrat</th>
-                    <th class="border-top-0">Type Contrat</th>
-                    <th class="border-top-0">Date Fin</th>
-                    <th class="border-top-0">Nom Client</th>
-                    <th class="border-top-0">Email Client</th>
-                    <th class="border-top-0">Téléphone Client</th>
-                    <th class="border-top-0">Adresse Client</th>
-                </tr>';
+                                                    <tr class="thead-dark" style="height:10px;">
+                                                        <th class="border-top-0">ID Voiture</th>
+                                                        <th class="border-top-0">Marque Voiture</th>
+                                                        <th class="border-top-0">Modèle Voiture</th>
+                                                        <th class="border-top-0">Immatriculation Voiture</th>
+                                                    </tr>';
+                                        function disponibilite_Vehicule($id_voiture){
+                                            global $conn;
+                                            $query = "SELECT * FROM contrat_client 
+                                               where id_voiture ='$id_voiture' 
+                                               and etat_contrat = 'A' 
+                                               and ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
+                                            $result = mysqli_query($conn, $query);
+                                            $nb_res = mysqli_num_rows($result);
+                                            if ($nb_res == 0) {
+                                                return "disponibile";
+                                            }
+                                        }
+
                                         if($_SESSION['Role'] == "superadmin" || $_SESSION['Role'] == "responsable"){
-                                            $query = "SELECT C.id_contrat,C.type_location,C.date_fin,CL.nom,CL.email,CL.tel,CL.adresse FROM `contrat_client` as C left JOIN client as CL on C.id_client=CL.id_client
+                                            $query = "SELECT V.id_voiture,V.pimm,MM.Marque,MM.Model
+                                            FROM voiture as V 
+                                            left JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel
+                                            WHERE etat_voiture='Disponible'
+                                            AND actions != 'S'
+                                            ORDER BY id_voiture";
+                                            $result = mysqli_query($conn, $query);
+                                        } else {
+                                            $query = "SELECT V.id_voiture,V.pimm,MM.Marque,MM.Model
+                                            FROM voiture as V 
+                                            left JOIN marquemodel as MM on V.id_MarqueModel=MM.id_MarqueModel
+                                            WHERE etat_voiture='Disponible'
+                                            AND actions != 'S'
+                                            AND V.id_agence = $id_agence
+                                            ORDER BY id_voiture";
+                                            $result = mysqli_query($conn, $query);
+                                        }
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $disponibilte = disponibilite_Vehicule($row['id_voiture']);
+                                            if ($disponibilte == 'disponibile') {
+                                                $value .= '               
+                                                <tr>
+                                                    <td class="border-top-0 font-weight-bold">' . $row['id_voiture'] . '</td>
+                                                    <td class="border-top-0 font-weight-bold">' . $row['Marque'] . '</td>
+                                                    <td class="border-top-0 font-weight-bold">' . $row['Model'] . '</td>
+                                                    <td class="border-top-0 font-weight-bold">' . $row['pimm'] . '</td>
+                                                </tr>';
+                                            } 
+                                        }
+                                        $value .= '</table>';
+                                        echo $value;
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters align-items-center mb-3">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-3">Contrats qui
+                                    prendront fin</div>
+                                <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">
+
+                                </div> -->
+                                <div class="row">
+                                    <div class="col-9 table-responsive" style="height:300px;">
+                                        <?php
+                                        $value = '<table class="table table-striped table-bordered table-hover">
+                                            <tr class="thead-dark">
+                                                <th class="border-top-0">ID Contrat</th>
+                                                <th class="border-top-0">Type Contrat</th>
+                                                <th class="border-top-0">Date Fin</th>
+                                                <th class="border-top-0">Nom Client</th>
+                                                <th class="border-top-0">Email Client</th>
+                                                <th class="border-top-0">Téléphone Client</th>
+                                                <th class="border-top-0">Adresse Client</th>
+                                            </tr>';
+                                        if($_SESSION['Role'] == "superadmin" || $_SESSION['Role'] == "responsable"){
+                                            $query = "SELECT C.id_contrat,C.type_location,C.date_fin,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse FROM `contrat_client` as C left JOIN client as CL on C.id_client=CL.id_client
                                                         WHERE (DATE(NOW()) BETWEEN DATE_SUB(C.date_fin, INTERVAL 7 DAY) AND DATE_SUB(C.date_fin, INTERVAL -3 DAY))
                                                         AND etat_contrat != 'S'";
                                         } else {
-                                            $query = "SELECT C.id_contrat,C.type_location,C.date_fin,CL.nom,CL.email,CL.tel,CL.adresse FROM `contrat_client` as C left JOIN client as CL on C.id_client=CL.id_client
+                                            $query = "SELECT C.id_contrat,C.type_location,C.date_fin,CL.nom,CL.nom_entreprise,CL.email,CL.tel,CL.adresse FROM `contrat_client` as C left JOIN client as CL on C.id_client=CL.id_client
                                                         WHERE (DATE(NOW()) BETWEEN DATE_SUB(C.date_fin, INTERVAL 7 DAY) AND DATE_SUB(C.date_fin, INTERVAL -3 DAY))
                                                         AND etat_contrat != 'S'
                                                         AND C.id_agence = $id_agence";
                                         }
                                         $result = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_assoc($result)) {
-                                            $value .= '               <tr>
-                    <td class="border-top-0 font-weight-bold">' . $row['id_contrat'] . '</td>
-                    <td class="border-top-0 font-weight-bold">' . $row['type_location'] . '</td>
-                    <td class="border-top-0 font-weight-bold">' . $row['date_fin'] . '</td>
-                    <td class="border-top-0 font-weight-bold">' . $row['nom'] . '</td>
-                    <td class="border-top-0 font-weight-bold">' . $row['email'] . '</td>
-                    <td class="border-top-0 font-weight-bold">' . $row['tel'] . '</td>
-                    <td class="border-top-0 font-weight-bold">' . $row['adresse'] . '</td>
-                </tr>';
+                                            $value .= '<tr>
+                                                <td class="border-top-0 font-weight-bold">' . $row['id_contrat'] . '</td>
+                                                <td class="border-top-0 font-weight-bold">' . $row['type_location'] . '</td>
+                                                <td class="border-top-0 font-weight-bold">' . $row['date_fin'] . '</td>';
+                                                if ($row['nom_entreprise'] == ""){
+                                                    $value .= '<td class="border-top-0 font-weight-bold">' . $row['nom'] . '</td>';
+                                                }else if ($row['nom'] == ""){
+                                                    $value .= '<td class="border-top-0 font-weight-bold">' . $row['nom_entreprise'] . '</td>';
+                                                }else{
+                                                    $value .= '<td class="border-top-0 font-weight-bold">' . $row['nom_entreprise'] . " / Conducteur : " . $row['nom'] . '</td>';
+                                                }
+                                                $value .= '<td class="border-top-0 font-weight-bold">' . $row['email'] . '</td>
+                                                <td class="border-top-0 font-weight-bold">' . $row['tel'] . '</td>
+                                                <td class="border-top-0 font-weight-bold">' . $row['adresse'] . '</td>
+                                            </tr>';
                                         }
                                         $value .= '</table>';
                                         echo $value;
