@@ -560,6 +560,13 @@ if (!isset($_SESSION['User'])) {
                                                 AND etat_contrat = 'A' 
                                                 AND ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
                                                 $resultnumber_vehicule_loue = mysqli_query($conn, $number_vehicule_loue);
+
+                                                $number_vehicule_loue_avenant = "SELECT COUNT(*) AS Numbervehiculeloueavenant 
+                                                FROM contrat_client_avenant as CA,contrat_client as c 
+                                                where c.id_contrat = CA.id_contrat_client
+                                                AND c.type_location = 'Vehicule' 
+                                                AND ((CA.debut_contrat_avenant <= DATE(NOW()) and CA.fin_contrat_avenant >=DATE(NOW())))";
+                                                $resultnumber_vehicule_loue_avenant = mysqli_query($conn, $number_vehicule_loue_avenant);
                                             }else{
                                                 $number_vehicule_loue = "SELECT COUNT(*) AS Numbervehiculeloue FROM contrat_client 
                                                 where type_location = 'Vehicule' 
@@ -567,8 +574,17 @@ if (!isset($_SESSION['User'])) {
                                                 AND (id_agence = $id_agence OR id_agenceret = $id_agence)
                                                 AND ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
                                                 $resultnumber_vehicule_loue = mysqli_query($conn, $number_vehicule_loue);
+
+                                                $number_vehicule_loue_avenant = "SELECT COUNT(*) AS Numbervehiculeloueavenant 
+                                                FROM contrat_client_avenant as CA,contrat_client as c 
+                                                where c.id_contrat = CA.id_contrat_client
+                                                AND c.type_location = 'Vehicule' 
+                                                AND (c.id_agence = $id_agence OR c.id_agenceret = $id_agence)
+                                                AND ((CA.debut_contrat_avenant <= DATE(NOW()) and CA.fin_contrat_avenant >=DATE(NOW())))";
+                                                $resultnumber_vehicule_loue_avenant = mysqli_query($conn, $number_vehicule_loue_avenant);
                                             }
-                                            $number_vehicule_loue = mysqli_fetch_assoc($resultnumber_vehicule_loue);
+                                            $number_vehicule_loue_normal = mysqli_fetch_assoc($resultnumber_vehicule_loue);
+                                            $number_vehicule_loue_avenant = mysqli_fetch_assoc($resultnumber_vehicule_loue_avenant);
 
                                             if($_SESSION['Role'] == "superadmin" || $_SESSION['Role'] == "responsable"){
                                                 $number_vehicule_total = "SELECT COUNT(*) AS Numbervehiculetotal FROM voiture 
@@ -584,7 +600,7 @@ if (!isset($_SESSION['User'])) {
                                             }
                                             $number_vehicule_total = mysqli_fetch_assoc($resultnumber_vehicule_total);
 
-                                            return $number_vehicule_total['Numbervehiculetotal'] - $number_vehicule_loue['Numbervehiculeloue'];   
+                                            return $number_vehicule_total['Numbervehiculetotal'] - ($number_vehicule_loue['Numbervehiculeloue'] + $number_vehicule_loue_avenant['Numbervehiculeloueavenant']);   
                                         }
                                         $number_vehicule_dispo = number_vehicule_dispo();
                                         echo $number_vehicule_dispo?> )
@@ -608,8 +624,17 @@ if (!isset($_SESSION['User'])) {
                                                and ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
                                             $result = mysqli_query($conn, $query);
                                             $nb_res = mysqli_num_rows($result);
-                                            if ($nb_res == 0) {
+
+                                            $query_avenant = "SELECT * FROM contrat_client_avenant 
+                                               where id_voiture_avenant ='$id_voiture' 
+                                               and ((debut_contrat_avenant <= DATE(NOW()) and fin_contrat_avenant >=DATE(NOW())))";
+                                            $result_avenant = mysqli_query($conn, $query_avenant);
+                                            $nb_res_avenant = mysqli_num_rows($result_avenant);
+
+                                            if ($nb_res == 0 && $nb_res_avenant == 0) {
                                                 return "disponibile";
+                                            } else {
+                                                return "non disponibile";
                                             }
                                         }
 
