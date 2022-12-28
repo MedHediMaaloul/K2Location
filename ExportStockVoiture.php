@@ -41,6 +41,19 @@ foreach($data as $d){
             $d->lieu_agence = $d1->nom_entreprise;
         }
     }
+    $del_avenant = $bdd->prepare("SELECT * FROM contrat_client_avenant As CA,contrat_client As C,client AS CL
+    where CA.id_voiture_avenant ='$d->id_voiture' 
+    and CA.id_contrat_client = C.id_contrat
+    and C.id_client = CL.id_client 
+    and ((CA.debut_contrat_avenant <= DATE(NOW()) and CA.fin_contrat_avenant >=DATE(NOW())))");
+    $del_avenant->execute();
+    $data_avenant = $del_avenant->fetchAll();
+    if ($del_avenant->rowCount() > 0){
+        $d->etat_voiture = "En Location";
+        foreach($data_avenant as $d2){
+            $d->lieu_agence = $d2->nom_entreprise;
+        }
+    }
     echo '"'.utf8_decode($d->type).'";"'.utf8_decode($d->pimm).'";"'.utf8_decode($d->Marque).'";"'.utf8_decode($d->Model).'";"'.utf8_decode($d->boite_vitesse).'";"'.utf8_decode($d->type_carburant).'";"'.utf8_decode($d->date_achat).'";"'.utf8_decode($d->lieu_agence).'";"'.utf8_decode($d->etat_voiture).'";'."\n";
 }
 ?>

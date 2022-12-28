@@ -11567,10 +11567,18 @@ function disponibilite_Vehicule1($id_voiture)
        where  
        id_voiture ='$id_voiture' and 
        etat_contrat = 'A' and
-       ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW()) ))  ";
+       ((date_debut <= DATE(NOW()) and date_fin >=DATE(NOW())))";
     $result = mysqli_query($conn, $query);
     $nb_res = mysqli_num_rows($result);
-    if ($nb_res == 0) {
+
+    $query_avenant = "SELECT * FROM contrat_client_avenant 
+       where  
+       id_voiture_avenant ='$id_voiture' and 
+       ((debut_contrat_avenant <= DATE(NOW()) and fin_contrat_avenant >=DATE(NOW())))";
+    $result_avenant = mysqli_query($conn, $query_avenant);
+    $nb_res_avenant = mysqli_num_rows($result_avenant);
+    
+    if ($nb_res == 0 && $nb_res_avenant == 0) {
         return "disponibile";
     } else {
         return "non disponibile";
@@ -11580,13 +11588,25 @@ function localisation_Vehicule($id_voiture)
 {
     global $conn;
     $query = "SELECT CL.nom_entreprise,CL.nom FROM contrat_client As C,client AS CL
-       where  
-       C.id_voiture ='$id_voiture' and 
-       C.id_client = CL.id_client and
-       C.etat_contrat = 'A' and
-       ((C.date_debut <= DATE(NOW()) and C.date_fin >=DATE(NOW()) ))  ";
+       where C.id_voiture ='$id_voiture' 
+       and C.id_client = CL.id_client 
+       and C.etat_contrat = 'A' 
+       and ((C.date_debut <= DATE(NOW()) and C.date_fin >=DATE(NOW())))";
     $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_row($result);
+    $nb_res = mysqli_num_rows($result);
+
+    if($nb_res == 0){
+        $query_avenant = "SELECT CL.nom_entreprise,CL.nom FROM contrat_client_avenant As CA,contrat_client As C,client AS CL
+        where CA.id_voiture_avenant ='$id_voiture' 
+        and CA.id_contrat_client = C.id_contrat
+        and C.id_client = CL.id_client 
+        and ((CA.debut_contrat_avenant <= DATE(NOW()) and CA.fin_contrat_avenant >=DATE(NOW())))";
+        $result_avenant = mysqli_query($conn, $query_avenant);
+        $row = mysqli_fetch_row($result_avenant);
+    }else{
+        $row = mysqli_fetch_row($result);
+    }
+    
     $nomentreprise = $row[0];
     $nom = $row[1];
     if ($nomentreprise == ""){
@@ -11609,7 +11629,20 @@ function telclient_VehiculeLoue($id_voiture)
        C.etat_contrat = 'A' and
        ((C.date_debut <= DATE(NOW()) and C.date_fin >=DATE(NOW()) ))  ";
     $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_row($result);
+    $nb_res = mysqli_num_rows($result);
+
+    if($nb_res == 0){
+        $query_avenant = "SELECT CL.tel FROM contrat_client_avenant As CA,contrat_client As C,client AS CL
+        where CA.id_voiture_avenant ='$id_voiture' 
+        and CA.id_contrat_client = C.id_contrat
+        and C.id_client = CL.id_client 
+        and ((CA.debut_contrat_avenant <= DATE(NOW()) and CA.fin_contrat_avenant >=DATE(NOW())))";
+        $result_avenant = mysqli_query($conn, $query_avenant);
+        $row = mysqli_fetch_row($result_avenant);
+    }else{
+        $row = mysqli_fetch_row($result);
+    }
+
     $tel = $row[0];
     return $tel;
 }
