@@ -600,7 +600,7 @@ if (!isset($_SESSION['User'])) {
                                             }
                                             $number_vehicule_total = mysqli_fetch_assoc($resultnumber_vehicule_total);
 
-                                            return $number_vehicule_total['Numbervehiculetotal'] - ($number_vehicule_loue['Numbervehiculeloue'] + $number_vehicule_loue_avenant['Numbervehiculeloueavenant']);   
+                                            return $number_vehicule_total['Numbervehiculetotal'] - ($number_vehicule_loue_normal['Numbervehiculeloue'] + $number_vehicule_loue_avenant['Numbervehiculeloueavenant']);   
                                         }
                                         $number_vehicule_dispo = number_vehicule_dispo();
                                         echo $number_vehicule_dispo?> )
