@@ -5778,17 +5778,17 @@ function update_user_record() {
       updateuserID == "" ||
       updateuserName == "" ||
       updateuserLogin == "" ||
-      updateuserEmail == "" ||
+      // updateuserEmail == "" ||
       updateuserPassword == ""
     ) {
       $("#up_message")
         .addClass("alert alert-danger")
         .html("Les champs obligatoires ne peuvent pas être nuls !");
       $("#updateUser").modal("show");
-    }else if (!isValidEmailAddress(updateuserEmail)) {
-      $("#up_message")
-        .addClass("alert alert-danger")
-        .html("le champ « email » est invalide");
+    // }else if (!isValidEmailAddress(updateuserEmail)) {
+    //   $("#up_message")
+    //     .addClass("alert alert-danger")
+    //     .html("le champ « email » est invalide");
     } else {
       var form_data = new FormData();
       form_data.append("_id", updateuserID);

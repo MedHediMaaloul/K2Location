@@ -4284,7 +4284,7 @@ function InsertContratMateriel()
                 require("PHPMailer/src/Exception.php");
                 require("PHPMailer/src/PHPMailer.php");
                 require("PHPMailer/src/SMTP.php");
-				$sender = 'maaloulmedhedi@gmail.com';
+				$sender = 'medhedimaaloul@ste-sitem.com';
                 $senderName = 'K2Location Sender Mail';
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -4296,7 +4296,7 @@ function InsertContratMateriel()
                 $bodyText =  "";
                 $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                 Ce contrat a été crée par $nomuser .</body></html>";
-                $mail = new \PHPMailer\PHPMailer\PHPMailer();
+                $mail = new PHPMailer(true);
                 try {
                     $mail->isSMTP(true);
                     $mail->setFrom($sender, $senderName);
@@ -4317,14 +4317,6 @@ function InsertContratMateriel()
                 } catch (Exception $e) {
                     echo "Email non envoyé. {$mail->ErrorInfo}", PHP_EOL;
                 }
-                // $to = "$mailuser";
-                // $subject = "Ajoutcontratmateriel";
-                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                // $header = "From:appk2contrat@gmail.com \r\n";
-                // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                // $header .= "MIME-Version: 1.0\r\n";
-                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                // mail($to, $subject, $message, $header);
                 /////////////////////////Mail AWS/////////////////////////////////
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
@@ -4463,7 +4455,7 @@ function InsertContratVoiture()
                     require("PHPMailer/src/Exception.php");
                     require("PHPMailer/src/PHPMailer.php");
                     require("PHPMailer/src/SMTP.php");
-				    $sender = 'maaloulmedhedi@gmail.com';
+				    $sender = 'medhedimaaloul@ste-sitem.com';
                     $senderName = 'K2Location Sender Mail';
                     $recipient = "$mailuser";
                     $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -4471,7 +4463,7 @@ function InsertContratVoiture()
                     $configurationSet = 'ConfigSet';
                     $host = 'email-smtp.eu-west-3.amazonaws.com';
                     $port = 465;
-                    $subject = 'K2Location App (Ajoutcontratvoiture)';
+                    $subject = 'K2Location App (Contrat Location Vehicule)';
                     $bodyText =  "";
                     $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                     Ce contrat a été crée par $nomuser .</body></html>";
@@ -10829,14 +10821,14 @@ function InsertContratPack()
                 require("PHPMailer/src/Exception.php");
                 require("PHPMailer/src/PHPMailer.php");
                 require("PHPMailer/src/SMTP.php");
-				$sender = 'maaloulmedhedi@gmail.com';
+				$sender = 'medhedimaaloul@ste-sitem.com';
                 $senderName = 'K2Location Sender Mail';
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
                 $passwordSmtp = 'BD8karZvvhSsE/LQU0BnRXa8KMTKKXr39StWLrNdSAqi';
                 $host = 'email-smtp.eu-west-3.amazonaws.com';
                 $port = 465;
-                $subject = 'K2Location App (Ajoutcontratpack)';
+                $subject = 'K2Location App (Contrat Location Pack)';
                 $bodyText =  "";
                 $bodyHtml = "<html><body> Bonjour, <br /> <br />Le contrat numéro $rowid relatif au client $nomclient a été crée le $rowdate avec le montant $ContratPrixContrat.
                 Ce contrat a été crée par $nomuser .</body></html>";
