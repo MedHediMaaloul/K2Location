@@ -50,6 +50,14 @@ $result = mysqli_query($conn, $query);
     </select>
 </div>
 
+<script type="text/javascript">
+    $(function() {
+        $('#list_materiel_avenant').select2({
+            dropdownParent: $('#list_materiel_avenant').parent()
+        });
+    })
+</script>
+
 <?php
 }
 function disponibilite_Vehicule($id_voiture, $debut, $fin)

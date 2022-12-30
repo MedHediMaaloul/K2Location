@@ -42,6 +42,13 @@ $result = mysqli_query($conn, $query);
     </select>
 </div>
 
+<script type="text/javascript">
+    $(function() {
+        $('#list_materiel').select2({
+            dropdownParent: $('#list_materiel').parent()
+        });
+    })
+</script>
 
 <?php
 
