@@ -4280,11 +4280,11 @@ function InsertContratMateriel()
                 while ($rownomclient = mysqli_fetch_assoc($resultnomclient)) {
                     $nomclient = $rownomclient['nom_entreprise'];
                 }
-                
+                /////////////////////////Mail PHPMailer/////////////////////////////////
                 require("PHPMailer/src/Exception.php");
                 require("PHPMailer/src/PHPMailer.php");
                 require("PHPMailer/src/SMTP.php");
-				$sender = 'medhedimaaloul@ste-sitem.com';
+				$sender = 'k2location-app@k2group.fr';
                 $senderName = 'K2Location Sender Mail';
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -4317,7 +4317,7 @@ function InsertContratMateriel()
                 } catch (Exception $e) {
                     echo "Email non envoyé. {$mail->ErrorInfo}", PHP_EOL;
                 }
-                /////////////////////////Mail AWS/////////////////////////////////
+                /////////////////////////Mail PHPMailer/////////////////////////////////
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
                 $liste_user1_query = mysqli_query($conn, $liste_user1);
@@ -4451,11 +4451,11 @@ function InsertContratVoiture()
                     while ($rownomclient = mysqli_fetch_assoc($resultnomclient)) {
                         $nomclient = $rownomclient['nom_entreprise'];
                     }
-                    /////////////////////////Mail AWS/////////////////////////////////
+                    /////////////////////////Mail PHPMailer/////////////////////////////////
                     require("PHPMailer/src/Exception.php");
                     require("PHPMailer/src/PHPMailer.php");
                     require("PHPMailer/src/SMTP.php");
-				    $sender = 'medhedimaaloul@ste-sitem.com';
+				    $sender = 'k2location-app@k2group.fr';
                     $senderName = 'K2Location Sender Mail';
                     $recipient = "$mailuser";
                     $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -4488,15 +4488,7 @@ function InsertContratVoiture()
                     } catch (Exception $e) {
                         echo "Email non envoyé. {$mail->ErrorInfo}", PHP_EOL;
                     }
-                    // $to = "$mailuser";
-                    // $subject = "Ajoutcontratvoiture";
-                    // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser."."; 
-                    // $header = "From:appk2contrat@gmail.com \r\n";
-                    // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                    // $header .= "MIME-Version: 1.0\r\n";
-                    // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                    // mail($to, $subject, $message, $header);
-                    /////////////////////////Mail AWS/////////////////////////////////
+                    /////////////////////////Mail PHPMailer/////////////////////////////////
                     $date_now = date("Y-m-d H:i:s");
                     $liste_user1 = "SELECT * FROM user";
                     $liste_user1_query = mysqli_query($conn, $liste_user1);
@@ -8634,15 +8626,18 @@ function DisplaySettingVoitureTransf()
     if ($id_agence != "0") {
         $query = "SELECT * FROM histrique_voiture,voiture,agence 
         WHERE action = 'Transferer' 
+        AND histrique_voiture.id_voiture_HV = voiture.id_voiture
         AND (histrique_voiture.id_agence_em='$id_agence' or histrique_voiture.id_agence_recv='$id_agence')
         AND agence.id_agence='$id_agence' 
         GROUP BY id_histrique_voiture ";
     } else {
         $query = "SELECT * FROM histrique_voiture,agence,voiture 
         WHERE action = 'Transferer' 
-        GROUP BY id_histrique_voiture ";
+        AND histrique_voiture.id_voiture_HV = voiture.id_voiture
+        GROUP BY id_histrique_voiture";
     }
     $result = mysqli_query($conn, $query);
+    $i = 1;
     while ($row = mysqli_fetch_assoc($result)) {
         $id_agence_em =  $row['id_agence_em'];
         $id_agence_recv =  $row['id_agence_recv'];
@@ -8657,12 +8652,13 @@ function DisplaySettingVoitureTransf()
         }
         $value .= '
             <tr>
-                <td class="border-top-0">' . $row['id_histrique_voiture'] . '</td>
+                <td class="border-top-0">' . $i . '</td>
                 <td class="border-top-0">' . $row['pimm'] . '</td>
                 <td class="border-top-0">' . $lieu_agence_em . '</td>
                 <td class="border-top-0">' .  $lieu_agence_rec . '</td>
                 <td class="border-top-0">' . $row['date_action'] . '</td>               
             </tr>';
+        $i += 1;
     }
 
     $value .= '</table>';
@@ -10816,12 +10812,11 @@ function InsertContratPack()
                 while ($rownomclient = mysqli_fetch_assoc($resultnomclient)) {
                     $nomclient = $rownomclient['nom_entreprise'];
                 }
-
-                /////////////////////////Mail AWS/////////////////////////////////
+                /////////////////////////Mail PHPMailer/////////////////////////////////
                 require("PHPMailer/src/Exception.php");
                 require("PHPMailer/src/PHPMailer.php");
                 require("PHPMailer/src/SMTP.php");
-				$sender = 'medhedimaaloul@ste-sitem.com';
+                $sender = 'k2location-app@k2group.fr';
                 $senderName = 'K2Location Sender Mail';
                 $recipient = "$mailuser";
                 $usernameSmtp = 'AKIAY2ABOIWIICCHUB4R';
@@ -10849,19 +10844,11 @@ function InsertContratPack()
                     $mail->Body       = $bodyHtml;
                     $mail->AltBody    = $bodyText;
                     $mail->Send();
-                    echo "E-mail bien envoyé.!" , PHP_EOL;
+                echo "E-mail bien envoyé.!" , PHP_EOL;
                 } catch (Exception $e) {
                     echo "Email non envoyé. {$mail->ErrorInfo}", PHP_EOL;
                 }
-                // $to = "$mailuser";
-                // $subject = "Ajoutcontratpack";
-                // $message = "Le contrat numéro ".$rowid." relatif au client ".$nomclient." a été crée le ".$rowdate." avec le montant ".$ContratPrixContrat.". Ce contrat a été crée par ".$nomuser.".";
-                // $header = "From:appk2contrat@gmail.com \r\n";
-                // $header .= "Cc:appk2contrat@gmail.com \r\n";
-                // $header .= "MIME-Version: 1.0\r\n";
-                // $header .= 'Content-Type: text/plain; charset="utf-8"' . " ";
-                // mail($to, $subject, $message, $header);
-                /////////////////////////Mail AWS/////////////////////////////////
+                /////////////////////////Mail PHPMailer/////////////////////////////////
                 $date_now = date("Y-m-d H:i:s");
                 $liste_user1 = "SELECT * FROM user";
                 $liste_user1_query = mysqli_query($conn, $liste_user1);

@@ -14,7 +14,8 @@ while($row = mysqli_fetch_assoc($result)){
   $idclient=$row['id_client'];
   $querydate = "SELECT contrat_client.date_fin 
     FROM client,contrat_client 
-    WHERE client.id_client=contrat_client.id_client 
+    WHERE client.id_client=contrat_client.id_client
+    AND  contrat_client.etat_contrat != 'S'
     AND contrat_client.date_fin=(select MAX(date_fin) FROM contrat_client where id_client=$idclient)";
     
   $resultdate = mysqli_query($conn, $querydate);
